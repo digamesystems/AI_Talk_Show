@@ -43,7 +43,8 @@ class Session:
         panelist = action.directed_at[0]
 
         if self.conversation.pending_prompt and \
-           panelist in self.conversation.pending_respondents:
+        panelist in self.conversation.pending_respondents:
+            # Pending response — prompt already in history from broadcast
             turn = panelist.respond(
                 self.conversation.history,
                 self.conversation.pending_prompt
@@ -55,6 +56,14 @@ class Session:
             if not self.conversation.has_pending():
                 print("[System]: All panelists have responded.\n")
         else:
+            # Regular directed prompt — record it first
+            moderator_turn = Turn(
+                speaker=self.moderator,
+                content=action.content,
+                in_response_to=action  # action is the Prompt, carries directed_at
+            )
+            self.conversation.add_turn(moderator_turn)
+            
             self.current_target = action.directed_at
             turn = panelist.respond(
                 self.conversation.history,
@@ -62,7 +71,7 @@ class Session:
             )
             self.conversation.add_turn(turn)
             print(f"\n[{panelist.name}]: {turn.content}\n")
-
+            
     def run(self):
         print(f"\n[System]: Session started. "
               f"Panelists: "

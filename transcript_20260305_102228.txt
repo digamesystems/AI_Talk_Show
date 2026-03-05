@@ -1,0 +1,7 @@
+=== Panel Discussion Transcript ===
+Date      : 2026-03-05 10:22
+Moderator : John
+Panelists : Jean, Alan
+Topic     : DOD restrictions on Anthropic products.
+========================================
+

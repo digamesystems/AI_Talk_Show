@@ -102,7 +102,7 @@ def main():
 def save_transcript(session: Session):
     from datetime import datetime
     filename = f"transcript_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
-    with open(filename, "w") as f:
+    with open(filename, "w", encoding="utf-8") as f:
         f.write(f"=== Panel Discussion Transcript ===\n")
         f.write(f"Date      : {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
         f.write(f"Moderator : {session.moderator.name}\n")
@@ -112,9 +112,22 @@ def save_transcript(session: Session):
                 f"{session.conversation.topic or 'Open discussion'}\n")
         f.write(f"{'=' * 40}\n\n")
         for turn in session.conversation.history:
-            f.write(f"[{turn.speaker.name}]: {turn.content}\n\n")
+            speaker = turn.speaker.name
+
+            if turn.speaker == session.moderator and \
+            turn.in_response_to is not None and \
+            hasattr(turn.in_response_to, 'directed_at'):
+                directed = turn.in_response_to.directed_at
+                if directed != "all" and isinstance(directed, list):
+                    target = directed[0].name
+                    label = f"[{speaker} → {target}]"
+                else:
+                    label = f"[{speaker}]"
+            else:
+                label = f"[{speaker}]"
+
+            f.write(f"{label}: {turn.content}\n\n")
+
     print(f"\n[System]: Transcript saved to {filename}\n")
-
-
 if __name__ == "__main__":
     main()
