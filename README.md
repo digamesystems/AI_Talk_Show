@@ -119,7 +119,7 @@ Everything else is treated as a Prompt directed at current_target. This was a us
 `/all` broadcasts set pending_prompt and pending_respondents. Panelists don't respond until called on by name. Moderator retains full editorial control over response order. Warning issued if new /all prompt arrives before pending respondents have all replied.
 
 **Role files (YAML)**
-Roles live in `roles/` directory as `.yml` files with metadata fields:
+Roles live in `roles/` directory as `.yaml` files with metadata fields:
 - `name`, `description`, `prompt` (default), `claude_prompt` (optional override)
 - Model-specific prompt overrides allow same conceptual role to be tuned per provider
 - `roles.py` handles loading, listing, and prompt selection
