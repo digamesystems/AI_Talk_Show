@@ -2,6 +2,17 @@ from models import Prompt, Statement, Turn
 from conversation import Conversation
 from moderator import Moderator
 
+
+def read_prompt(prefix: str) -> str:
+    """Read one or more lines until a line containing only '.' is entered."""
+    lines = []
+    line = input(prefix)
+    while line != ".":
+        lines.append(line)
+        line = input("")
+    return "\n".join(lines)
+
+
 def resolve_recipients(prompt: Prompt, panelists: list) -> list:
     if prompt.directed_at == "all":
         return panelists
@@ -82,8 +93,8 @@ class Session:
 
         while True:
             try:
-                raw = input(f"[{self.moderator.name} "
-                        f"→ {self.target_name()}]: ").strip()
+                raw = read_prompt(f"[{self.moderator.name} "
+                                  f"→ {self.target_name()}]: ").strip()
             except (EOFError, KeyboardInterrupt):
                 print("\n[System]: Session ended.")
                 break

@@ -82,7 +82,8 @@ def main():
     print("  //...        Statement (no response expected)")
     print("  /all ...     Broadcast to all panelists")
     print("  Name, ...    Direct to named panelist")
-    print("  /quit        End session\n")
+    print("  /quit        End session")
+    print("  .            Send (terminate multi-line input)\n")
 
     session = create_session()
     session.run()
