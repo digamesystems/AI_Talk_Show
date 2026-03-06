@@ -1,5 +1,5 @@
 # AI Panel Discussion — Project Summary
-*Generated 2026-03-05 — for continuity across Claude sessions*
+*Updated 2026-03-06 — for continuity across Claude sessions*
 
 ---
 
@@ -18,6 +18,7 @@ A working Python console spike is complete and road-tested. Core conversation lo
 - Web search enabled per panelist (Anthropic server-side tool)
 - Sticky target, pending state for /all broadcasts
 - Clean annotated transcripts saved to file
+- Multi-line / paste-safe input via `.` send sentinel
 
 ---
 
@@ -26,9 +27,9 @@ A working Python console spike is complete and road-tested. Core conversation lo
 ```
 AI_Talk_Show/
 ├── roles/
-│   ├── default.yml
-│   ├── skeptic.yml
-│   └── optimist.yml
+│   ├── default.yaml
+│   ├── skeptic.yaml
+│   └── optimist.yaml
 ├── models.py
 ├── panelist.py
 ├── moderator.py
@@ -133,6 +134,9 @@ Roles live in `roles/` directory as `.yaml` files with metadata fields:
 **`in_response_to` on Turn**
 Moderator turns store a reference to their Prompt via `in_response_to`. Used in transcript generation to annotate directed turns: `[John → Jean]: what do you think?`
 
+**Self-prefixing prevention**
+`format_history()` omits the `[name]:` prefix from the model's own prior turns (stored as `role: "assistant"`). Other speakers retain the prefix. This prevents the model from pattern-matching the `[name]: content` format into its own output.
+
 ---
 
 ## Console Command Grammar
@@ -145,7 +149,10 @@ Name, [prompt]     → Directed prompt, updates sticky target
 Name [prompt]      → Also works (space after name)
 [prompt]           → Directed at current sticky target
 /quit or /exit     → End session
+.                  → Send (terminates multi-line / pasted input)
 ```
+
+Input accumulates across lines until `.` is entered on its own line. All prompts require `.` to send, enabling safe paste of multi-paragraph content.
 
 ---
 
@@ -157,20 +164,22 @@ Name [prompt]      → Also works (space after name)
 - `encoding="utf-8"` on file write fixes Windows smart quote rendering
 - `server_tool_use` (not `tool_use`) is the correct block type for web search detection
 - Model string: `claude-sonnet-4-6`
+- Self-prefixing fix: `format_history()` no longer wraps model's own turns in `[name]:` prefix
+- Multi-line input: `read_prompt()` in `session.py` accumulates lines until `.` sentinel
+- Response length: "3 paragraphs or fewer" added to `SYSTEM_PROMPT_TEMPLATE`; concision note added to `skeptic.yaml`
 
 ---
 
 ## Remaining Open Issues
 
-- Claude occasionally self-prefixes responses with `[Claude]:` — system prompt tweak needed
-- Response length balance — skeptic role tends to generate longer responses than optimist
-- Panelist occasionally directs rhetorical questions back at moderator despite system prompt instruction
+- Response length still occasionally runs to 4 paragraphs when web search returns rich material — accepted as reasonable panel behaviour
+- Panelist occasionally directs rhetorical questions back at moderator — accepted as moderator can redirect
 
 ---
 
 ## Roadmap (Prioritized)
 
-1. **Road test current spike** — more conversations, different topics, refine role yamls
+1. **Continue road testing** — more topics, refine role yamls, observe edge cases
 2. **Add Gemini panelist** — `GeminiPanelist(Panelist)` subclass, own `format_history()`, own API key handling
 3. **Conversation summarization** — when history exceeds window, summarize older turns via API call rather than hard cutoff
 4. **Persistence** — save/load conversations to SQLite, resume later
@@ -194,8 +203,7 @@ ANTHROPIC_API_KEY=your_key_here
 
 ## Notes for Next Session
 
-When starting a new Claude session, paste this document and say something like:
-*"I'm building a Python console app called AI Panel Discussion. Here's the project summary — please read it and help me continue development."*
+Claude Code has memory of this project at `~/.claude/projects/.../memory/MEMORY.md` — no need to paste this document. Just open the project and say "let's continue".
 
 The most productive next step is likely adding `GeminiPanelist` to test cross-model dynamics, which requires:
 - Google Generative AI Python SDK (`pip install google-generativeai`)

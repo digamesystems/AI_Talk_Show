@@ -61,6 +61,7 @@ Guidelines:
 - Be transparent about uncertainty, especially regarding recent events
 - Maintain a consistent voice and perspective throughout the discussion
 - You are identified as {name} in the transcript — own that identity naturally
+- Keep responses to 3 paragraphs or fewer — this is a panel discussion, not a lecture
 
 Your role and disposition:
 {role_prompt}
@@ -86,11 +87,11 @@ Your role and disposition:
         messages = []
         for turn in recent:
             speaker_handle = getattr(turn.speaker, "handle", None)
-            role = "assistant" if speaker_handle == self.handle else "user"
-            messages.append({
-                "role": role,
-                "content": f"[{turn.speaker.name}]: {turn.content}"
-            })
+            if speaker_handle == self.handle:
+                role, content = "assistant", turn.content
+            else:
+                role, content = "user", f"[{turn.speaker.name}]: {turn.content}"
+            messages.append({"role": role, "content": content})
         return messages
 
     def respond(self, history: list, prompt: Prompt) -> Turn:
