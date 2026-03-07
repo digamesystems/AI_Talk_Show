@@ -55,7 +55,13 @@ class Session:
 
         if self.conversation.pending_prompt and \
         panelist in self.conversation.pending_respondents:
-            # Pending response — prompt already in history from broadcast
+            # Directed follow-up to a pending broadcast — record the moderator prompt
+            moderator_turn = Turn(
+                speaker=self.moderator,
+                content=action.content,
+                in_response_to=action
+            )
+            self.conversation.add_turn(moderator_turn)
             turn = panelist.respond(
                 self.conversation.history,
                 self.conversation.pending_prompt
