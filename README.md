@@ -1,5 +1,5 @@
 # AI Panel Discussion — Project Summary
-*Updated 2026-03-06 — for continuity across Claude sessions*
+*Updated 2026-03-06 (2) — for continuity across Claude sessions*
 
 ---
 
@@ -29,7 +29,13 @@ AI_Talk_Show/
 ├── roles/
 │   ├── default.yaml
 │   ├── skeptic.yaml
-│   └── optimist.yaml
+│   ├── optimist.yaml
+│   ├── sartre.yaml
+│   └── watts.yaml
+├── TTS/
+│   ├── render_transcript.py
+│   ├── tts_voices.yaml
+│   └── list_voices.py
 ├── models.py
 ├── panelist.py
 ├── moderator.py
@@ -167,6 +173,9 @@ Input accumulates across lines until `.` is entered on its own line. All prompts
 - Self-prefixing fix: `format_history()` no longer wraps model's own turns in `[name]:` prefix
 - Multi-line input: `read_prompt()` in `session.py` accumulates lines until `.` sentinel
 - Response length: "3 paragraphs or fewer" added to `SYSTEM_PROMPT_TEMPLATE`; concision note added to `skeptic.yaml`
+- Historical figure roles added: `sartre.yaml` (Jean-Paul Sartre) and `watts.yaml` (Alan Watts)
+- Transcript bug fixed: directed moderator follow-ups (`[John → Jean]: ...`) now recorded in both the pending-broadcast and fresh-direct code paths
+- TTS experiment files moved to `TTS/` subdirectory
 
 ---
 
@@ -201,12 +210,28 @@ ANTHROPIC_API_KEY=your_key_here
 
 ---
 
+## TTS Pipeline
+
+Scripts live in `TTS/`. Requires ElevenLabs quota (30,000 chars/month on Starter plan).
+
+```bash
+cd TTS
+python list_voices.py                          # list available voice IDs
+python render_transcript.py ../transcript.txt  # render to MP3
+```
+
+`tts_voices.yaml` maps panelist display names to ElevenLabs voice IDs and settings. Add a new entry for each speaker name used in a transcript.
+
+Partial renders are saved on quota failure — the MP3 up to the failed turn is exported rather than lost.
+
+---
+
 ## Notes for Next Session
 
 Claude Code has memory of this project at `~/.claude/projects/.../memory/MEMORY.md` — no need to paste this document. Just open the project and say "let's continue".
 
-The most productive next step is likely adding `GeminiPanelist` to test cross-model dynamics, which requires:
-- Google Generative AI Python SDK (`pip install google-generativeai`)
-- `GEMINI_API_KEY` environment variable
-- New `GeminiPanelist` subclass in `panelist.py`
-- Updated `main.py` to offer gemini as a panelist type at setup
+Good next steps (in rough priority order):
+1. **More role experimentation** — test other historical figures, observe edge cases
+2. **Add Gemini panelist** — `GeminiPanelist(Panelist)` subclass, own `format_history()`, own API key
+3. **Conversation summarization** — summarize older turns via API when history exceeds window
+4. **TTS render** — top up ElevenLabs quota ($5 Starter) and render a full transcript
