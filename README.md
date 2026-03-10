@@ -1,24 +1,25 @@
 # AI Panel Discussion — Project Summary
-*Updated 2026-03-06 (2) — for continuity across Claude sessions*
+*Updated 2026-03-09 — for continuity across Claude sessions*
 
 ---
 
 ## Project Vision
 
-A console-based (first) then web-based moderated panel discussion app where a human moderator directs conversation between multiple AI panelists (and optionally human panelists). Inspired by a talk show format — the moderator holds the talking stick and directs who speaks. Each panelist hears the full conversation history regardless of who a prompt was directed at.
+A console-based (first) then web-based moderated panel discussion app where a human moderator directs conversation between multiple AI panelists (and optionally human panelists). Inspired by a talk show format — the moderator holds the talking stick and directs who speaks. Each panelist hears the full conversation history regardless of who a turn was directed at.
 
-Longer term vision includes: text-to-speech/speech-to-text for a "real" talk show feel, YouTube content production, and potentially a multi-user hosted platform.
+Longer term vision includes: Slack integration as a natural multi-user interface, text-to-speech/speech-to-text for a real talk show feel, YouTube content production, and potentially a multi-user hosted platform.
 
 ---
 
 ## Current Status
 
 A working Python console spike is complete and road-tested. Core conversation loop is functional with:
-- Two Claude panelists with different role-based personas
+- Multiple Claude panelists with different role-based personas (Sartre, Watts, Shaman, Skeptic, Optimist, Default)
 - Web search enabled per panelist (Anthropic server-side tool)
 - Sticky target, pending state for /all broadcasts
 - Clean annotated transcripts saved to file
 - Multi-line / paste-safe input via `.` send sentinel
+- TTS pipeline in TTS/ subdirectory (ElevenLabs)
 
 ---
 
@@ -31,7 +32,8 @@ AI_Talk_Show/
 │   ├── skeptic.yaml
 │   ├── optimist.yaml
 │   ├── sartre.yaml
-│   └── watts.yaml
+│   ├── watts.yaml
+│   └── shaman.yaml
 ├── TTS/
 │   ├── render_transcript.py
 │   ├── tts_voices.yaml
@@ -66,12 +68,18 @@ Turn
 ├── timestamp: datetime
 └── in_response_to: Prompt | Statement | None
 
+PanelistMeta
+├── joined_at: int             # turn index when panelist joined
+└── onboarding_summary: str | None
+
 Conversation
 ├── topic: str
 ├── panelists: list[Panelist]
 ├── history: list[Turn]        # full record, never truncated
-├── summary: str | None
-├── active_window: int         # API context window only, not archive
+├── pinned: list[Turn]         # always in context, immune to summarization
+├── summary: str | None        # rolling summary of out-of-window turns
+├── panelist_meta: dict[str, PanelistMeta]
+├── active_window: int         # turns sent raw to API (default: 30)
 ├── pending_prompt: Prompt | None
 └── pending_respondents: list[Panelist]
 
@@ -81,7 +89,7 @@ Panelist (base, ABC)
 └── role: str
 
 HumanPanelist(Panelist)
-└── respond() → reads from stdin
+└── respond() → reads from stdin, returns (Turn, Prompt | None)
 
 ClaudePanelist(Panelist)
 ├── system_prompt: str         # built internally from template + role yaml
@@ -117,7 +125,7 @@ All panelists receive full conversation history regardless of who a turn was dir
 Statements are declarative moderator turns — no response expected, just recorded in history. Prompts solicit responses from one or more panelists.
 
 **`//` prefix forces Statement**
-Everything else is treated as a Prompt directed at current_target. This was a usability decision — natural language directives ("Expand on that.") should elicit responses without requiring special syntax.
+Everything else is treated as a Prompt directed at current_target. Natural language directives ("Expand on that.") elicit responses without requiring special syntax.
 
 **Sticky target**
 `current_target` persists until explicitly changed. Avoids requiring panelist name on every turn during extended single-panelist exchanges.
@@ -134,8 +142,14 @@ Roles live in `roles/` directory as `.yaml` files with metadata fields:
 **System prompt ownership**
 `ClaudePanelist` owns its own `SYSTEM_PROMPT_TEMPLATE` and builds the system prompt internally from `moderator_name`, `name`, and role yaml. `main.py` just passes high-level parameters.
 
-**History windowing**
-`active_window` limits how many turns get sent to the API per call (cost management). Full history always preserved in `conversation.history` and always saved to transcript.
+**History windowing and summarization**
+`active_window` (default: 30 turns) limits raw turns sent to API per call. Full history always preserved in `conversation.history`. When history exceeds the window, older turns are compressed by `summarize_history()` rather than hard-dropped. The summarizer is instructed to be lossless about facts, names, concessions, and pivots — and lossy about rhetorical scaffolding. Pinned turns are always included regardless of window.
+
+**Guest onboarding**
+When a panelist joins mid-session, `summarize_history()` generates an onboarding briefing. `ClaudePanelist` receives this as a synthetic message prepended to their context. `HumanPanelist` receives it as a console print before their first stdin prompt. `panelist_meta` tracks each panelist's `joined_at` index and `onboarding_summary`.
+
+**HumanPanelist directive power**
+`HumanPanelist.respond()` returns a `(Turn, Prompt | None)` tuple. If the human panelist types a directive matching `Name, prompt` syntax, the system parses it as a `Prompt` and queues the named panelist to respond — subject to moderator override before firing. Moderator-only commands (`//`, `/all`, `/add_guest`, `/drop_guest`, `/pin`) are not available to panelists.
 
 **`in_response_to` on Turn**
 Moderator turns store a reference to their Prompt via `in_response_to`. Used in transcript generation to annotate directed turns: `[John → Jean]: what do you think?`
@@ -147,18 +161,30 @@ Moderator turns store a reference to their Prompt via `in_response_to`. Used in 
 
 ## Console Command Grammar
 
+### Moderator commands
 ```
-//...              → Statement (no response expected)
-/all [prompt]      → Broadcast to all panelists (pending state)
-/all [prompt] Name → Broadcast + immediately call on Name
-Name, [prompt]     → Directed prompt, updates sticky target
-Name [prompt]      → Also works (space after name)
-[prompt]           → Directed at current sticky target
-/quit or /exit     → End session
-.                  → Send (terminates multi-line / pasted input)
+//...                  → Statement (no response expected)
+/all [prompt]          → Broadcast to all panelists (pending state)
+/all [prompt] Name     → Broadcast + immediately call on Name
+/add_guest Name role   → Introduce new panelist mid-session
+/drop_guest Name       → Dismiss panelist gracefully
+/pin                   → Pin most recent turn (always in context)
+/pin Name              → Pin most recent turn from named panelist
+/quit or /exit         → End session
+Name, [prompt]         → Directed prompt, updates sticky target
+Name [prompt]          → Also works (space after name)
+[prompt]               → Directed at current sticky target
+.                      → Send (terminates multi-line / pasted input)
 ```
 
-Input accumulates across lines until `.` is entered on its own line. All prompts require `.` to send, enabling safe paste of multi-paragraph content.
+### HumanPanelist input (subset)
+```
+Name, [prompt]         → Directive (queues named panelist, moderator can override)
+[anything else]        → Plain turn, recorded in history
+.                      → Send
+```
+
+Input accumulates across lines until `.` is entered on its own line. All input requires `.` to send, enabling safe paste of multi-paragraph content.
 
 ---
 
@@ -173,7 +199,7 @@ Input accumulates across lines until `.` is entered on its own line. All prompts
 - Self-prefixing fix: `format_history()` no longer wraps model's own turns in `[name]:` prefix
 - Multi-line input: `read_prompt()` in `session.py` accumulates lines until `.` sentinel
 - Response length: "3 paragraphs or fewer" added to `SYSTEM_PROMPT_TEMPLATE`; concision note added to `skeptic.yaml`
-- Historical figure roles added: `sartre.yaml` (Jean-Paul Sartre) and `watts.yaml` (Alan Watts)
+- Historical figure roles added: `sartre.yaml`, `watts.yaml`, `shaman.yaml`
 - Transcript bug fixed: directed moderator follow-ups (`[John → Jean]: ...`) now recorded in both the pending-broadcast and fresh-direct code paths
 - TTS experiment files moved to `TTS/` subdirectory
 
@@ -183,17 +209,24 @@ Input accumulates across lines until `.` is entered on its own line. All prompts
 
 - Response length still occasionally runs to 4 paragraphs when web search returns rich material — accepted as reasonable panel behaviour
 - Panelist occasionally directs rhetorical questions back at moderator — accepted as moderator can redirect
+- No `current_target` on session open — natural openers without a named target stall; `/all` or explicit name required first
+- Multi-target syntax (`Jean and Alan, prompt`) not yet supported — use `/all` or address separately
 
 ---
 
 ## Roadmap (Prioritized)
 
-1. **Continue road testing** — more topics, refine role yamls, observe edge cases
-2. **Add Gemini panelist** — `GeminiPanelist(Panelist)` subclass, own `format_history()`, own API key handling
-3. **Conversation summarization** — when history exceeds window, summarize older turns via API call rather than hard cutoff
-4. **Persistence** — save/load conversations to SQLite, resume later
-5. **Web UI** — Flask frontend, user login, conversation history browser
-6. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists (Whisper/Deepgram)
+1. **`summarize_history()`** — utility API call (not a panelist); smart prompt lossless on facts/concessions, lossy on scaffolding; foundation for everything below
+2. **`Conversation.panelist_meta` + `pinned`** — data model updates; `PanelistMeta(joined_at, onboarding_summary)`; `pinned: list[Turn]`
+3. **`format_history()` updates** — onboarding briefing prepend for late-joining panelists; rolling summary for out-of-window turns; merge both when applicable
+4. **`/add_guest` and `/drop_guest`** — mid-session guest management; onboarding via summarizer; graceful dismissal with moderator farewell
+5. **Parser fixes** — `/pin` command; multi-target syntax; no-target-on-open guard
+6. **HumanPanelist directive power** — `respond()` returns `(Turn, Prompt | None)`; moderator override hook before queuing
+7. **Gemini panelist** — `GeminiPanelist(Panelist)` subclass; own `format_history()`; own API key handling
+8. **Persistence** — save/load conversations to SQLite, resume later
+9. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond to @mentions; human panelists are registered Slack users
+10. **Web UI** — Flask frontend, user login, conversation history browser
+11. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists (Whisper/Deepgram)
 
 ---
 
@@ -231,7 +264,7 @@ Partial renders are saved on quota failure — the MP3 up to the failed turn is 
 Claude Code has memory of this project at `~/.claude/projects/.../memory/MEMORY.md` — no need to paste this document. Just open the project and say "let's continue".
 
 Good next steps (in rough priority order):
-1. **More role experimentation** — test other historical figures, observe edge cases
-2. **Add Gemini panelist** — `GeminiPanelist(Panelist)` subclass, own `format_history()`, own API key
-3. **Conversation summarization** — summarize older turns via API when history exceeds window
-4. **TTS render** — top up ElevenLabs quota ($5 Starter) and render a full transcript
+1. **Implement `summarize_history()`** — standalone, testable immediately; includes smart summarization prompt
+2. **Update `Conversation` data model** — add `panelist_meta`, `pinned`
+3. **Update `format_history()`** — onboarding + rolling summary support
+4. **Implement `/add_guest` and `/drop_guest`**
