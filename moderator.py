@@ -1,4 +1,4 @@
-from models import Prompt, Statement
+from models import Prompt, Statement, AddGuestAction, DropGuestAction
 
 STATEMENT_PREFIX = "//"
 
@@ -13,6 +13,20 @@ class Moderator:
 
         if raw.lower() in ("/quit", "/exit"):
             return None
+
+        if raw.lower().startswith("/add_guest"):
+            parts = raw.split(maxsplit=2)
+            if len(parts) >= 3:
+                return AddGuestAction(name=parts[1], role_name=parts[2].lower())
+            print("[System]: Usage: /add_guest Name role")
+            return Prompt(content="", directed_at=current_target)
+
+        if raw.lower().startswith("/drop_guest"):
+            parts = raw.split(maxsplit=1)
+            if len(parts) >= 2:
+                return DropGuestAction(name=parts[1])
+            print("[System]: Usage: /drop_guest Name")
+            return Prompt(content="", directed_at=current_target)
 
         if raw.startswith(STATEMENT_PREFIX):
             content = raw[len(STATEMENT_PREFIX):].strip()

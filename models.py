@@ -21,3 +21,12 @@ class Turn:
     content: str
     timestamp: datetime = field(default_factory=datetime.now)
     in_response_to: Prompt | Statement | None = None
+
+@dataclass
+class AddGuestAction:
+    name: str
+    role_name: str     # role yaml name, or "human"
+
+@dataclass
+class DropGuestAction:
+    name: str

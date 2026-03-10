@@ -51,7 +51,7 @@ def create_session() -> Session:
     moderator = Moderator(name=moderator_name)
 
     topic = input("Opening topic (optional): ").strip() or None
-    conversation = Conversation(topic=topic, active_window=20)
+    conversation = Conversation(topic=topic, active_window=30)
 
     print("\nAdd panelists (minimum 1):")
     while True:

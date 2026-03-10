@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
+import anthropic
+from conversation import summarize_history
 from models import Prompt, Turn
 from roles import load_role, get_prompt
-import anthropic
 
 class Panelist(ABC):
     def __init__(self, name: str, handle: str, role: str):
@@ -68,13 +69,14 @@ Your role and disposition:
 """
 
     def __init__(self, name: str, handle: str, role_name: str,
-                 moderator_name: str, window: int = 20):
+                 moderator_name: str, window: int = 30):
         role_data = load_role(role_name)
         role_prompt = get_prompt(role_data, model_key="claude")
         super().__init__(name=name, handle=handle, role=role_data["name"])
         self.role_name = role_name
         self.moderator_name = moderator_name
         self.window = window
+        self.onboarding_summary = None
         self.client = anthropic.Anthropic()
         self.system_prompt = self.SYSTEM_PROMPT_TEMPLATE.format(
             name=name,
@@ -82,9 +84,31 @@ Your role and disposition:
             role_prompt=role_prompt
         )
 
-    def format_history(self, history: list, window: int) -> list[dict]:
-        recent = history[-window:] if len(history) > window else history
+    def format_history(self, history: list, window: int,
+                       summary: str | None = None) -> list[dict]:
         messages = []
+
+        if self.onboarding_summary:
+            messages.append({
+                "role": "user",
+                "content": f"[ONBOARDING BRIEFING — discussion before you joined]\n\n{self.onboarding_summary}"
+            })
+            messages.append({
+                "role": "assistant",
+                "content": "Understood. I have reviewed what was discussed before I joined."
+            })
+
+        if summary:
+            messages.append({
+                "role": "user",
+                "content": f"[DISCUSSION SUMMARY — earlier in this session]\n\n{summary}"
+            })
+            messages.append({
+                "role": "assistant",
+                "content": "Understood. I have reviewed the earlier discussion."
+            })
+
+        recent = history[-window:] if len(history) > window else history
         for turn in recent:
             speaker_handle = getattr(turn.speaker, "handle", None)
             if speaker_handle == self.handle:
@@ -92,10 +116,16 @@ Your role and disposition:
             else:
                 role, content = "user", f"[{turn.speaker.name}]: {turn.content}"
             messages.append({"role": role, "content": content})
+
         return messages
 
     def respond(self, history: list, prompt: Prompt) -> Turn:
-        messages = self.format_history(history, self.window)
+        summary = None
+        if len(history) > self.window:
+            older = history[:-self.window]
+            print(f"\n[{self.name}]: Summarizing earlier discussion...", flush=True)
+            summary = summarize_history(older, self.client)
+        messages = self.format_history(history, self.window, summary=summary)
         messages.append({
             "role": "user",
             "content": f"[{prompt.directed_at}]: {prompt.content}"
