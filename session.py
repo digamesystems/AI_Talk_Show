@@ -159,9 +159,8 @@ class Session:
         print(f"\n[System]: Session started. "
               f"Panelists: "
               f"{', '.join(p.name for p in self.conversation.panelists)}\n"
-              f"Type // to make a statement, "
-              f"/all to address everyone, "
-              f"/quit to exit.\n")
+              f"Commands: // statement, /all everyone, "
+              f"/add_guest Name role, /drop_guest Name, /quit\n")
 
         while True:
             try:

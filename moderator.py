@@ -14,7 +14,7 @@ class Moderator:
         if raw.lower() in ("/quit", "/exit"):
             return None
 
-        if raw.lower().startswith("/add_guest"):
+        if raw.lower().startswith("/add_guest") or raw.lower().startswith("/add_panelist"):
             parts = raw.split(maxsplit=2)
             if len(parts) >= 3:
                 return AddGuestAction(name=parts[1], role_name=parts[2].lower())
@@ -47,6 +47,11 @@ class Moderator:
                     content=content,
                     directed_at=[panelist]
                 )
+
+        if raw.startswith("/"):
+            print(f"[System]: Unknown command '{raw.split()[0]}'. "
+                  f"Commands: /add_guest, /drop_guest, /all, //, /quit")
+            return Prompt(content="", directed_at=current_target)
 
         return Prompt(
             content=raw,
