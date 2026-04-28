@@ -4,7 +4,7 @@ A moderated panel discussion app where a human host directs conversation between
 
 Built to explore a specific question: can introducing friction and disagreement into AI interactions produce richer, more interesting results than the smooth consensus that LLMs tend toward on their own?
 
-The conceptual background is in the essay [Why I Built a Talk Show](https://digamesystems.com) — the short version is that LLMs, when used conventionally, tend to converge toward a kind of statistically average response. This project is an experiment in whether multi-agent panels with human intervention can push against that tendency.
+The conceptual background is in the essay [Why I Built a Talk Show](Why%20%20I%20built%20a%20talk%20show.docx) — the short version is that LLMs, when used conventionally, tend to converge toward a kind of statistically average response. This project is an experiment in whether multi-agent panels with human intervention can push against that tendency.
 
 ---
 
