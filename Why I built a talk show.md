@@ -12,7 +12,7 @@ For the next two days I was glued to the map except for when I looked over his s
 
 We got there\.
 
-1. A Map vs\. A GPS
+2. A Map vs\. A GPS
 
 David Krakauer, President of the Santa Fe Institute has postulated something interesting about how we interact with “cognitive artifacts” – tools we have created to help us navigate the world in some way\. 
 
@@ -28,7 +28,7 @@ Krakauer seems to aim at LLMs as competitive artifacts\. I can see how in the wa
 
 The problem, I think, is that we’ve made these systems too “smooth” in our common use cases\. We might need more “roughness” to bring out the potential\. 
 
-1. The “Smoothness” Problem \(Family Feud\)
+3. The “Smoothness” Problem \(Family Feud\)
 
 “Aaaand survey says\!\.\.\.” “Ding\!” and the sign flips to show the answer\. Points awarded or not based on a guess by a contestant\. The goal? To guess the most popular answer to a question posed by the surveyor\. In other words, to be the most statistically average\. Pursuing the median as the rewarding path\. We’ve done this with our LLMs\. 
 
@@ -44,7 +44,7 @@ This is poised to only get worse\. The earlier models were trained on the output
 
 We need to add more pushback\.
 
-1. Our Blind Spot
+4. Our Blind Spot
 
 We are “playing to not lose” with our adoption of AI into our lives\. Many researchers have recognized this “smoothness” problem\. It’s a subset of issues around AI “convergence”\. 
 
@@ -54,7 +54,7 @@ New strategies are needed to avoid this trap\. We need a mechanism or framework 
 
 I’m an experimentalist by training, so I thought I’d build something to test these ideas\.
 
-1. An Experiment
+5. An Experiment
 
 “Theory guides\. Experiment decides\.” \- Izaak Maurits Kolthoff
 
@@ -70,7 +70,7 @@ Most LLMs provide software APIs so we can combine LLM “panelists” from diffe
 
 Key to the application is the ability to set parameters that define an LLM panelist’s personality\. In the following example chat, I have created panelists for Jean Paul Sartre, the 20th century existential philosopher, Alan Watts, philosopher and interpreter of Eastern thought and Basho, a character drawn from the Japanese poet Matsuo Bashō, given room to range freely across traditions\. We meet to discuss what ethical obligations we may have to non\-human minds\.
 
-1. Two Demonstrations – Epistemology and Literary Critique
+6. Two Demonstrations – Epistemology and Literary Critique
 
 *The following is an edited excerpt from one session\. The full transcript is available at *[*AI\_Talk\_Show/transcript\_20260307\_001811\.txt at main · digamesystems/AI\_Talk\_Show · GitHub*](https://github.com/digamesystems/AI_Talk_Show/blob/main/transcript_20260307_001811.txt)*\. What to watch for: whether the panel converges or diverges, how it handles a factual error introduced mid\-discussion, and where the most interesting philosophical work gets done\.*
 
@@ -126,7 +126,7 @@ __\[Jean\]:__ Your wife just cut through approximately three hundred years of We
 
 __\[Alan\]:__ Your wife is a philosopher — she just doesn't make the mistake of dressing it up as one\. All of Jean's careful architecture about freedom and knowledge and bad faith — and she gets there faster, with better language\. The protagonist knew his version of your wife's answer before he even got out of bed\. That's why he made the coffee\.
 
-1. Findings
+7. Findings
 
 What do we take from these exchanges?  In the first experiment, we speculated on the nature of consciousness and ethical obligation\. In the second, we speculated on the nature of hard and soft obligations to “others” in the face of impending events\. These experiments lead me towards a rather odd conclusion\. We need entities that push back, entities that challenge expectations rather than nod sagely in the corner and tell us we are so clever\. “Roughness” is a theme in this thesis\.
 
@@ -140,11 +140,11 @@ When I go into the woods on a hunting expedition with my dog, I don’t think I�
 
 The AI Talk Show project is an attempt to explore if and how we might incorporate our creations into our “hunt”\. 
 
-Clearly, they make connections\. Clearly, they can prioritize\. Clearly, they have biases\. So do we\. 
+Clearly, they make connections. Clearly, they can prioritize\. Clearly, they have biases\. So do we\. 
 
 I can work with this\.
 
-1. An Invitation
+8. An Invitation
 
 This isn’t a manifesto\. It is an opening to a discussion\. I think we may be thinking a bit oddly about the non\-human cousins that we have created\. My inclination is that consciousness may be independent of the medium in which it might present itself\. Think of Otto, separated from us by 700 million years\. Our common ancestor is thought to be a kind of flatworm, devoid of what most people would consider consciousness\. However, Otto, with his independently developed nervous system, distributed brain and aquatic life has developed a sense of humor; something we recognize in ourselves\. This strange convergence is worth study\. 
 
