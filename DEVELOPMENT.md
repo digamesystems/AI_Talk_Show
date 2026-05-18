@@ -1,10 +1,10 @@
 # AI Panel Discussion — Project Summary
-*Updated 2026-03-09 — for continuity across Claude sessions*
+*Updated 2026-05-18 — for continuity across Claude sessions*
 
 ---
 
 ## Project Vision
- 
+
 A console-based (first) then web-based moderated panel discussion app where a human moderator directs conversation between multiple AI panelists (and optionally human panelists). Inspired by a talk show format — the moderator holds the talking stick and directs who speaks. Each panelist hears the full conversation history regardless of who a turn was directed at.
 
 Longer term vision includes: Slack integration as a natural multi-user interface, text-to-speech/speech-to-text for a real talk show feel, YouTube content production, and potentially a multi-user hosted platform.
@@ -14,7 +14,8 @@ Longer term vision includes: Slack integration as a natural multi-user interface
 ## Current Status
 
 A working Python console spike is complete and road-tested. Core conversation loop is functional with:
-- Multiple Claude panelists with different role-based personas (Sartre, Watts, Shaman, Skeptic, Optimist, Default)
+- Multiple Claude panelists with different role-based personas (Sartre, Watts, Basho, Searle, Skeptic, Optimist, Default)
+- Structured YAML schema for historical-figure roles providing behavioral rather than descriptive personas
 - Web search enabled per panelist (Anthropic server-side tool)
 - Sticky target, pending state for /all broadcasts
 - Clean annotated transcripts saved to file
@@ -28,12 +29,13 @@ A working Python console spike is complete and road-tested. Core conversation lo
 ```
 AI_Talk_Show/
 ├── roles/
+│   ├── Basho.yaml
+│   ├── Searle.yaml
 │   ├── default.yaml
-│   ├── skeptic.yaml
 │   ├── optimist.yaml
 │   ├── sartre.yaml
-│   ├── watts.yaml
-│   └── shaman.yaml
+│   ├── skeptic.yaml
+│   └── watts.yaml
 ├── TTS/
 │   ├── render_transcript.py
 │   ├── tts_voices.yaml
@@ -133,29 +135,73 @@ Everything else is treated as a Prompt directed at current_target. Natural langu
 **Pending state for /all broadcasts**
 `/all` broadcasts set pending_prompt and pending_respondents. Panelists don't respond until called on by name. Moderator retains full editorial control over response order. Warning issued if new /all prompt arrives before pending respondents have all replied.
 
-**Role files (YAML)**
-Roles live in `roles/` directory as `.yaml` files with metadata fields:
-- `name`, `description`, `prompt` (default), `claude_prompt` (optional override)
-- Model-specific prompt overrides allow same conceptual role to be tuned per provider
-- `roles.py` handles loading, listing, and prompt selection
+**Role files (YAML) — two schemas**
+Roles live in `roles/` directory as `.yaml` files. Two schemas are supported:
+
+*Prose schema* (legacy — default, skeptic, optimist):
+- `name`, `description`, `prompt` (default), `claude_prompt` (optional model-specific override)
+- `get_prompt()` returns the string as-is
+
+*Structured schema* (preferred — Basho, Searle, sartre, watts):
+- Top-level `name` and `description` for menu display
+- `identity` — name, era, archetype, voice_description
+- `core_beliefs` — philosophical bedrock, keyed by concept
+- `dissonance_triggers` — specific things that provoke sharp reactions
+- `vocabulary_weights` — `high` and `low` word lists
+- `interaction_style` — list of behavioral rules
+- `friction_directives` — list of anti-smoothness rules
+- `system_overrides` — optional per-character overrides for `register_instruction`
+  and `closing_instruction` in `SYSTEM_PROMPT_TEMPLATE`
+
+Detection: `get_prompt()` checks for `core_beliefs` key to determine schema type.
+Rendering: `render_structured_prompt()` in `roles.py` serializes structured fields
+into a compact, model-readable prompt block.
+
+The structured schema is **behavioral** rather than descriptive — `dissonance_triggers`
+names what provokes the character, `vocabulary_weights` constrains word choice, and
+`friction_directives` enforces anti-smoothness rules. This produces characters that
+react from a center of gravity rather than performing a persona.
 
 **System prompt ownership**
-`ClaudePanelist` owns its own `SYSTEM_PROMPT_TEMPLATE` and builds the system prompt internally from `moderator_name`, `name`, and role yaml. `main.py` just passes high-level parameters.
+`ClaudePanelist` owns its own `SYSTEM_PROMPT_TEMPLATE` and builds the system prompt
+internally. Two slots are overridable per-character via `system_overrides` in the
+role YAML:
+- `register_instruction` — default: "Respond thoughtfully and concisely"
+- `closing_instruction` — default: "Close with a concluding statement"
+
+Structured-schema roles typically override both to match their character's register
+and rhetorical style.
 
 **History windowing and summarization**
-`active_window` (default: 30 turns) limits raw turns sent to API per call. Full history always preserved in `conversation.history`. When history exceeds the window, older turns are compressed by `summarize_history()` rather than hard-dropped. The summarizer is instructed to be lossless about facts, names, concessions, and pivots — and lossy about rhetorical scaffolding. Pinned turns are always included regardless of window.
+`active_window` (default: 30 turns) limits raw turns sent to API per call. Full
+history always preserved in `conversation.history`. When history exceeds the window,
+older turns are compressed by `summarize_history()` rather than hard-dropped. The
+summarizer is instructed to be lossless about facts, names, concessions, and pivots
+— and lossy about rhetorical scaffolding. Pinned turns are always included regardless
+of window.
 
 **Guest onboarding**
-When a panelist joins mid-session, `summarize_history()` generates an onboarding briefing. `ClaudePanelist` receives this as a synthetic message prepended to their context. `HumanPanelist` receives it as a console print before their first stdin prompt. `panelist_meta` tracks each panelist's `joined_at` index and `onboarding_summary`.
+When a panelist joins mid-session, `summarize_history()` generates an onboarding
+briefing. `ClaudePanelist` receives this as a synthetic message prepended to their
+context. `HumanPanelist` receives it as a console print before their first stdin
+prompt. `panelist_meta` tracks each panelist's `joined_at` index and
+`onboarding_summary`.
 
 **HumanPanelist directive power**
-`HumanPanelist.respond()` returns a `(Turn, Prompt | None)` tuple. If the human panelist types a directive matching `Name, prompt` syntax, the system parses it as a `Prompt` and queues the named panelist to respond — subject to moderator override before firing. Moderator-only commands (`//`, `/all`, `/add_guest`, `/drop_guest`, `/pin`) are not available to panelists.
+`HumanPanelist.respond()` returns a `(Turn, Prompt | None)` tuple. If the human
+panelist types a directive matching `Name, prompt` syntax, the system parses it as
+a `Prompt` and queues the named panelist to respond — subject to moderator override
+before firing. Moderator-only commands (`//`, `/all`, `/add_guest`, `/drop_guest`,
+`/pin`) are not available to panelists.
 
 **`in_response_to` on Turn**
-Moderator turns store a reference to their Prompt via `in_response_to`. Used in transcript generation to annotate directed turns: `[John → Jean]: what do you think?`
+Moderator turns store a reference to their Prompt via `in_response_to`. Used in
+transcript generation to annotate directed turns: `[John → Jean]: what do you think?`
 
 **Self-prefixing prevention**
-`format_history()` omits the `[name]:` prefix from the model's own prior turns (stored as `role: "assistant"`). Other speakers retain the prefix. This prevents the model from pattern-matching the `[name]: content` format into its own output.
+`format_history()` omits the `[name]:` prefix from the model's own prior turns
+(stored as `role: "assistant"`). Other speakers retain the prefix. This prevents
+the model from pattern-matching the `[name]: content` format into its own output.
 
 ---
 
@@ -184,7 +230,8 @@ Name, [prompt]         → Directive (queues named panelist, moderator can overr
 .                      → Send
 ```
 
-Input accumulates across lines until `.` is entered on its own line. All input requires `.` to send, enabling safe paste of multi-paragraph content.
+Input accumulates across lines until `.` is entered on its own line. All input
+requires `.` to send, enabling safe paste of multi-paragraph content.
 
 ---
 
@@ -198,35 +245,53 @@ Input accumulates across lines until `.` is entered on its own line. All input r
 - Model string: `claude-sonnet-4-6`
 - Self-prefixing fix: `format_history()` no longer wraps model's own turns in `[name]:` prefix
 - Multi-line input: `read_prompt()` in `session.py` accumulates lines until `.` sentinel
-- Response length: "3 paragraphs or fewer" added to `SYSTEM_PROMPT_TEMPLATE`; concision note added to `skeptic.yaml`
-- Historical figure roles added: `sartre.yaml`, `watts.yaml`, `shaman.yaml`
-- Transcript bug fixed: directed moderator follow-ups (`[John → Jean]: ...`) now recorded in both the pending-broadcast and fresh-direct code paths
-- TTS experiment files moved to `TTS/` subdirectory
+- Response length: tightened to 2 paragraphs maximum; web search restricted to one
+  supporting fact — do not enumerate findings
+- Structured YAML schema introduced for historical-figure roles; `roles.py` updated
+  with `render_structured_prompt()` and `get_system_overrides()`
+- `sartre.yaml`, `watts.yaml` migrated from prose to structured schema
+- `Searle.yaml` implemented as structured schema (was inert — no `prompt` key)
+- `shaman.yaml` renamed `Basho.yaml` and rewritten as structured schema grounded in
+  Matsuo Bashō's actual aesthetic philosophy
+- `SYSTEM_PROMPT_TEMPLATE` now uses `{register_instruction}` and `{closing_instruction}`
+  format slots, overridable per-character via `system_overrides` in role YAML
+- Repeated-passage artifact observed in Jean (Sartre) responses under web search —
+  monitor for pattern
 
 ---
 
 ## Remaining Open Issues
 
-- Response length still occasionally runs to 4 paragraphs when web search returns rich material — accepted as reasonable panel behaviour
-- Panelist occasionally directs rhetorical questions back at moderator — accepted as moderator can redirect
-- No `current_target` on session open — natural openers without a named target stall; `/all` or explicit name required first
-- Multi-target syntax (`Jean and Alan, prompt`) not yet supported — use `/all` or address separately
+- Occasional response duplication (repeated paragraph) in web-search turns — not
+  yet diagnosed; appears to be a model artifact rather than a code bug
+- No `current_target` on session open — natural openers without a named target stall;
+  `/all` or explicit name required first
+- Multi-target syntax (`Jean and Alan, prompt`) not yet supported — use `/all` or
+  address separately
 
 ---
 
 ## Roadmap (Prioritized)
 
-1. **`summarize_history()`** — utility API call (not a panelist); smart prompt lossless on facts/concessions, lossy on scaffolding; foundation for everything below
-2. **`Conversation.panelist_meta` + `pinned`** — data model updates; `PanelistMeta(joined_at, onboarding_summary)`; `pinned: list[Turn]`
-3. **`format_history()` updates** — onboarding briefing prepend for late-joining panelists; rolling summary for out-of-window turns; merge both when applicable
-4. **`/add_guest` and `/drop_guest`** — mid-session guest management; onboarding via summarizer; graceful dismissal with moderator farewell
+1. **`summarize_history()`** — utility API call (not a panelist); smart prompt
+   lossless on facts/concessions, lossy on scaffolding; foundation for everything below
+2. **`Conversation.panelist_meta` + `pinned`** — data model updates;
+   `PanelistMeta(joined_at, onboarding_summary)`; `pinned: list[Turn]`
+3. **`format_history()` updates** — onboarding briefing prepend for late-joining
+   panelists; rolling summary for out-of-window turns; merge both when applicable
+4. **`/add_guest` and `/drop_guest`** — mid-session guest management; onboarding
+   via summarizer; graceful dismissal with moderator farewell
 5. **Parser fixes** — `/pin` command; multi-target syntax; no-target-on-open guard
-6. **HumanPanelist directive power** — `respond()` returns `(Turn, Prompt | None)`; moderator override hook before queuing
-7. **Gemini panelist** — `GeminiPanelist(Panelist)` subclass; own `format_history()`; own API key handling
+6. **HumanPanelist directive power** — `respond()` returns `(Turn, Prompt | None)`;
+   moderator override hook before queuing
+7. **Gemini panelist** — `GeminiPanelist(Panelist)` subclass; own `format_history()`;
+   own API key handling
 8. **Persistence** — save/load conversations to SQLite, resume later
-9. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond to @mentions; human panelists are registered Slack users
+9. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond
+   to @mentions; human panelists are registered Slack users
 10. **Web UI** — Flask frontend, user login, conversation history browser
-11. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists (Whisper/Deepgram)
+11. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists
+    (Whisper/Deepgram)
 
 ---
 
@@ -253,18 +318,21 @@ python list_voices.py                          # list available voice IDs
 python render_transcript.py ../transcript.txt  # render to MP3
 ```
 
-`tts_voices.yaml` maps panelist display names to ElevenLabs voice IDs and settings. Add a new entry for each speaker name used in a transcript.
+`tts_voices.yaml` maps panelist display names to ElevenLabs voice IDs and settings.
+Add a new entry for each speaker name used in a transcript.
 
-Partial renders are saved on quota failure — the MP3 up to the failed turn is exported rather than lost.
+Partial renders are saved on quota failure — the MP3 up to the failed turn is
+exported rather than lost.
 
 ---
 
 ## Notes for Next Session
 
-Claude Code has memory of this project at `~/.claude/projects/.../memory/MEMORY.md` — no need to paste this document. Just open the project and say "let's continue".
+Claude Code has memory of this project at `~/.claude/projects/.../memory/MEMORY.md`
+— no need to paste this document. Just open the project and say "let's continue".
 
 Good next steps (in rough priority order):
-1. **Implement `summarize_history()`** — standalone, testable immediately; includes smart summarization prompt
+1. **Implement `summarize_history()`** — standalone, testable immediately
 2. **Update `Conversation` data model** — add `panelist_meta`, `pinned`
 3. **Update `format_history()`** — onboarding + rolling summary support
 4. **Implement `/add_guest` and `/drop_guest`**

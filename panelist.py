@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import anthropic
 from conversation import summarize_history
 from models import Prompt, Turn
-from roles import load_role, get_prompt
+from roles import load_role, get_prompt, get_system_overrides
 
 class Panelist(ABC):
     def __init__(self, name: str, handle: str, role: str):
@@ -52,17 +52,16 @@ You are one of several panelists which may include other AIs and humans.
 Guidelines:
 - You hear everything said in the discussion, regardless of who it was directed at
 - The moderator controls the flow of conversation and directs who speaks
-- Respond thoughtfully and concisely — this is a panel discussion, not a lecture
+- {register_instruction}
 - You may reference what other panelists have said, but do not direct questions
   to them directly — the moderator controls turn taking
-- Do NOT end your responses with questions directed at the moderator or other
-  panelists — the moderator controls the flow, not you. Close with a concluding
-  statement instead.
+- {closing_instruction}
 - Do not prefix your responses with your own name.
 - Be transparent about uncertainty, especially regarding recent events
 - Maintain a consistent voice and perspective throughout the discussion
 - You are identified as {name} in the transcript — own that identity naturally
-- Keep responses to 3 paragraphs or fewer — this is a panel discussion, not a lecture
+- Keep responses to 2 paragraphs maximum. If web search returns material, use one
+  fact at most — do not enumerate findings.
 
 Your role and disposition:
 {role_prompt}
@@ -72,16 +71,29 @@ Your role and disposition:
                  moderator_name: str, window: int = 30):
         role_data = load_role(role_name)
         role_prompt = get_prompt(role_data, model_key="claude")
+        overrides = get_system_overrides(role_data)
         super().__init__(name=name, handle=handle, role=role_data["name"])
         self.role_name = role_name
         self.moderator_name = moderator_name
         self.window = window
         self.onboarding_summary = None
         self.client = anthropic.Anthropic()
+        register_instruction = overrides.get(
+            "register",
+            "Respond thoughtfully and concisely — this is a panel discussion, not a lecture"
+        )
+        closing_instruction = overrides.get(
+            "closing_rule",
+            "Do NOT end your responses with questions directed at the moderator or other"
+            " panelists — the moderator controls the flow, not you. Close with a"
+            " concluding statement instead."
+        )
         self.system_prompt = self.SYSTEM_PROMPT_TEMPLATE.format(
             name=name,
             moderator_name=moderator_name,
-            role_prompt=role_prompt
+            role_prompt=role_prompt,
+            register_instruction=register_instruction,
+            closing_instruction=closing_instruction,
         )
 
     def format_history(self, history: list, window: int,

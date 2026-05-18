@@ -51,16 +51,17 @@ The current target is sticky — once you've directed at a panelist, subsequent 
 
 ## Panelist Roles
 
-Roles are defined in YAML files in the `roles/` directory. Each file specifies a name, description, and system prompt. Current built-in roles:
+Roles are defined in YAML files in the `roles/` directory. Current built-in roles:
 
-- `sartre` — Jean-Paul Sartre, existentialist
-- `watts` — Alan Watts, interpreter of Eastern thought  
-- `shaman` — ranges freely across traditions
+- `Basho` — Matsuo Bashō, haiku master and precise observer
+- `Searle` — John Searle, biological realist and critic of AI consciousness claims
+- `sartre` — Jean-Paul Sartre, existentialist philosopher of radical freedom
+- `watts` — Alan Watts, interpreter of Zen, Taoism, and Vedanta
 - `skeptic` — adversarial, demands evidence
 - `optimist` — constructive, seeks synthesis
 - `default` — neutral, balanced
 
-To create a new role, add a `.yaml` file to `roles/` following the same structure. The model-specific `claude_prompt` field lets you tune the same conceptual role per provider.
+Historical-figure roles (Basho, Searle, sartre, watts) use a structured YAML schema with `core_beliefs`, `dissonance_triggers`, `vocabulary_weights`, and `friction_directives` — producing behavioral rather than purely descriptive personas. Generic roles use a simpler prose prompt. See [`DEVELOPMENT.md`](DEVELOPMENT.md) for the full schema reference.
 
 ---
 
