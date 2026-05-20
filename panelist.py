@@ -176,11 +176,12 @@ Your role and disposition:
         if searched:
             print(f"[{self.name}]: Searching the web...", flush=True)
 
-        content = " ".join(
+        text_blocks = [
             block.text
             for block in response.content
             if block.type == "text"
-        )
+        ]
+        content = text_blocks[-1] if (searched and len(text_blocks) > 1) else " ".join(text_blocks)
 
         return Turn(
             speaker=self,
