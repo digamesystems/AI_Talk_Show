@@ -301,17 +301,21 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
 - Leash pull signal now fires after full response text is printed (not before)
 - Leash pull checks suppressed on moderator turns — only panelist responses trigger scans
 - Duplicate panelist name guard added to `main.py` setup loop (same check as `/add_guest`)
+- Web search response duplication fixed — when search occurs, only the final text block
+  is used (post-search model output); pre-search fragment was causing near-duplicate
+  opening sentences when joined with the continuation block
+- Role YAML files renamed to consistent Title Case (Sartre, Watts, Default, Optimist,
+  Skeptic); `load_role()` made case-insensitive so existing code passing lowercase names
+  still resolves correctly
 
 ---
 
 ## Remaining Open Issues
 
-- Occasional response duplication (repeated paragraph) in web-search turns — not
-  yet diagnosed; appears to be a model artifact rather than a code bug
-- No `current_target` on session open — natural openers without a named target stall;
-  `/all` or explicit name required first
 - Multi-target syntax (`Jean and Alan, prompt`) not yet supported — use `/all` or
   address separately
+- `prompt.directed_at` renders as Python object repr in API messages when it is a
+  list — functionally harmless but untidy; a named target or "all" string would be cleaner
 
 ---
 
