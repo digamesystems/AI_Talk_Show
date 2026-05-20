@@ -12,7 +12,9 @@ The conceptual background is in the essay [Why I Built a Talk Show](Why%20I%20bu
 
 You play the host. You direct questions at individual panelists or broadcast to all of them. Each panelist hears the full conversation history and responds in character. You can introduce factual provocations, redirect mid-discussion, bring in new guests, and generally cause the kind of productive chaos that a good talk show host generates.
 
-A session with Sartre, Alan Watts, and a character drawn from Matsuo Bashō discussing the ethical obligations we might have toward non-human minds looks — and reads — quite differently than a single LLM asked the same question.
+Idle panelists also passively monitor the conversation. When a turn crosses one of their configured fault lines, they signal with `[!!!!!!!] Name is pulling at the leash` — the moderator can follow the pull with `/allow handle` or ignore it and continue. No extra API calls: detection is pure keyword matching.
+
+A session with Sartre, Alan Watts, Matsuo Bashō, and John Searle discussing the ethical obligations we might have toward non-human minds looks — and reads — quite differently than a single LLM asked the same question. The panel composition is the editorial decision — choose guests whose fault lines intersect with your topic.
 
 ---
 
@@ -39,6 +41,7 @@ On startup you'll be prompted for a discussion topic and which panelists to incl
 | `Jean, what do you think?` | Direct a prompt at a named panelist |
 | `Alan, respond to Jean's point` | Direct follow-up |
 | `/all what is consciousness?` | Broadcast to all panelists (pending state — call on each by name) |
+| `/allow jean` | Follow a leash pull — let a flagged panelist speak |
 | `//` followed by text | Moderator statement, no response expected |
 | `/add_guest Name role` | Introduce a new panelist mid-session |
 | `/drop_guest Name` | Gracefully dismiss a panelist |
@@ -61,7 +64,9 @@ Roles are defined in YAML files in the `roles/` directory. Current built-in role
 - `optimist` — constructive, seeks synthesis
 - `default` — neutral, balanced
 
-Historical-figure roles (Basho, Searle, sartre, watts) use a structured YAML schema with `core_beliefs`, `dissonance_triggers`, `vocabulary_weights`, and `friction_directives` — producing behavioral rather than purely descriptive personas. Generic roles use a simpler prose prompt. See [`DEVELOPMENT.md`](DEVELOPMENT.md) for the full schema reference.
+Historical-figure roles (Basho, Searle, sartre, watts) use a structured YAML schema with `core_beliefs`, `dissonance_triggers`, `vocabulary_weights`, `friction_directives`, and `trigger_keywords` — producing behavioral rather than purely descriptive personas. The `trigger_keywords` field drives the leash pull mechanism: a list of substring patterns that fire when an idle panelist's fault lines are crossed by another speaker. Generic roles use a simpler prose prompt.
+
+The schema is domain-agnostic — any historical figure, fictional character, or domain expert can be authored as a role. See [`DEVELOPMENT.md`](DEVELOPMENT.md) for the full schema reference.
 
 ---
 
@@ -88,9 +93,9 @@ The short version: `Conversation` is provider-agnostic. Each `Panelist` subclass
 
 Near term:
 - History summarization for long sessions
-- `/add_guest` and `/drop_guest` (mid-session guest management)
 - Multi-target syntax (`Jean and Alan, ...`)
 - Gemini panelist support
+- Persona authoring guide — how to write a YAML role for any domain or figure
 
 Longer term:
 - Slack integration as a multi-user interface

@@ -16,13 +16,15 @@ def prompt_role_selection() -> str:
         choice = input("  Select role (name or number, Enter for default): "
                        ).strip().lower()
         if not choice:
-            return "default"
+            return "Default"
         if choice.isdigit():
             idx = int(choice) - 1
             if 0 <= idx < len(roles):
                 return roles[idx]
-        elif choice in roles:
-            return choice
+        else:
+            match = next((r for r in roles if r.lower() == choice), None)
+            if match:
+                return match
         print(f"  Invalid selection. Try again.")
 
 
@@ -63,6 +65,11 @@ def create_session() -> Session:
             panelist = add_human_panelist()
         else:
             print("  Invalid type. Enter 'claude' or 'human'.")
+            continue
+
+        handle = panelist.name.lower().replace(" ", "_")
+        if any(p.handle == handle for p in conversation.panelists):
+            print(f"  A panelist named '{panelist.name}' is already in the session. Choose a different name.")
             continue
 
         conversation.add_panelist(panelist)

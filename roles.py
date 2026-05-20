@@ -6,14 +6,24 @@ ROLES_DIR = Path(__file__).parent / "roles"
 def load_role(role_name: str) -> dict:
     path = ROLES_DIR / f"{role_name}.yaml"
     if not path.exists():
-        raise FileNotFoundError(
-            f"Role '{role_name}' not found in {ROLES_DIR}"
+        match = next(
+            (p for p in ROLES_DIR.glob("*.yaml")
+             if p.stem.lower() == role_name.lower()),
+            None
         )
+        if match is None:
+            raise FileNotFoundError(
+                f"Role '{role_name}' not found in {ROLES_DIR}"
+            )
+        path = match
     with open(path, encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 def list_roles() -> list[str]:
     return sorted(p.stem for p in ROLES_DIR.glob("*.yaml"))
+
+def get_trigger_keywords(role_data: dict) -> list[str]:
+    return role_data.get("trigger_keywords", [])
 
 def get_system_overrides(role_data: dict) -> dict:
     return role_data.get("system_overrides", {})

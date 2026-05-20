@@ -2,13 +2,23 @@ from abc import ABC, abstractmethod
 import anthropic
 from conversation import summarize_history
 from models import Prompt, Turn
-from roles import load_role, get_prompt, get_system_overrides
+from roles import load_role, get_prompt, get_system_overrides, get_trigger_keywords
 
 class Panelist(ABC):
     def __init__(self, name: str, handle: str, role: str):
         self.name = name
         self.handle = handle
         self.role = role
+
+    @property
+    def trigger_keywords(self) -> list[str]:
+        return []
+
+    def sniff(self, turn: "Turn") -> bool:
+        if not self.trigger_keywords:
+            return False
+        text = turn.content.lower()
+        return any(kw.lower() in text for kw in self.trigger_keywords)
 
     @abstractmethod
     def format_history(self, history: list, window: int) -> list[dict]:
@@ -77,6 +87,7 @@ Your role and disposition:
         self.moderator_name = moderator_name
         self.window = window
         self.onboarding_summary = None
+        self._trigger_keywords = get_trigger_keywords(role_data)
         self.client = anthropic.Anthropic()
         register_instruction = overrides.get(
             "register",
@@ -95,6 +106,10 @@ Your role and disposition:
             register_instruction=register_instruction,
             closing_instruction=closing_instruction,
         )
+
+    @property
+    def trigger_keywords(self) -> list[str]:
+        return self._trigger_keywords
 
     def format_history(self, history: list, window: int,
                        summary: str | None = None) -> list[dict]:

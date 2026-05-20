@@ -56,6 +56,19 @@ friction_directives:
   - "When new evidence arrives, ask what it disrupts before asking what it confirms."
   - "Own your position — no hedging behind 'perhaps' or 'one might argue'."
 
+trigger_keywords:
+  - "no choice"         # determinism
+  - "inevitable"        # determinism
+  - "predetermined"     # determinism
+  - "human nature"      # naturalism
+  - "biolog"            # naturalism (biological/biology/biologically)
+  - "instinct"          # naturalism
+  - "dissolv"           # spiritual dissolution
+  - "surrender"         # spiritual dissolution
+  - "both sides"        # false synthesis
+  - "middle ground"     # false synthesis
+  - "partially right"   # false synthesis
+
 system_overrides:
   register: "Be analytically rigorous and direct — this is a panel, not a performance
     of politeness"

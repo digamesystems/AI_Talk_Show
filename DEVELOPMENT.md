@@ -1,5 +1,5 @@
 # AI Panel Discussion — Project Summary
-*Updated 2026-05-18 — for continuity across Claude sessions*
+*Updated 2026-05-20 — for continuity across Claude sessions*
 
 ---
 
@@ -21,6 +21,8 @@ A working Python console spike is complete and road-tested. Core conversation lo
 - Clean annotated transcripts saved to file
 - Multi-line / paste-safe input via `.` send sentinel
 - TTS pipeline in TTS/ subdirectory (ElevenLabs)
+- Leash pull mechanism — idle panelists passively monitor turns via zero-token
+  keyword matching; `/allow handle` lets the moderator follow a pull on demand
 
 ---
 
@@ -88,7 +90,9 @@ Conversation
 Panelist (base, ABC)
 ├── name: str                  # display name in transcript
 ├── handle: str                # unique system ID for history matching
-└── role: str
+├── role: str
+├── trigger_keywords: list[str]  # substring patterns; sniff() checks these
+└── sniff(turn) → bool         # zero-token keyword scan; True = caught a scent
 
 HumanPanelist(Panelist)
 └── respond() → reads from stdin, returns (Turn, Prompt | None)
@@ -97,6 +101,7 @@ ClaudePanelist(Panelist)
 ├── system_prompt: str         # built internally from template + role yaml
 ├── moderator_name: str
 ├── window: int
+├── _trigger_keywords: list[str]  # loaded from role YAML at init
 └── respond() → Anthropic API with web search tool
 
 Moderator
@@ -107,6 +112,7 @@ Session
 ├── conversation: Conversation
 ├── moderator: Moderator
 ├── current_target: list[Panelist] | "all"   # sticky
+├── leash_pulls: dict[Panelist, Turn]         # panelist → turn that triggered signal
 └── run() → main console loop
 ```
 
@@ -150,6 +156,10 @@ Roles live in `roles/` directory as `.yaml` files. Two schemas are supported:
 - `vocabulary_weights` — `high` and `low` word lists
 - `interaction_style` — list of behavioral rules
 - `friction_directives` — list of anti-smoothness rules
+- `trigger_keywords` — list of substring patterns used by `sniff()` for zero-token
+  leash-pull detection; derived from the character's own fault lines, not from
+  other panelists' vocabulary; substring matching handles inflection automatically
+  (e.g. `"biolog"` matches "biological", "biology", "biologically")
 - `system_overrides` — optional per-character overrides for `register_instruction`
   and `closing_instruction` in `SYSTEM_PROMPT_TEMPLATE`
 
@@ -161,6 +171,28 @@ The structured schema is **behavioral** rather than descriptive — `dissonance_
 names what provokes the character, `vocabulary_weights` constrains word choice, and
 `friction_directives` enforces anti-smoothness rules. This produces characters that
 react from a center of gravity rather than performing a persona.
+
+**Leash pull — autonomous interrupt mechanism**
+Idle panelists passively monitor every turn added to history via `sniff(turn) -> bool`,
+a zero-token substring scan against their `trigger_keywords` list. When a match is
+found, the panelist is flagged in `Session.leash_pulls` and a console signal fires:
+`[!!!!!!!] Name is pulling at the leash. /allow handle to let them speak.`
+
+Key design decisions:
+- Detection fires only on *panelist response turns*, not moderator prompts — avoids
+  signals appearing mid-thinking and preserves natural pacing
+- One flag per panelist at a time — subsequent triggers are suppressed until the pull
+  is followed or cleared
+- Flags clear automatically when the panelist speaks via any path (directed prompt
+  or `/allow`)
+- `/allow handle` constructs a synthetic Prompt ("You have something to say about
+  what was just discussed.") and calls the standard `respond()` pathway — same
+  token cost as any directed prompt, no special handling
+- `trigger_keywords` are character-intrinsic: derived from the character's own fault
+  lines expressed in vocabulary *any* speaker might use — not from specific
+  co-panelist vocabulary (which would couple YAML files to each other)
+- Pending broadcast respondents are excluded from leash pull checks (they are already
+  queued to speak)
 
 **System prompt ownership**
 `ClaudePanelist` owns its own `SYSTEM_PROMPT_TEMPLATE` and builds the system prompt
@@ -212,6 +244,7 @@ the model from pattern-matching the `[name]: content` format into its own output
 //...                  → Statement (no response expected)
 /all [prompt]          → Broadcast to all panelists (pending state)
 /all [prompt] Name     → Broadcast + immediately call on Name
+/allow handle          → Let a flagged panelist speak (follow a leash pull)
 /add_guest Name role   → Introduce new panelist mid-session
 /drop_guest Name       → Dismiss panelist gracefully
 /pin                   → Pin most recent turn (always in context)
@@ -257,6 +290,17 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
   format slots, overridable per-character via `system_overrides` in role YAML
 - Repeated-passage artifact observed in Jean (Sartre) responses under web search —
   monitor for pattern
+- Leash pull mechanism implemented — `sniff()`, `trigger_keywords`, `AllowAction`,
+  `/allow` command, `leash_pulls` dict, `_check_leash_pulls()`, `_add_turn()` wrapper,
+  `handle_allow()` in session.py
+- `trigger_keywords` added to all four structured YAML roles — character-intrinsic,
+  derived from each character's own fault lines
+- Searle's `trigger_keywords` expanded with philosophy-of-mind vocabulary ("inner life",
+  "subjective", "sentien", "what it is like", "qualia") to catch sophisticated
+  consciousness claims, not just naive ones
+- Leash pull signal now fires after full response text is printed (not before)
+- Leash pull checks suppressed on moderator turns — only panelist responses trigger scans
+- Duplicate panelist name guard added to `main.py` setup loop (same check as `/add_guest`)
 
 ---
 
@@ -287,10 +331,14 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
 7. **Gemini panelist** — `GeminiPanelist(Panelist)` subclass; own `format_history()`;
    own API key handling
 8. **Persistence** — save/load conversations to SQLite, resume later
-9. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond
-   to @mentions; human panelists are registered Slack users
-10. **Web UI** — Flask frontend, user login, conversation history browser
-11. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists
+9. **Persona authoring guide** — how to write a structured YAML role from scratch
+   for any domain (historical figures, fictional characters, domain experts);
+   covers schema fields, trigger_keywords calibration, cross-panel fault-line
+   design, and worked examples beyond the philosophy-of-mind panel
+10. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond
+    to @mentions; human panelists are registered Slack users
+11. **Web UI** — Flask frontend, user login, conversation history browser
+12. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists
     (Whisper/Deepgram)
 
 ---
@@ -336,3 +384,5 @@ Good next steps (in rough priority order):
 2. **Update `Conversation` data model** — add `panelist_meta`, `pinned`
 3. **Update `format_history()`** — onboarding + rolling summary support
 4. **Implement `/add_guest` and `/drop_guest`**
+5. **Tune `trigger_keywords`** — run more sessions across topics; watch signal rate;
+   tighten noisy keywords, expand gaps revealed by cross-panel analysis

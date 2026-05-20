@@ -30,3 +30,7 @@ class AddGuestAction:
 @dataclass
 class DropGuestAction:
     name: str
+
+@dataclass
+class AllowAction:
+    handle: str

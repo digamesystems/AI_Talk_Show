@@ -1,4 +1,4 @@
-from models import Prompt, Statement, Turn, AddGuestAction, DropGuestAction
+from models import Prompt, Statement, Turn, AddGuestAction, AllowAction, DropGuestAction
 from conversation import Conversation, summarize_history
 from moderator import Moderator
 from panelist import ClaudePanelist, HumanPanelist
@@ -25,6 +25,27 @@ class Session:
         self.conversation = conversation
         self.moderator = moderator
         self.current_target = "all"
+        self.leash_pulls: dict = {}  # panelist -> Turn that triggered the signal
+
+    def _add_turn(self, turn: Turn):
+        self.conversation.add_turn(turn)
+        self._check_leash_pulls(turn)
+
+    def _check_leash_pulls(self, turn: Turn):
+        if turn.speaker == self.moderator:
+            return
+        idle = [
+            p for p in self.conversation.panelists
+            if isinstance(p, ClaudePanelist)
+            and p != turn.speaker
+            and p not in self.conversation.pending_respondents
+            and p not in self.leash_pulls
+        ]
+        for p in idle:
+            if p.sniff(turn):
+                self.leash_pulls[p] = turn
+                print(f"\n[!!!!!!!] {p.name} is pulling at the leash."
+                      f" /allow {p.handle} to let them speak.\n")
 
     def target_name(self) -> str:
         if self.current_target == "all":
@@ -33,7 +54,7 @@ class Session:
 
     def handle_statement(self, action: Statement):
         turn = Turn(speaker=self.moderator, content=action.content)
-        self.conversation.add_turn(turn)
+        self._add_turn(turn)
         print(f"\n[{self.moderator.name}]: {action.content}\n")
 
     def handle_broadcast(self, action: Prompt):
@@ -47,9 +68,7 @@ class Session:
                 return
         self.conversation.clear_pending()
         self.conversation.broadcast(action)
-        self.conversation.add_turn(
-            Turn(speaker=self.moderator, content=action.content)
-        )
+        self._add_turn(Turn(speaker=self.moderator, content=action.content))
         print(f"\n[{self.moderator.name} → all]: {action.content}\n")
 
     def handle_directed(self, action: Prompt):
@@ -63,14 +82,15 @@ class Session:
                 content=action.content,
                 in_response_to=action
             )
-            self.conversation.add_turn(moderator_turn)
+            self._add_turn(moderator_turn)
+            self.leash_pulls.pop(panelist, None)
             turn = panelist.respond(
                 self.conversation.history,
                 self.conversation.pending_prompt
             )
-            self.conversation.add_turn(turn)
-            self.conversation.record_response(panelist)
             print(f"\n[{panelist.name}]: {turn.content}\n")
+            self._add_turn(turn)
+            self.conversation.record_response(panelist)
 
             if not self.conversation.has_pending():
                 print("[System]: All panelists have responded.\n")
@@ -81,15 +101,16 @@ class Session:
                 content=action.content,
                 in_response_to=action
             )
-            self.conversation.add_turn(moderator_turn)
+            self._add_turn(moderator_turn)
 
             self.current_target = action.directed_at
+            self.leash_pulls.pop(panelist, None)
             turn = panelist.respond(
                 self.conversation.history,
                 action
             )
-            self.conversation.add_turn(turn)
             print(f"\n[{panelist.name}]: {turn.content}\n")
+            self._add_turn(turn)
 
     def handle_add_guest(self, action: AddGuestAction):
         name = action.name
@@ -129,6 +150,28 @@ class Session:
         self.conversation.add_panelist(panelist, onboarding_summary=onboarding_summary)
         print(f"\n[System]: {name} ({role_name}) has joined the panel.\n")
 
+    def handle_allow(self, action: AllowAction):
+        panelist = next(
+            (p for p in self.conversation.panelists
+             if p.handle == action.handle), None
+        )
+        if not panelist:
+            print(f"\n[System]: No panelist with handle '{action.handle}'.\n")
+            return
+        if panelist not in self.leash_pulls:
+            print(f"\n[System]: {panelist.name} hasn't caught a scent.\n")
+            return
+
+        self.leash_pulls.pop(panelist)
+        synthetic_prompt = Prompt(
+            content="You have something to say about what was just discussed.",
+            directed_at=[panelist]
+        )
+        self.current_target = [panelist]
+        turn = panelist.respond(self.conversation.history, synthetic_prompt)
+        print(f"\n[{panelist.name}]: {turn.content}\n")
+        self._add_turn(turn)
+
     def handle_drop_guest(self, action: DropGuestAction):
         name = action.name
         panelist = next(
@@ -147,12 +190,13 @@ class Session:
         farewell = input(f"\nFarewell words for {name} (or Enter to skip): ").strip()
         if farewell:
             turn = Turn(speaker=self.moderator, content=farewell)
-            self.conversation.add_turn(turn)
+            self._add_turn(turn)
             print(f"\n[{self.moderator.name}]: {farewell}\n")
 
         self.conversation.panelists.remove(panelist)
         if panelist in self.conversation.pending_respondents:
             self.conversation.pending_respondents.remove(panelist)
+        self.leash_pulls.pop(panelist, None)
         print(f"\n[System]: {name} has left the panel.\n")
 
     def run(self):
@@ -160,7 +204,7 @@ class Session:
               f"Panelists: "
               f"{', '.join(p.name for p in self.conversation.panelists)}\n"
               f"Commands: // statement, /all everyone, "
-              f"/add_guest Name role, /drop_guest Name, /quit\n")
+              f"/allow handle, /add_guest Name role, /drop_guest Name, /quit\n")
 
         while True:
             try:
@@ -185,6 +229,8 @@ class Session:
                 self.handle_add_guest(action)
             elif isinstance(action, DropGuestAction):
                 self.handle_drop_guest(action)
+            elif isinstance(action, AllowAction):
+                self.handle_allow(action)
             elif isinstance(action, Statement):
                 self.handle_statement(action)
             elif isinstance(action, Prompt):
