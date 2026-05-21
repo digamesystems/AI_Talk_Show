@@ -4,7 +4,7 @@ A moderated panel discussion app where a human host directs conversation between
 
 Built to explore a specific question: can introducing friction and disagreement into AI interactions produce richer, more interesting results than the smooth consensus that LLMs tend toward on their own?
 
-The conceptual background is in the essay [Why I Built a Talk Show](Why%20I%20built%20a%20talk%20show.md) — the short version is that LLMs, when used conventionally, tend to converge toward a kind of statistically average response. This project is an experiment in whether multi-agent panels with human intervention can push against that tendency.
+The conceptual background is in the essay [Why I Built a Talk Show](documentation/Why%20I%20built%20a%20talk%20show.md) — the short version is that LLMs, when used conventionally, tend to converge toward a kind of statistically average response. This project is an experiment in whether multi-agent panels with human intervention can push against that tendency.
 
 ---
 
@@ -58,8 +58,8 @@ Roles are defined in YAML files in the `roles/` directory. Current built-in role
 
 - `Basho` — Matsuo Bashō, haiku master and precise observer
 - `Searle` — John Searle, biological realist and critic of AI consciousness claims
-- `sartre` — Jean-Paul Sartre, existentialist philosopher of radical freedom
-- `watts` — Alan Watts, interpreter of Zen, Taoism, and Vedanta
+- `Sartre` — Jean-Paul Sartre, existentialist philosopher of radical freedom
+- `Watts` — Alan Watts, interpreter of Zen, Taoism, and Vedanta
 - `skeptic` — adversarial, demands evidence
 - `optimist` — constructive, seeks synthesis
 - `default` — neutral, balanced
@@ -72,7 +72,7 @@ The schema is domain-agnostic — any historical figure, fictional character, or
 
 ## Transcripts
 
-Sessions are saved automatically to timestamped transcript files. The format annotates directed turns:
+Sessions are saved automatically to timestamped files in the `transcripts/` directory. The format annotates directed turns:
 
 ```
 [John → Jean]: what do you make of Otto's behavior?

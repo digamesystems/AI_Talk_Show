@@ -32,16 +32,23 @@ A working Python console spike is complete and road-tested. Core conversation lo
 AI_Talk_Show/
 ├── roles/
 │   ├── Basho.yaml
+│   ├── Default.yaml
+│   ├── Optimist.yaml
+│   ├── Sartre.yaml
 │   ├── Searle.yaml
-│   ├── default.yaml
-│   ├── optimist.yaml
-│   ├── sartre.yaml
-│   ├── skeptic.yaml
-│   └── watts.yaml
+│   ├── Skeptic.yaml
+│   └── Watts.yaml
 ├── TTS/
 │   ├── render_transcript.py
 │   ├── tts_voices.yaml
 │   └── list_voices.py
+├── transcripts/
+│   └── transcript_YYYYMMDD_HHMMSS.txt
+├── documentation/
+│   ├── AI_Talk_Show_Session_Summary_20260309.md
+│   ├── AI_Talk_Show_Session_Summary_20260309.docx
+│   ├── Why I built a talk show.md
+│   └── Why I built a talk show.docx
 ├── models.py
 ├── panelist.py
 ├── moderator.py
@@ -367,7 +374,7 @@ Scripts live in `TTS/`. Requires ElevenLabs quota (30,000 chars/month on Starter
 ```bash
 cd TTS
 python list_voices.py                          # list available voice IDs
-python render_transcript.py ../transcript.txt  # render to MP3
+python render_transcript.py ../transcripts/transcript_YYYYMMDD_HHMMSS.txt  # render to MP3
 ```
 
 `tts_voices.yaml` maps panelist display names to ElevenLabs voice IDs and settings.

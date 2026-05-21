@@ -109,7 +109,10 @@ def main():
 
 def save_transcript(session: Session):
     from datetime import datetime
-    filename = f"transcript_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    from pathlib import Path
+    transcripts_dir = Path(__file__).parent / "transcripts"
+    transcripts_dir.mkdir(exist_ok=True)
+    filename = transcripts_dir / f"transcript_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     with open(filename, "w", encoding="utf-8") as f:
         f.write(f"=== Panel Discussion Transcript ===\n")
         f.write(f"Date      : {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
