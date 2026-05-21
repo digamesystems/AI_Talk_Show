@@ -21,6 +21,7 @@ class Turn:
     content: str
     timestamp: datetime = field(default_factory=datetime.now)
     in_response_to: Prompt | Statement | None = None
+    interjection: bool = False
 
 @dataclass
 class AddGuestAction:

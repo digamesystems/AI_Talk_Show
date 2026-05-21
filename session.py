@@ -169,6 +169,7 @@ class Session:
         )
         self.current_target = [panelist]
         turn = panelist.respond(self.conversation.history, synthetic_prompt)
+        turn.interjection = True
         print(f"\n[{panelist.name}]: {turn.content}\n")
         self._add_turn(turn)
 

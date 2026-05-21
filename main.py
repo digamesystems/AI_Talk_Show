@@ -125,7 +125,9 @@ def save_transcript(session: Session):
         for turn in session.conversation.history:
             speaker = turn.speaker.name
 
-            if turn.speaker == session.moderator and \
+            if turn.interjection:
+                label = f"[{speaker} Interjects]"
+            elif turn.speaker == session.moderator and \
             turn.in_response_to is not None and \
             hasattr(turn.in_response_to, 'directed_at'):
                 directed = turn.in_response_to.directed_at
