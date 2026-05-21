@@ -44,8 +44,13 @@ class HumanPanelist(Panelist):
         return []
 
     def respond(self, history: list, prompt: Prompt) -> Turn:
-        print(f"\n[{self.name}]: ", end="")
-        content = input()
+        print(f"\n[{self.name}]: ", end="", flush=True)
+        lines = []
+        line = input()
+        while line != ".":
+            lines.append(line)
+            line = input("")
+        content = "\n".join(lines)
         return Turn(
             speaker=self,
             content=content,

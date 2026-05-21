@@ -88,7 +88,8 @@ class Session:
                 self.conversation.history,
                 self.conversation.pending_prompt
             )
-            print(f"\n[{panelist.name}]: {turn.content}\n")
+            if not isinstance(panelist, HumanPanelist):
+                print(f"\n[{panelist.name}]: {turn.content}\n")
             self._add_turn(turn)
             self.conversation.record_response(panelist)
 
@@ -109,7 +110,8 @@ class Session:
                 self.conversation.history,
                 action
             )
-            print(f"\n[{panelist.name}]: {turn.content}\n")
+            if not isinstance(panelist, HumanPanelist):
+                print(f"\n[{panelist.name}]: {turn.content}\n")
             self._add_turn(turn)
 
     def handle_add_guest(self, action: AddGuestAction):
