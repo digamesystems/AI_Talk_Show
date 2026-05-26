@@ -12,9 +12,11 @@ The conceptual background is in the essay [Why I Built a Talk Show](documentatio
 
 You play the host. You direct questions at individual panelists or broadcast to all of them. Each panelist hears the full conversation history and responds in character. You can introduce factual provocations, redirect mid-discussion, bring in new guests, and generally cause the kind of productive chaos that a good talk show host generates.
 
-Idle panelists also passively monitor the conversation. When a turn crosses one of their configured fault lines, they signal with `[!!!!!!!] Name is pulling at the leash` — the moderator can follow the pull with `/allow handle` or ignore it and continue. No extra API calls: detection is pure keyword matching.
+Idle panelists passively monitor the conversation. When a turn crosses one of their configured fault lines, they signal with `[!!!!!!!] Name is pulling at the leash` — the moderator can follow the pull with `/allow handle` or ignore it and continue. No extra API calls: detection is pure keyword matching.
 
-A session with Sartre, Alan Watts, Matsuo Bashō, and John Searle discussing the ethical obligations we might have toward non-human minds looks — and reads — quite differently than a single LLM asked the same question. The panel composition is the editorial decision — choose guests whose fault lines intersect with your topic.
+Human panelists are fully supported alongside AI panelists. They type their turns at the console using the same `.` sentinel to send. A human panelist can signal they want to interject by typing `!` at the moderator prompt — the same leash pull flow applies.
+
+A session with Sartre, Wittgenstein, Turing, and Searle discussing the minds of octopi looks — and reads — quite differently than a single LLM asked the same question. The panel composition is the editorial decision — choose guests whose fault lines intersect with your topic.
 
 ---
 
@@ -41,11 +43,11 @@ On startup you'll be prompted for a discussion topic and which panelists to incl
 | `Jean, what do you think?` | Direct a prompt at a named panelist |
 | `Alan, respond to Jean's point` | Direct follow-up |
 | `/all what is consciousness?` | Broadcast to all panelists (pending state — call on each by name) |
-| `/allow jean` | Follow a leash pull — let a flagged panelist speak |
+| `/allow jean` | Follow a leash pull — let a flagged AI panelist speak |
+| `!` | Signal a human panelist wants to interject (at moderator prompt) |
 | `//` followed by text | Moderator statement, no response expected |
 | `/add_guest Name role` | Introduce a new panelist mid-session |
 | `/drop_guest Name` | Gracefully dismiss a panelist |
-| `/pin` | Pin the last turn — always kept in context |
 | `/quit` | End session and save transcript |
 
 The current target is sticky — once you've directed at a panelist, subsequent prompts go to them until you name someone else.
@@ -60,11 +62,13 @@ Roles are defined in YAML files in the `roles/` directory. Current built-in role
 - `Searle` — John Searle, biological realist and critic of AI consciousness claims
 - `Sartre` — Jean-Paul Sartre, existentialist philosopher of radical freedom
 - `Watts` — Alan Watts, interpreter of Zen, Taoism, and Vedanta
-- `skeptic` — adversarial, demands evidence
-- `optimist` — constructive, seeks synthesis
-- `default` — neutral, balanced
+- `Wittgenstein` — Ludwig Wittgenstein, meaning-as-use and the dissolution of philosophical problems
+- `Turing` — Alan Turing, operationalist and architect of the Imitation Game
+- `Skeptic` — adversarial, demands evidence
+- `Optimist` — constructive, seeks synthesis
+- `Default` — neutral, balanced
 
-Historical-figure roles (Basho, Searle, sartre, watts) use a structured YAML schema with `core_beliefs`, `dissonance_triggers`, `vocabulary_weights`, `friction_directives`, and `trigger_keywords` — producing behavioral rather than purely descriptive personas. The `trigger_keywords` field drives the leash pull mechanism: a list of substring patterns that fire when an idle panelist's fault lines are crossed by another speaker. Generic roles use a simpler prose prompt.
+Historical-figure roles use a structured YAML schema with `core_beliefs`, `dissonance_triggers`, `vocabulary_weights`, `friction_directives`, and `trigger_keywords` — producing behavioral rather than purely descriptive personas. The `trigger_keywords` field drives the leash pull mechanism: a list of substring patterns derived from the character's own fault lines that fire when an idle panelist's fault lines are crossed. Generic roles use a simpler prose prompt.
 
 The schema is domain-agnostic — any historical figure, fictional character, or domain expert can be authored as a role. See [`DEVELOPMENT.md`](DEVELOPMENT.md) for the full schema reference.
 
@@ -72,11 +76,12 @@ The schema is domain-agnostic — any historical figure, fictional character, or
 
 ## Transcripts
 
-Sessions are saved automatically to timestamped files in the `transcripts/` directory. The format annotates directed turns:
+Sessions are saved automatically to timestamped files in the `transcripts/` directory. The format annotates directed turns and interjections:
 
 ```
-[John → Jean]: what do you make of Otto's behavior?
+[JP → Jean]: what do you make of Otto's behavior?
 [Jean]: The moment we must describe a creature's behavior in intentional terms...
+[Ludwig Interjects]: What work is "causal powers" doing there, exactly?
 ```
 
 ---
@@ -92,12 +97,12 @@ The short version: `Conversation` is provider-agnostic. Each `Panelist` subclass
 ## Roadmap
 
 Near term:
-- History summarization for long sessions
 - Multi-target syntax (`Jean and Alan, ...`)
 - Gemini panelist support
 - Persona authoring guide — how to write a YAML role for any domain or figure
 
 Longer term:
+- SQLite persistence — save and resume conversations
 - Slack integration as a multi-user interface
 - Web UI
 - Speech layer (TTS for AI voices, STT for human participants)
@@ -109,7 +114,6 @@ Longer term:
 ```
 pip install anthropic pyyaml
 ```
-
 
 ---
 

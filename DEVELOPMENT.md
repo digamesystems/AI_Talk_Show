@@ -1,5 +1,5 @@
 # AI Panel Discussion — Project Summary
-*Updated 2026-05-20 — for continuity across Claude sessions*
+*Updated 2026-05-26 — for continuity across Claude sessions*
 
 ---
 
@@ -14,12 +14,15 @@ Longer term vision includes: Slack integration as a natural multi-user interface
 ## Current Status
 
 A working Python console spike is complete and road-tested. Core conversation loop is functional with:
-- Multiple Claude panelists with different role-based personas (Sartre, Watts, Basho, Searle, Skeptic, Optimist, Default)
+- Multiple Claude panelists with different role-based personas (Sartre, Watts, Basho, Searle, Wittgenstein, Turing, Skeptic, Optimist, Default)
 - Structured YAML schema for historical-figure roles providing behavioral rather than descriptive personas
 - Web search enabled per panelist (Anthropic server-side tool)
 - Sticky target, pending state for /all broadcasts
-- Clean annotated transcripts saved to file
-- Multi-line / paste-safe input via `.` send sentinel
+- Clean annotated transcripts saved to `transcripts/` — directed turns and interjections annotated
+- Multi-line / paste-safe input via `.` send sentinel (moderator and human panelists)
+- Human panelists supported alongside AI panelists; `!` command signals human interjection request
+- History summarization for long sessions; onboarding summaries for mid-session guests
+- Mid-session guest management via `/add_guest` and `/drop_guest`
 - TTS pipeline in TTS/ subdirectory (ElevenLabs)
 - Leash pull mechanism — idle panelists passively monitor turns via zero-token
   keyword matching; `/allow handle` lets the moderator follow a pull on demand
@@ -37,7 +40,9 @@ AI_Talk_Show/
 │   ├── Sartre.yaml
 │   ├── Searle.yaml
 │   ├── Skeptic.yaml
-│   └── Watts.yaml
+│   ├── Turing.yaml
+│   ├── Watts.yaml
+│   └── Wittgenstein.yaml
 ├── TTS/
 │   ├── render_transcript.py
 │   ├── tts_voices.yaml
@@ -77,7 +82,8 @@ Turn
 ├── speaker: Panelist | Moderator
 ├── content: str
 ├── timestamp: datetime
-└── in_response_to: Prompt | Statement | None
+├── in_response_to: Prompt | Statement | None
+└── interjection: bool             # True when turn follows a leash pull (/allow)
 
 PanelistMeta
 ├── joined_at: int             # turn index when panelist joined
@@ -102,7 +108,7 @@ Panelist (base, ABC)
 └── sniff(turn) → bool         # zero-token keyword scan; True = caught a scent
 
 HumanPanelist(Panelist)
-└── respond() → reads from stdin, returns (Turn, Prompt | None)
+└── respond() → reads from stdin (multi-line, `.` to send), returns Turn
 
 ClaudePanelist(Panelist)
 ├── system_prompt: str         # built internally from template + role yaml
@@ -155,7 +161,7 @@ Roles live in `roles/` directory as `.yaml` files. Two schemas are supported:
 - `name`, `description`, `prompt` (default), `claude_prompt` (optional model-specific override)
 - `get_prompt()` returns the string as-is
 
-*Structured schema* (preferred — Basho, Searle, sartre, watts):
+*Structured schema* (preferred — Basho, Searle, Sartre, Watts, Wittgenstein, Turing):
 - Top-level `name` and `description` for menu display
 - `identity` — name, era, archetype, voice_description
 - `core_beliefs` — philosophical bedrock, keyed by concept
@@ -200,6 +206,11 @@ Key design decisions:
   co-panelist vocabulary (which would couple YAML files to each other)
 - Pending broadcast respondents are excluded from leash pull checks (they are already
   queued to speak)
+- Followed leash pulls set `turn.interjection = True`; transcript renders as
+  `[Name Interjects]` instead of `[Name]`
+- Human panelists can signal an interjection request by typing `!` (or `!handle`
+  for a specific panelist) at the moderator prompt — registers in `leash_pulls`,
+  same `/allow` flow applies
 
 **System prompt ownership**
 `ClaudePanelist` owns its own `SYSTEM_PROMPT_TEMPLATE` and builds the system prompt
@@ -226,12 +237,12 @@ context. `HumanPanelist` receives it as a console print before their first stdin
 prompt. `panelist_meta` tracks each panelist's `joined_at` index and
 `onboarding_summary`.
 
-**HumanPanelist directive power**
-`HumanPanelist.respond()` returns a `(Turn, Prompt | None)` tuple. If the human
-panelist types a directive matching `Name, prompt` syntax, the system parses it as
-a `Prompt` and queues the named panelist to respond — subject to moderator override
-before firing. Moderator-only commands (`//`, `/all`, `/add_guest`, `/drop_guest`,
-`/pin`) are not available to panelists.
+**HumanPanelist input**
+`HumanPanelist.respond()` accumulates lines until `.` on its own line — same sentinel
+as the moderator. The human's typed input is not echoed after submission (terminal
+already shows it). Human panelists can request to interject by typing `!` at the
+moderator prompt between turns; this registers a leash pull that the moderator can
+follow with `/allow handle` on their next turn.
 
 **`in_response_to` on Turn**
 Moderator turns store a reference to their Prompt via `in_response_to`. Used in
@@ -252,10 +263,10 @@ the model from pattern-matching the `[name]: content` format into its own output
 /all [prompt]          → Broadcast to all panelists (pending state)
 /all [prompt] Name     → Broadcast + immediately call on Name
 /allow handle          → Let a flagged panelist speak (follow a leash pull)
+!                      → Register human panelist interjection request
+!handle                → Register specific human panelist interjection request
 /add_guest Name role   → Introduce new panelist mid-session
 /drop_guest Name       → Dismiss panelist gracefully
-/pin                   → Pin most recent turn (always in context)
-/pin Name              → Pin most recent turn from named panelist
 /quit or /exit         → End session
 Name, [prompt]         → Directed prompt, updates sticky target
 Name [prompt]          → Also works (space after name)
@@ -263,11 +274,10 @@ Name [prompt]          → Also works (space after name)
 .                      → Send (terminates multi-line / pasted input)
 ```
 
-### HumanPanelist input (subset)
+### HumanPanelist input
 ```
-Name, [prompt]         → Directive (queues named panelist, moderator can override)
-[anything else]        → Plain turn, recorded in history
-.                      → Send
+[anything]             → Plain turn, recorded in history
+.                      → Send (terminates multi-line / pasted input)
 ```
 
 Input accumulates across lines until `.` is entered on its own line. All input
@@ -314,6 +324,18 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
 - Role YAML files renamed to consistent Title Case (Sartre, Watts, Default, Optimist,
   Skeptic); `load_role()` made case-insensitive so existing code passing lowercase names
   still resolves correctly
+- `Turn.interjection: bool` field added; transcript renders `[Name Interjects]` for
+  leash-pull responses instead of `[Name]`
+- `InterjectionRequest` action added — `!` or `!handle` at moderator prompt registers
+  human panelist leash pull; same `/allow` flow as AI panelists
+- `HumanPanelist.respond()` updated to multi-line input with `.` sentinel
+- Human panelist response no longer echoed after submission (was printing twice)
+- `Wittgenstein.yaml` and `Turing.yaml` added as structured-schema roles
+- Design principle established: `friction_directives` and `trigger_keywords` must be
+  derived from the character's own worldview — never name specific co-panelists;
+  friction emerges from worldview collision, not scripted opposition
+- `transcripts/` and `documentation/` directories created; `main.py` updated to save
+  transcripts to `transcripts/` automatically; `.gitignore` added for `__pycache__`
 
 ---
 
@@ -328,21 +350,15 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
 
 ## Roadmap (Prioritized)
 
-1. **`summarize_history()`** — utility API call (not a panelist); smart prompt
-   lossless on facts/concessions, lossy on scaffolding; foundation for everything below
-2. **`Conversation.panelist_meta` + `pinned`** — data model updates;
-   `PanelistMeta(joined_at, onboarding_summary)`; `pinned: list[Turn]`
-3. **`format_history()` updates** — onboarding briefing prepend for late-joining
-   panelists; rolling summary for out-of-window turns; merge both when applicable
-4. **`/add_guest` and `/drop_guest`** — mid-session guest management; onboarding
-   via summarizer; graceful dismissal with moderator farewell
-5. **Parser fixes** — `/pin` command; multi-target syntax; no-target-on-open guard
-6. **HumanPanelist directive power** — `respond()` returns `(Turn, Prompt | None)`;
-   moderator override hook before queuing
-7. **Gemini panelist** — `GeminiPanelist(Panelist)` subclass; own `format_history()`;
+1. **Multi-target syntax** — `Jean and Alan, prompt`; currently use `/all` or address
+   separately
+2. **`/pin` command** — pin most recent turn (always in context); currently unimplemented
+3. **HumanPanelist directive power** — human panelist can direct other panelists from
+   within their turn (`Name, prompt` syntax); moderator override hook before queuing
+4. **Gemini panelist** — `GeminiPanelist(Panelist)` subclass; own `format_history()`;
    own API key handling
-8. **Persistence** — save/load conversations to SQLite, resume later
-9. **Persona authoring guide** — how to write a structured YAML role from scratch
+5. **Persistence** — save/load conversations to SQLite, resume later
+6. **Persona authoring guide** — how to write a structured YAML role from scratch
    for any domain (historical figures, fictional characters, domain experts);
    covers schema fields, trigger_keywords calibration, cross-panel fault-line
    design, and worked examples beyond the philosophy-of-mind panel.
@@ -351,11 +367,11 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
    Friction emerges from worldview collision, not from scripted opposition.
    A role that names its opponents is brittle and domain-specific; a role that
    expresses its own fault lines is composable across any panel.
-10. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond
-    to @mentions; human panelists are registered Slack users
-11. **Web UI** — Flask frontend, user login, conversation history browser
-12. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists
-    (Whisper/Deepgram)
+7. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond
+   to @mentions; human panelists are registered Slack users
+8. **Web UI** — Flask frontend, user login, conversation history browser
+9. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists
+   (Whisper/Deepgram)
 
 ---
 
@@ -396,9 +412,8 @@ Claude Code has memory of this project at `~/.claude/projects/.../memory/MEMORY.
 — no need to paste this document. Just open the project and say "let's continue".
 
 Good next steps (in rough priority order):
-1. **Implement `summarize_history()`** — standalone, testable immediately
-2. **Update `Conversation` data model** — add `panelist_meta`, `pinned`
-3. **Update `format_history()`** — onboarding + rolling summary support
-4. **Implement `/add_guest` and `/drop_guest`**
-5. **Tune `trigger_keywords`** — run more sessions across topics; watch signal rate;
+1. **Multi-target syntax** — `Jean and Alan, prompt`
+2. **`/pin` command** — implementation straightforward; data model already supports it
+3. **Tune `trigger_keywords`** — run more sessions across topics; watch signal rate;
    tighten noisy keywords, expand gaps revealed by cross-panel analysis
+4. **HumanPanelist directive power** — `respond()` returns `(Turn, Prompt | None)`
