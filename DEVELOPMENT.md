@@ -345,7 +345,12 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
 9. **Persona authoring guide** — how to write a structured YAML role from scratch
    for any domain (historical figures, fictional characters, domain experts);
    covers schema fields, trigger_keywords calibration, cross-panel fault-line
-   design, and worked examples beyond the philosophy-of-mind panel
+   design, and worked examples beyond the philosophy-of-mind panel.
+   Key principle: `friction_directives` and `trigger_keywords` must be derived
+   from the character's own worldview — never name specific co-panelists.
+   Friction emerges from worldview collision, not from scripted opposition.
+   A role that names its opponents is brittle and domain-specific; a role that
+   expresses its own fault lines is composable across any panel.
 10. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond
     to @mentions; human panelists are registered Slack users
 11. **Web UI** — Flask frontend, user login, conversation history browser

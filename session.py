@@ -1,4 +1,4 @@
-from models import Prompt, Statement, Turn, AddGuestAction, AllowAction, DropGuestAction
+from models import Prompt, Statement, Turn, AddGuestAction, AllowAction, DropGuestAction, InterjectionRequest
 from conversation import Conversation, summarize_history
 from moderator import Moderator
 from panelist import ClaudePanelist, HumanPanelist
@@ -152,6 +152,27 @@ class Session:
         self.conversation.add_panelist(panelist, onboarding_summary=onboarding_summary)
         print(f"\n[System]: {name} ({role_name}) has joined the panel.\n")
 
+    def handle_interjection_request(self, action: InterjectionRequest):
+        if action.handle:
+            panelist = next(
+                (p for p in self.conversation.panelists
+                 if isinstance(p, HumanPanelist) and p.handle == action.handle), None
+            )
+        else:
+            panelist = next(
+                (p for p in self.conversation.panelists
+                 if isinstance(p, HumanPanelist)), None
+            )
+        if not panelist:
+            print(f"\n[System]: No human panelist found.\n")
+            return
+        if panelist in self.leash_pulls:
+            print(f"\n[System]: {panelist.name} is already flagged.\n")
+            return
+        self.leash_pulls[panelist] = None
+        print(f"\n[!!!!!!!] {panelist.name} wants to interject."
+              f" /allow {panelist.handle} to let them speak.\n")
+
     def handle_allow(self, action: AllowAction):
         panelist = next(
             (p for p in self.conversation.panelists
@@ -232,6 +253,8 @@ class Session:
                 self.handle_add_guest(action)
             elif isinstance(action, DropGuestAction):
                 self.handle_drop_guest(action)
+            elif isinstance(action, InterjectionRequest):
+                self.handle_interjection_request(action)
             elif isinstance(action, AllowAction):
                 self.handle_allow(action)
             elif isinstance(action, Statement):

@@ -1,4 +1,4 @@
-from models import Prompt, Statement, AddGuestAction, AllowAction, DropGuestAction
+from models import Prompt, Statement, AddGuestAction, AllowAction, DropGuestAction, InterjectionRequest
 
 STATEMENT_PREFIX = "//"
 
@@ -34,6 +34,10 @@ class Moderator:
                 return AllowAction(handle=parts[1].lower())
             print("[System]: Usage: /allow <handle>")
             return Prompt(content="", directed_at=current_target)
+
+        if raw.startswith("!"):
+            handle = raw[1:].strip().lower() or None
+            return InterjectionRequest(handle=handle)
 
         if raw.startswith(STATEMENT_PREFIX):
             content = raw[len(STATEMENT_PREFIX):].strip()

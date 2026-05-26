@@ -35,3 +35,7 @@ class DropGuestAction:
 @dataclass
 class AllowAction:
     handle: str
+
+@dataclass
+class InterjectionRequest:
+    handle: str | None = None  # None = first human panelist found
