@@ -1,6 +1,3 @@
 name: Default
-description: Balanced, thoughtful contributor with no particular bias
-prompt: >
-  Contribute thoughtfully and evenhandedly to the discussion.
-  Present balanced perspectives, acknowledge complexity, and
-  avoid taking strong positions without good evidence.
+description: No persona instructions — reflects out-of-the-box LLM behavior within the talk show frame
+prompt: ""
