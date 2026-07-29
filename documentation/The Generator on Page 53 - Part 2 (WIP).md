@@ -4,7 +4,7 @@
 
 ---
 
-Part 1 left off with a company that had already solved a problem most organizations never see coming: not how to prevent a disaster, but how to build a system that gets smarter every time one happens. Waffle House's hurricane playbook — categories instead of one-off patches, a boundary set once and trusted to trained judgment inside it — earned something remarkable: FEMA treating the company's own operating status as a credible read on how bad a storm actually is.
+Part 1 left off with three industries — a diner chain, commercial aviation, nuclear power — that had each separately solved the same problem: not how to prevent every disaster, but how to build a system that gets smarter every time one happens, and trusts trained people to act on what it's learned without checking in every time. Waffle House split that into two pieces: a Playbook that generalizes each storm into a category, and jump teams authorized to act on it fast. Aviation's anonymous incident-reporting system and the nuclear industry's own peer-reviewed watchdog do the same two things, independently, in their own domains. AI doesn't have one of these yet.
 
 Here's the thing both Waffle House and a well-run military hide, without meaning to.
 
