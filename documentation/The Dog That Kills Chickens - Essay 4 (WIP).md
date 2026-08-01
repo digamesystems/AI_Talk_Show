@@ -1,14 +1,12 @@
 # The Dog That Kills Chickens
 
-**STATUS: DRAFT COMPLETE, title locked 2026-07-31. See "Essay 4 Outline - Chasing Chickens (WIP).md" for the full developed argument (three-country nuclear comparison, sourced evidence, open verification items) this draft is being built from.**
-
 ---
 
 Every farmer knows the difference between a dog that chases squirrels and one that kills chickens.
 
 The strange thing is that the difference isn't really about the dog.
 
-In both cases, instinct beat training. But chasing the squirrel is forgivable — the squirrel means nothing to the farmer. The chickens are his livelihood. True or not, the general view is that once a dog gets a taste for killing chickens no amount of training in the world is going to make him stop.
+In both cases, instinct beat training. But chasing the squirrel is forgivable. The squirrel means nothing to the farmer. The chickens are his livelihood. True or not, the general view is that once a dog gets a taste for killing chickens no amount of training in the world is going to make him stop.
 
 He's gotta be put down.
 
@@ -16,7 +14,7 @@ He's gotta be put down.
 
 Institutions are not dogs, but we judge them by similar instincts when they fail us.
 
-A plane crashes because of a software fault — tragic, investigated, and mostly forgiven; the industry fixes it and keeps flying. A carmaker ships a design flaw that gets people killed, and it isn't always forgiven — sometimes it ends careers, sometimes verdicts, sometimes whole product lines. A nuclear plant has an accident, and depending on where it happens, the industry might not survive it at all.
+A plane crashes because of a software fault: tragic, investigated, and mostly forgiven; the industry fixes it and keeps flying. A carmaker ships a design flaw that gets people killed, and it isn't always forgiven: sometimes it ends careers, sometimes verdicts, sometimes whole product lines. A nuclear plant has an accident, and depending on where it happens, the industry might not survive it at all.
 
 Some failures are squirrels. Some are chickens.
 
@@ -24,11 +22,11 @@ In the farmer's case, the line is clear: the dog kills chickens. For institution
 
 ---
 
-The obvious answer is severity — how bad it was, how many people it hurt. Sounds good, but the answer doesn't survive contact with the evidence.
+The obvious answer is severity: how bad it was, how many people it hurt. Sounds good, but the answer doesn't survive contact with the evidence.
 
 The Three Mile Island accident resulted in zero deaths.<a id="cite1"></a>[¹](https://www.energy.gov/ne/articles/5-facts-know-about-three-mile-island)
 
-Fukushima, in Japan, resulted in just 1 confirmed death directly attributed to radiation — though thousands more likely died from the stress and disruption of the evacuation itself.<a id="cite2a"></a>[²](https://ourworldindata.org/what-was-the-death-toll-from-chernobyl-and-fukushima)
+Fukushima, in Japan, resulted in just 1 confirmed death directly attributed to radiation, though thousands more likely died from the stress and disruption of the evacuation itself.<a id="cite2a"></a>[²](https://ourworldindata.org/what-was-the-death-toll-from-chernobyl-and-fukushima)
 
 Commercial aviation, however, can kill hundreds to over a thousand people in a year.<a id="cite3"></a>[³](https://www.statista.com/statistics/263443/worldwide-air-traffic-fatalities/)
 
@@ -44,7 +42,7 @@ Start with the case that should set the baseline.
 
 The United States had a real domestic accident: Three Mile Island, an American plant, an American failure. If a country's own accident is what does the lasting damage, this is where it should show. No new construction permit was approved for roughly three decades.<a id="cite5a"></a>[⁵](https://world-nuclear.org/information-library/country-profiles/countries-t-z/usa-nuclear-power) But the existing fleet never stopped running. In 2023 and 2024, two new reactors at Georgia's Vogtle plant went online, the first newly built American reactors in a generation.<a id="cite5b"></a>[⁵](https://world-nuclear.org/information-library/country-profiles/countries-t-z/usa-nuclear-power) A domestic catastrophe didn't doom the industry. It just slowed it down.
 
-Now raise the stakes. Japan carries the deepest cultural memory of nuclear catastrophe of any nation on Earth — Hiroshima, Nagasaki, a vocabulary of nuclear dread that predates civilian power plants by decades. In 2011, Fukushima gave it a second, domestic reason: the worst civilian nuclear disaster since Chernobyl, on Japanese soil. If historical trauma plus a fresh domestic disaster doesn't produce a "put down" verdict, nothing should. As of February 2026, 15 of Japan's 32 operable reactors are running again anyway.<a id="cite6"></a>[⁶](https://world-nuclear.org/information-library/country-profiles/countries-g-n/japan-nuclear-power)
+Now raise the stakes. Japan carries the deepest cultural memory of nuclear catastrophe of any nation on Earth: Hiroshima, Nagasaki, a vocabulary of nuclear dread that predates civilian power plants by decades. In 2011, Fukushima gave it a second, domestic reason: the worst civilian nuclear disaster since Chernobyl, on Japanese soil. If historical trauma plus a fresh domestic disaster doesn't produce a "put down" verdict, nothing should. As of February 2026, 15 of Japan's 32 operable reactors are running again anyway.<a id="cite6"></a>[⁶](https://world-nuclear.org/information-library/country-profiles/countries-g-n/japan-nuclear-power)
 
 Now remove the accident entirely. Germany never had a Fukushima of its own. Chernobyl was Soviet. Fukushima was Japanese. No German reactor ever failed. If the categorical verdict requires an actual domestic incident — your own dog, your own chickens — Germany shouldn't have one at all. By April 2023, every reactor in the country was shut down for good anyway.<a id="cite7"></a>[⁷](https://world-nuclear.org/information-library/country-profiles/countries-g-n/germany)
 
@@ -58,7 +56,7 @@ None of the obvious variables survive contact with all three cases at once. Some
 
 That prior does more work than the crisis itself. Take the type of failure first: violations of competence are repairable. An honest mistake, met with a real fix, tends to earn trust back. Violations of integrity — deception, concealment — are much harder.<a id="cite8"></a>[⁸](https://pubmed.ncbi.nlm.nih.gov/14769123/) Three Mile Island was a stuck valve and a misread gauge: a competence failure, openly investigated and actually repaired. The fix was INPO, the same self-regulatory body [the previous essay in this series](PASTE-ESSAY-3-PART-1-LINKEDIN-URL-HERE) used as its central proof that self-policing can work: a peer-review structure the industry itself still funds and submits to, watching continuously rather than declaring the matter closed once.<a id="cite-inpo"></a>[²¹](https://world-nuclear.org/information-library/current-and-future-generation/cooperation-in-nuclear-power) TEPCO sat on its own 2008 tsunami projections for three years.<a id="cite9"></a>[⁹](https://www.aljazeera.com/amp/news/2012/10/13/japans-tepco-admits-downplaying-tsunami-risk)
 
-Concealment should have doomed Japan's reactors. It didn't. Japan's own investigation named the failure institutional, not technological: "collusion" between TEPCO and its regulators, a "profoundly manmade disaster."<a id="cite10"></a>[¹⁰](https://world.time.com/2012/07/05/report-fukushima-nuclear-disaster-was-manmade/) A new, independent regulator, split from the ministry that used to both promote and police nuclear power,<a id="cite11"></a>[¹¹](https://www.world-nuclear-news.org/Articles/New-Japanese-regulator-takes-over) was enough to let reactors restart. That kind of repair only works, though, if there's something underneath it to repair. Japan built its nuclear program as deliberate national policy, a strategic answer to having almost no domestic fuel of its own — a strong prior, decades in place before Fukushima ever tested it.
+Concealment should have doomed Japan's reactors. It didn't. Japan's own investigation named the failure institutional, not technological: "collusion" between TEPCO and its regulators, a "profoundly manmade disaster."<a id="cite10"></a>[¹⁰](https://world.time.com/2012/07/05/report-fukushima-nuclear-disaster-was-manmade/) A new, independent regulator, split from the ministry that used to both promote and police nuclear power,<a id="cite11"></a>[¹¹](https://www.world-nuclear-news.org/Articles/New-Japanese-regulator-takes-over) was enough to let reactors restart. That kind of repair only works, though, if there's something underneath it to repair. Japan built its nuclear program as deliberate national policy, a strategic answer to having almost no domestic fuel of its own. A strong prior, decades in place before Fukushima ever tested it.
 
 Germany never had a violation to repair in the first place. It had no domestic accident, no concealed report, no institutional failure to name. What it had instead was a technology it had never fully trusted to begin with.
 
@@ -70,9 +68,9 @@ No German reactor ever failed. No German engineer concealed a report. There was 
 
 Japan's trust was damaged and repaired. Germany's was never given in the first place. A foreign accident was all the permission its opponents needed to act on that older conviction.
 
-What Germany had instead was a movement decades older than either Chernobyl or Fukushima, born out of 1970s anti-nuclear-weapons politics and the founding of the Green party. In 1998, the Greens joined Germany's governing coalition — a junior partner, not a majority. During the negotiations that became the 2000 phase-out law, they threatened to curtail plant licenses unilaterally if no deal was reached.<a id="cite12"></a>[¹²](https://www.cleanenergywire.org/factsheets/history-behind-germanys-nuclear-phase-out) Chernobyl and Fukushima didn't create that conviction. They gave an already-organized minority the occasion to cash it in.
+What Germany had instead was a movement decades older than either Chernobyl or Fukushima, born out of 1970s anti-nuclear-weapons politics and the founding of the Green party. In 1998, the Greens joined Germany's governing coalition: a junior partner, not a majority. During the negotiations that became the 2000 phase-out law, they threatened to curtail plant licenses unilaterally if no deal was reached.<a id="cite12"></a>[¹²](https://www.cleanenergywire.org/factsheets/history-behind-germanys-nuclear-phase-out) Chernobyl and Fukushima didn't create that conviction. They gave an already-organized minority the occasion to cash it in.
 
-It wasn't material self-interest either — Russian gas filled the gap, rising to roughly 55% of national consumption by 2021,<a id="cite13"></a>[¹³](https://www.cleanenergywire.org/factsheets/germanys-dependence-imported-fossil-fuels) a dependency that turned genuinely costly in 2022. Germany didn't put nuclear down to protect itself. It accepted real cost to do it anyway.
+It wasn't material self-interest either. Russian gas filled the gap, rising to roughly 55% of national consumption by 2021,<a id="cite13"></a>[¹³](https://www.cleanenergywire.org/factsheets/germanys-dependence-imported-fossil-fuels) a dependency that turned genuinely costly in 2022. Germany didn't put nuclear down to protect itself. It accepted real cost to do it anyway.
 
 ---
 
@@ -80,7 +78,7 @@ Now point this at AI, carefully, because everything above is closed history and 
 
 The verdict is already splitting by scale. At the product level, it's still squirrels: 49% of U.S. adults now use AI chatbots, more than double the 2023 figure.<a id="cite14"></a>[¹⁴](https://www.pewresearch.org/internet/2026/06/17/americans-and-ai-2026-chatbots-smart-devices-and-views-on-impact/) At the siting level, it's already closer to chickens: only 14% of Americans support a data center in their own community,<a id="cite15"></a>[¹⁵](https://www.usnews.com/news/politics/articles/2026-06-11/americans-wary-of-ai-driven-data-center-boom-reuters-ipsos-poll-shows) and more than 75 projects worth $130 billion were blocked or delayed in early 2026 alone.<a id="cite16"></a>[¹⁶](https://www.tomshardware.com/tech-industry/artificial-intelligence/more-than-75-data-center-build-outs-worth-usd130-billion-have-been-successfully-blocked-in-the-first-four-months-of-2026-bipartisan-opposition-mounts-nationwide-over-fears-of-soaring-power-and-water-costs)
 
-None of this traces back to one grievance. Some of it is water — data centers can drain a local aquifer dry. Some is electricity prices, passed straight to nearby ratepayers. Some is the newer complaint Scott Galloway has been making — that America's reputation abroad and AI have both cratered over the same eighteen months, and for the same underlying reason.<a id="cite17"></a>[¹⁷](https://podcasts.happyscribe.com/the-diary-of-a-ceo-with-steven-bartlett/scott-galloway-ai-wasn-t-built-for-you) Not because either turned dangerous. Because their gains look like they're flowing only to people who are already rich.
+None of this traces back to one grievance. Some of it is water: data centers can drain a local aquifer dry. Some is electricity prices, passed straight to nearby ratepayers. Some is the newer complaint Scott Galloway has been making: that America's reputation abroad and AI have both cratered over the same eighteen months, and for the same underlying reason.<a id="cite17"></a>[¹⁷](https://podcasts.happyscribe.com/the-diary-of-a-ceo-with-steven-bartlett/scott-galloway-ai-wasn-t-built-for-you) Not because either turned dangerous. Because their gains look like they're flowing only to people who are already rich.
 
 That's a third kind of trust question, distinct from the ones nuclear power raised. Competence asks whether the people in charge know what they're doing. Integrity asks whether they're telling the truth. This one asks something else entirely: whether they have your interests at heart at all, or just their own.<a id="cite18"></a>[¹⁸](https://www.researchgate.net/publication/312070306_Organizational_trust_Mayer_Davis_and_Schoorman_model_a_review) None of these people need to agree with each other. They just need to end up in the same coalition.
 
@@ -88,7 +86,7 @@ That's already happening. In July 2026, data-center opponents staged 142 protest
 
 That's the same move Germany's Greens made in the 1970s, decades before Chernobyl ever gave them an incident to point to: turn scattered local grievances into one organized, national conviction. Germany's conversion took over three decades and a foreign disaster to cash in. Brockovich's coalition assembled in about a year.
 
-It's tempting to think data-center opposition is the safer, more forgivable kind — rooted in fixable material costs, not fixed belief. Germany's own case argues against that comfort: a technology doesn't need to hurt you to get put down. It just needs enough people, organized well enough, deciding it should be. That coalition either holds together or it doesn't. As of this writing, nothing about it looks hypothetical.
+It's tempting to think data-center opposition is the safer, more forgivable kind, rooted in fixable material costs, not fixed belief. Germany's own case argues against that comfort: a technology doesn't need to hurt you to get put down. It just needs enough people, organized well enough, deciding it should be. That coalition either holds together or it doesn't. As of this writing, nothing about it looks hypothetical.
 
 ---
 
@@ -133,6 +131,8 @@ The farmer is still watching.
 ---
 
 ## Revision log (not part of the essay itself)
+
+**2026-08-01, em-dash reduction pass, round two (via `tic scanner.py`):** John asked to run the newly-built scanner tool against this essay to see what it found after the earlier session's first cleanup pass (28 → 17). Result: 16 dashes remained, and the tool's new pair/single classification feature showed only 2 of them were genuine bracketing pairs — the other 12 were single-sided and hadn't been caught by the earlier, less systematic pass. Also removed a stale drafting-stage `**STATUS: DRAFT COMPLETE...**` note from the top of the file (no longer needed now that the essay is locked and scheduled). Applied the same method as Essay 3's two rounds: kept the 2 genuine pairs (line 49's "your own dog, your own chickens" callback to the opening metaphor; line 59's "deception, concealment" aside), converted the 12 singles to a mix of colons, periods, and commas rather than defaulting to colon everywhere — this essay's first pass already leaned on colons heavily (the U.S./Japan/Germany recap triad), so blanket colon-conversion risked trading one repetitive tell for another. Net: 16 down to 4. Word count: ~1,764.
 
 **2026-08-01, Mistral cross-review pass — three findings checked, none held up:** Mistral flagged (1) inconsistent citation formatting, citing "[21]" as a plain-number citation versus superscript ones elsewhere; (2) an orphaned Chernobyl backlink (`cite2b`) left in reference 2 after the Chernobyl death-toll line was cut; (3) inconsistent spacing around em-dashes, some spaced ("— and") and some not ("—and"), recommending unspaced as the standard. Checked all three directly against the live file rather than taking them at face value: (1) false — every inline citation in the body already uses a superscript number, including `[²¹]` next to the INPO cite; the "[21]" Mistral flagged is the Markdown ordered-list numbering in the References section, not a citation marker. (2) false — already fixed in the same day's earlier Chernobyl pruning pass; reference 2 has read `[↩](#cite2a)` only, with no `cite2b` anywhere in the file, since before this review was run. (3) false — every em-dash in the body already uses consistent spacing (`word — word`); no unspaced instances exist to standardize. John re-pasted the essay text into Mistral independently and got the same three findings back, confirming this wasn't a one-off misread on Mistral's end — worth treating as a standing caution about this tool's review reliability on this piece specifically, not just a single-pass fluke. Third instance this essay of an outside review tool's finding not surviving a check against the actual file (see also the DeepSeek subtitle miss on Essay 3 Part 1, and DeepSeek's Galloway "uncashed reference" miss above). No changes made to the essay text — nothing to fix.
 
