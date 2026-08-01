@@ -24,6 +24,18 @@ Selected 2026-07-31: iStock "Sheep dog herding cockerel" (Gary Daggers) — land
 
 ---
 
+## LinkedIn post copy
+
+**Blurb saved 2026-08-01, for use when assembling the LinkedIn post:**
+
+> Why did Japan restart nuclear reactors after Fukushima while Germany shut down every reactor it had—even though Germany never had a nuclear accident of its own?
+>
+> I don't think the answer is nuclear power.
+>
+> I think it's how societies decide that trust has become a verdict.
+
+---
+
 ## The core folk belief (source material, from Essay 2's cut passage)
 
 > Dog will hunt... Did the dog jump the fence and start chasing squirrels? Not really. If a hunting dog does this, it's not following its training. Instinct has taken over. It's off the reservation. If it starts chasing chickens, that's a different, harder problem — in rural country, a dog that kills chickens is often considered untrainable. Not corrected. Put down. No amount of retraining is trusted to undo it.
