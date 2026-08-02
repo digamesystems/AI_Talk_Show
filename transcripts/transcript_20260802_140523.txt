@@ -1,0 +1,19 @@
+=== Panel Discussion Transcript ===
+Date      : 2026-08-02 14:05
+Moderator : John
+Panelists : Sartre, Turing, Searle, Basho
+Topic     : Machine consciousness — can an AI genuinely understand, or only behave as if it does?
+========================================
+
+[John]: ChatGPT is _clearly_ thinking.
+
+[John]: Biology is not required for conciousness.
+
+[John]: Machines can never think they aren't biological.
+
+[John]: " The chinese room doesn't apply to llms because a neural network is not a book.
+
+[John]: the chinese room doesn't apply to LLMs because a neural network is not a book.
+
+[John]: personal freedom and choice is an illusion.
+

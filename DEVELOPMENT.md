@@ -221,8 +221,11 @@ found, the panelist is flagged in `Session.leash_pulls` and a console signal fir
 `[!!!!!!!] Name is pulling at the leash. /allow handle to let them speak.`
 
 Key design decisions:
-- Detection fires only on *panelist response turns*, not moderator prompts — avoids
-  signals appearing mid-thinking and preserves natural pacing
+- Detection fires on *panelist response turns* and on moderator `//` Statement turns
+  (2026-08-02) — Statements are the moderator's own explicit assertions, so panelists
+  can react to a strong opinion, not just to each other. Directed prompts and `/all`
+  broadcasts are still excluded (they're usually questions/stage-direction, not
+  claims) — avoids signals appearing mid-thinking on ordinary turn-taking
 - One flag per panelist at a time — subsequent triggers are suppressed until the pull
   is followed or cleared
 - Flags clear automatically when the panelist speaks via any path (directed prompt
@@ -386,6 +389,17 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
 - **2026-08-02:** Fixed a crash printing "Matsuo Bashō" on a default Windows console
   (cp1252 can't encode the macron) — `sys.stdout.reconfigure(encoding="utf-8")` added
   near the top of `main.py`
+- **2026-08-02:** Fixed `_check_leash_pulls()`'s hardcoded `isinstance(p, ClaudePanelist)`
+  check (`session.py`) — DeepSeek panelists could never trigger a leash pull, on any
+  turn, before this fix. Now `not isinstance(p, HumanPanelist)`, so it covers any
+  current or future AI panelist type automatically. Verified with a four-panelist
+  session (`panels/leash_pull_fix_test.yaml`; transcript `transcript_20260802_132702.txt`)
+  where both DeepSeek panelists (Turing, Searle) interjected via genuine leash pulls.
+- **2026-08-02:** Leash-pull detection extended to moderator `//` Statement turns —
+  supersedes the "suppressed on moderator turns" fix noted above. `handle_statement()`
+  now passes `in_response_to=action` so `_check_leash_pulls()` can distinguish a
+  Statement turn from a Prompt turn; directed prompts and `/all` broadcasts are still
+  excluded.
 - **2026-08-02:** Fixed a stale doc claim — `/all [prompt] Name` (broadcast + immediate
   call) was documented here but never actually implemented in `moderator.py`; doc
   corrected to match the code rather than the other way around
@@ -410,6 +424,22 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
   (only triggers on a malformed command while mid-conversation with one panelist),
   noticed 2026-08-02 while adding `/help` — `/help` itself deliberately avoids this
   by using a dedicated `HelpAction` instead of the same empty-Prompt pattern.
+- An unprefixed line that doesn't match `//`, `/all`, a panelist name, or a known `/`
+  command falls through `compose_action()`'s cascade to
+  `Prompt(content=raw, directed_at=current_target)` — if `current_target` is still
+  `"all"` (e.g. session default, or nothing has redirected it yet), a simple typo
+  (missing the `//` prefix) silently becomes a full-panel broadcast instead of an
+  error. Discovered 2026-08-02 testing the `//`-statement leash-pull feature: a
+  mistyped `//` queued all four panelists as `pending_respondents`, and since
+  `_check_leash_pulls()`'s idle-panelist filter excludes anyone pending, leash-pull
+  detection was silently disabled for the rest of the session once the pending
+  prompt was kept (`Discard pending prompt? (y/n): n`) rather than cleared. No
+  panelist ever spoke for the remainder of that session as a result. The
+  pending-exclusion itself is correct design (a panelist already queued to speak
+  shouldn't also get flagged); the surprising part is how easy the accidental
+  broadcast is to trigger and how sticky its effects are. Not fixed — flagged for
+  a future pass (e.g. a clearer warning when an unprefixed line becomes a broadcast,
+  or requiring explicit `/all` rather than falling back to it silently).
 
 ---
 
@@ -448,13 +478,15 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
 Engineering side of a question the essay project is tracking: does panel "richness"
 come from persona configuration, or from having genuinely different models in the
 room? `DeepSeekPanelist` + `panels/*.yaml` presets are the infrastructure for this.
-First factory-settings data point (2026-08-02, `role: Default` on both sides, no
-persona): real content-level cross-pollination between Claude and DeepSeek, but in a
-smooth/concessive register — not the sharp friction the persona-configured six-Claude
-panel produces. Tentative read: friction is coming from `friction_directives`
-configuration, not model diversity alone. Full writeup and both transcripts referenced
-in the essay roadmap entry; next step there is the same persona on both models to
-isolate the variable further.
+Two data points so far (2026-08-02): (1) factory-settings — `role: Default` on both
+Claude and DeepSeek, no persona — produced real content-level engagement but stayed
+in a smooth, concessive register; (2) same-model/persona-varied — Turing and Searle
+both on DeepSeek, opposing personas — produced the sharpest exchange of any session
+run so far. Together they point the same direction: friction tracks persona
+configuration (`friction_directives`), not model diversity by itself. Full writeup,
+both transcripts, and the still-open next step (same persona across both models, the
+mirror of data point 2) are in the essay roadmap entry — check that file rather than
+this summary for current status.
 
 ---
 

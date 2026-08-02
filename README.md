@@ -50,7 +50,7 @@ list.
 | `/all what is consciousness?` | Broadcast to all panelists (pending state — call on each by name) |
 | `/allow jean` | Follow a leash pull — let a flagged AI panelist speak |
 | `!` | Signal a human panelist wants to interject (at moderator prompt) |
-| `//` followed by text | Moderator statement, no response expected |
+| `//` followed by text | Moderator statement, no response expected — can trigger a leash pull |
 | `/add_guest Name role` | Introduce a new panelist mid-session |
 | `/drop_guest Name` | Gracefully dismiss a panelist |
 | `/help` or `/?` | Print the full current command list |

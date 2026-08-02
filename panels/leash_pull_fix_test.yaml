@@ -1,0 +1,16 @@
+# Test panel for the session.py:57 leash-pull fix (isinstance(HumanPanelist)
+# exclusion instead of a hardcoded ClaudePanelist check). Turing and Searle are
+# both DeepSeek panelists specifically because neither could ever leash-pull
+# before the fix — this tests that two simultaneous DeepSeek panelists both
+# fire correctly, not just one. Turing and Searle are also each other's direct
+# philosophical opposite (system reply vs. Chinese Room), so they should pull
+# against each other as well as against the moderator's bait. Sartre
+# (determinism/naturalism triggers) and Basho (abstraction triggers) round out
+# the panel on Claude.
+moderator_name: "John"
+topic: "Machine consciousness — can an AI genuinely understand, or only behave as if it does?"
+panelists:
+  - {type: claude,    name: "Sartre", role: "Sartre"}
+  - {type: deepseek,  name: "Turing", role: "Turing"}
+  - {type: deepseek,  name: "Searle", role: "Searle"}
+  - {type: claude,    name: "Basho",  role: "Basho"}

@@ -2,7 +2,8 @@ from models import Prompt, Statement, Turn, AddGuestAction, AllowAction, DropGue
 
 HELP_TEXT = """\
 [System]: Available commands
-  //text                 Statement — recorded, no response expected
+  //text                 Statement — recorded, no response expected. Can trigger a
+                          leash pull if it hits a panelist's trigger_keywords.
   /all [prompt]          Broadcast to all panelists (they respond only when
                           called on by name afterward)
   Name, prompt           Direct a prompt to a panelist, updates sticky target
@@ -50,11 +51,11 @@ class Session:
         self._check_leash_pulls(turn)
 
     def _check_leash_pulls(self, turn: Turn):
-        if turn.speaker == self.moderator:
+        if turn.speaker == self.moderator and not isinstance(turn.in_response_to, Statement):
             return
         idle = [
             p for p in self.conversation.panelists
-            if isinstance(p, ClaudePanelist)
+            if not isinstance(p, HumanPanelist)
             and p != turn.speaker
             and p not in self.conversation.pending_respondents
             and p not in self.leash_pulls
@@ -71,7 +72,7 @@ class Session:
         return self.current_target[0].name
 
     def handle_statement(self, action: Statement):
-        turn = Turn(speaker=self.moderator, content=action.content)
+        turn = Turn(speaker=self.moderator, content=action.content, in_response_to=action)
         self._add_turn(turn)
         print(f"\n[{self.moderator.name}]: {action.content}\n")
 
