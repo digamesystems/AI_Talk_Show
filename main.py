@@ -4,7 +4,7 @@ from pathlib import Path
 
 from conversation import Conversation
 from moderator import Moderator
-from panelist import ClaudePanelist, HumanPanelist
+from panelist import ClaudePanelist, DeepSeekPanelist, HumanPanelist
 from roles import list_roles, load_role
 from session import Session
 
@@ -43,6 +43,18 @@ def add_claude_panelist(moderator_name: str) -> ClaudePanelist:
     handle = name.lower().replace(" ", "_")
     role_name = prompt_role_selection()
     return ClaudePanelist(
+        name=name,
+        handle=handle,
+        role_name=role_name,
+        moderator_name=moderator_name
+    )
+
+
+def add_deepseek_panelist(moderator_name: str) -> DeepSeekPanelist:
+    name = input("  Display name: ").strip() or "DeepSeek"
+    handle = name.lower().replace(" ", "_")
+    role_name = prompt_role_selection()
+    return DeepSeekPanelist(
         name=name,
         handle=handle,
         role_name=role_name,
@@ -99,7 +111,8 @@ def build_panelist_from_preset(entry: dict, moderator_name: str):
         role = entry.get("role_description", "Guest Panelist")
         return HumanPanelist(name=name, role=role)
     role_name = entry.get("role", "Default")
-    return ClaudePanelist(
+    panelist_class = DeepSeekPanelist if kind == "deepseek" else ClaudePanelist
+    return panelist_class(
         name=name,
         handle=name.lower().replace(" ", "_"),
         role_name=role_name,
@@ -157,13 +170,15 @@ def create_session_by_hand() -> Session:
     print("\nAdd panelists (minimum 1):")
     while True:
         print(f"\n  Panelist {len(conversation.panelists) + 1}:")
-        kind = input("  Type (claude/human): ").strip().lower()
+        kind = input("  Type (claude/deepseek/human): ").strip().lower()
         if kind == "claude":
             panelist = add_claude_panelist(moderator_name)
+        elif kind == "deepseek":
+            panelist = add_deepseek_panelist(moderator_name)
         elif kind == "human":
             panelist = add_human_panelist()
         else:
-            print("  Invalid type. Enter 'claude' or 'human'.")
+            print("  Invalid type. Enter 'claude', 'deepseek', or 'human'.")
             continue
 
         handle = panelist.name.lower().replace(" ", "_")

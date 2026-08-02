@@ -22,17 +22,22 @@ A session with Sartre, Wittgenstein, Turing, and Searle discussing the minds of 
 
 ## Quickstart
 
-**Requirements:** Python 3.10+, an Anthropic API key
+**Requirements:** Python 3.10+, an Anthropic API key (DeepSeek key optional — see below)
 
 ```bash
 git clone https://github.com/digamesystems/AI_Talk_Show.git
 cd AI_Talk_Show
-pip install anthropic pyyaml
+pip install anthropic openai pyyaml
 export ANTHROPIC_API_KEY=your_key_here
 python main.py
 ```
 
-On startup you'll be prompted for a discussion topic and which panelists to include. Type your prompts at the console. Use `.` on its own line to send multi-line or pasted input.
+At startup you'll choose to build a panel by hand (prompted for a topic and each
+panelist in turn) or load one from a preset file in `panels/` (moderator name, topic,
+and full roster defined in one YAML file — see `panels/nuclear_legitimacy.yaml` for
+an example). Type your prompts at the console; use `.` on its own line to send
+multi-line or pasted input; type `/help` once the session starts for the full command
+list.
 
 ---
 
@@ -48,6 +53,7 @@ On startup you'll be prompted for a discussion topic and which panelists to incl
 | `//` followed by text | Moderator statement, no response expected |
 | `/add_guest Name role` | Introduce a new panelist mid-session |
 | `/drop_guest Name` | Gracefully dismiss a panelist |
+| `/help` or `/?` | Print the full current command list |
 | `/quit` | End session and save transcript |
 
 The current target is sticky — once you've directed at a panelist, subsequent prompts go to them until you name someone else.
@@ -72,6 +78,8 @@ Historical-figure roles use a structured YAML schema with `core_beliefs`, `disso
 
 The schema is domain-agnostic — any historical figure, fictional character, or domain expert can be authored as a role. See [`DEVELOPMENT.md`](DEVELOPMENT.md) for the full schema reference.
 
+A role is the persona; separately, each panelist also has a **type** — `claude`, `deepseek`, or `human` — that decides which model (if any) powers it. The same role file works with any AI type: `Sartre` can be run as a Claude panelist or a DeepSeek panelist without changes to `Sartre.yaml`.
+
 ---
 
 ## Transcripts
@@ -90,7 +98,7 @@ Sessions are saved automatically to timestamped files in the `transcripts/` dire
 
 For contributors and the technically curious: the full architecture document — data structures, design decisions, command grammar, and roadmap — is in [`DEVELOPMENT.md`](DEVELOPMENT.md).
 
-The short version: `Conversation` is provider-agnostic. Each `Panelist` subclass owns its own `format_history()` and `respond()` methods, translating the shared history into whatever format its API requires. Adding a Gemini or GPT panelist means subclassing `Panelist` — the conversation loop doesn't change.
+The short version: `Conversation` is provider-agnostic. Each `Panelist` subclass owns its own `format_history()` and `respond()` methods, translating the shared history into whatever format its API requires. `DeepSeekPanelist` proved this out — adding it required zero changes to `Conversation`, `Session`, or `Moderator`, just a new `Panelist` subclass. A Gemini panelist would work the same way.
 
 ---
 
@@ -98,7 +106,7 @@ The short version: `Conversation` is provider-agnostic. Each `Panelist` subclass
 
 Near term:
 - Multi-target syntax (`Jean and Alan, ...`)
-- Gemini panelist support
+- Gemini panelist support (DeepSeek shipped first — see `panelist.py`)
 - Persona authoring guide — how to write a YAML role for any domain or figure
 
 Longer term:
@@ -112,8 +120,10 @@ Longer term:
 ## Dependencies
 
 ```
-pip install anthropic pyyaml
+pip install anthropic openai pyyaml
 ```
+
+`openai` powers `DeepSeekPanelist` (DeepSeek's API is OpenAI-SDK-compatible) — skip it if you're only running Claude and human panelists.
 
 ---
 

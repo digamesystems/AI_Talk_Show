@@ -1,5 +1,5 @@
 # AI Panel Discussion — Project Summary
-*Updated 2026-05-26 — for continuity across Claude sessions*
+*Updated 2026-08-02 — for continuity across Claude sessions*
 
 ---
 
@@ -15,13 +15,23 @@ Longer term vision includes: Slack integration as a natural multi-user interface
 
 A working Python console spike is complete and road-tested. Core conversation loop is functional with:
 - Multiple Claude panelists with different role-based personas (Sartre, Watts, Basho, Searle, Wittgenstein, Turing, Skeptic, Optimist, Default)
+- **DeepSeek panelist support** — `DeepSeekPanelist` talks to DeepSeek's OpenAI-compatible API
+  (`openai` SDK, `base_url` pointed at DeepSeek, model `deepseek-chat`); same role YAML files
+  work for both providers. First real (non-Claude) proof that `Panelist` is genuinely
+  provider-agnostic, not just designed to be. Requires `DEEPSEEK_API_KEY`.
+- **Panel presets** — `panels/*.yaml` files describe a full roster (moderator name, topic,
+  panelist list with type/name/role) that can be loaded in one shot instead of building a
+  session by hand every time; `main.py` asks "build by hand or load from file?" at startup.
 - Structured YAML schema for historical-figure roles providing behavioral rather than descriptive personas
-- Web search enabled per panelist (Anthropic server-side tool)
+- Web search enabled per Claude panelist (Anthropic server-side tool) — not yet available for DeepSeek panelists
 - Sticky target, pending state for /all broadcasts
+- `/help` and `/?` — prints the full current command list on demand; startup banners now
+  point at this instead of maintaining their own separate (and drifting) partial lists
 - Clean annotated transcripts saved to `transcripts/` — directed turns and interjections annotated
 - Multi-line / paste-safe input via `.` send sentinel (moderator and human panelists)
 - Human panelists supported alongside AI panelists; `!` command signals human interjection request
 - History summarization for long sessions; onboarding summaries for mid-session guests
+  (Claude panelists only — see Known Issues)
 - Mid-session guest management via `/add_guest` and `/drop_guest`
 - TTS pipeline in TTS/ subdirectory (ElevenLabs)
 - Leash pull mechanism — idle panelists passively monitor turns via zero-token
@@ -43,6 +53,9 @@ AI_Talk_Show/
 │   ├── Turing.yaml
 │   ├── Watts.yaml
 │   └── Wittgenstein.yaml
+├── panels/
+│   ├── cross_model_pilot.yaml
+│   └── nuclear_legitimacy.yaml
 ├── TTS/
 │   ├── render_transcript.py
 │   ├── tts_voices.yaml
@@ -85,6 +98,10 @@ Turn
 ├── in_response_to: Prompt | Statement | None
 └── interjection: bool             # True when turn follows a leash pull (/allow)
 
+AddGuestAction / DropGuestAction / AllowAction / InterjectionRequest / HelpAction
+└── setup/control actions parsed by Moderator.compose_action(), dispatched to
+    matching Session.handle_*() methods
+
 PanelistMeta
 ├── joined_at: int             # turn index when panelist joined
 └── onboarding_summary: str | None
@@ -111,11 +128,20 @@ HumanPanelist(Panelist)
 └── respond() → reads from stdin (multi-line, `.` to send), returns Turn
 
 ClaudePanelist(Panelist)
-├── system_prompt: str         # built internally from template + role yaml
+├── system_prompt: str         # built from module-level SYSTEM_PROMPT_TEMPLATE + role yaml
 ├── moderator_name: str
 ├── window: int
 ├── _trigger_keywords: list[str]  # loaded from role YAML at init
 └── respond() → Anthropic API with web search tool
+
+DeepSeekPanelist(Panelist)
+├── system_prompt: str         # same SYSTEM_PROMPT_TEMPLATE as ClaudePanelist
+├── moderator_name: str
+├── window: int
+├── _trigger_keywords: list[str]
+├── client: openai.OpenAI      # base_url="https://api.deepseek.com", DEEPSEEK_API_KEY
+└── respond() → deepseek-chat via Chat Completions; no web search tool yet;
+    does not call summarize_history() beyond window (see Known Issues)
 
 Moderator
 ├── name: str
@@ -132,7 +158,10 @@ Session
 ### Key Design Decisions & Rationale
 
 **Panelist abstraction**
-`format_history()` and `respond()` live on each Panelist subclass, not on Conversation. Each provider (Claude, Gemini, Human) knows how to translate shared history into its own API format. Conversation stays provider-agnostic.
+`format_history()` and `respond()` live on each Panelist subclass, not on Conversation. Each provider (Claude, DeepSeek, Human) knows how to translate shared history into its own API format. Conversation stays provider-agnostic — proven out for real, not just by design, once `DeepSeekPanelist` shipped and needed zero changes to `Conversation`, `Session`, or `Moderator`.
+
+**Panel presets (`panels/*.yaml`)**
+An alternative to building a session by hand every time: a preset file specifies `moderator_name`, `topic`, and a `panelists` list (`type`: claude/deepseek/human, `name`, `role`). `main.py`'s `create_session()` asks "build by hand or load from file?" and dispatches to `create_session_from_file()`, which reuses the same duplicate-name guard as the hand-built path and falls back to it if the preset is empty or missing. Existed first as a convenience for repeatedly re-running the same panel roster; became load-bearing for the cross-model experiment (Roadmap, cross-model entry below), since a preset is the only practical way to reliably load a mixed Claude/DeepSeek roster for a repeatable test.
 
 **name vs handle**
 `name` = display label in transcript (e.g. "Jean").
@@ -213,9 +242,11 @@ Key design decisions:
   same `/allow` flow applies
 
 **System prompt ownership**
-`ClaudePanelist` owns its own `SYSTEM_PROMPT_TEMPLATE` and builds the system prompt
-internally. Two slots are overridable per-character via `system_overrides` in the
-role YAML:
+`SYSTEM_PROMPT_TEMPLATE` lives at module level in `panelist.py`, shared by
+`ClaudePanelist` and `DeepSeekPanelist` (promoted out of `ClaudePanelist` when
+`DeepSeekPanelist` was added, to avoid a second copy of the same ~20-line template
+drifting out of sync). Two slots are overridable per-character via `system_overrides`
+in the role YAML:
 - `register_instruction` — default: "Respond thoughtfully and concisely"
 - `closing_instruction` — default: "Close with a concluding statement"
 
@@ -228,7 +259,11 @@ history always preserved in `conversation.history`. When history exceeds the win
 older turns are compressed by `summarize_history()` rather than hard-dropped. The
 summarizer is instructed to be lossless about facts, names, concessions, and pivots
 — and lossy about rhetorical scaffolding. Pinned turns are always included regardless
-of window.
+of window. **Known gap:** `summarize_history()` in `conversation.py` is written
+against Anthropic's `client.messages.create()` shape; `DeepSeekPanelist.respond()`
+does not call it and falls back to plain window truncation instead. Not an issue for
+short sessions (under ~30 turns); would need a provider-agnostic rewrite of
+`summarize_history()` before long DeepSeek sessions are safe.
 
 **Guest onboarding**
 When a panelist joins mid-session, `summarize_history()` generates an onboarding
@@ -261,18 +296,22 @@ the model from pattern-matching the `[name]: content` format into its own output
 ```
 //...                  → Statement (no response expected)
 /all [prompt]          → Broadcast to all panelists (pending state)
-/all [prompt] Name     → Broadcast + immediately call on Name
 /allow handle          → Let a flagged panelist speak (follow a leash pull)
 !                      → Register human panelist interjection request
 !handle                → Register specific human panelist interjection request
 /add_guest Name role   → Introduce new panelist mid-session
 /drop_guest Name       → Dismiss panelist gracefully
+/help or /?            → Print the full current command list
 /quit or /exit         → End session
 Name, [prompt]         → Directed prompt, updates sticky target
 Name [prompt]          → Also works (space after name)
 [prompt]               → Directed at current sticky target
 .                      → Send (terminates multi-line / pasted input)
 ```
+Note: `/all [prompt] Name` (broadcast + immediately call on Name in one command) is
+**not** implemented, despite once being documented here — `moderator.py`'s actual
+`/all` handling only broadcasts. Corrected 2026-08-02 after finding the mismatch
+during a documentation sync pass; see Remaining Open Issues.
 
 ### HumanPanelist input
 ```
@@ -336,6 +375,20 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
   friction emerges from worldview collision, not scripted opposition
 - `transcripts/` and `documentation/` directories created; `main.py` updated to save
   transcripts to `transcripts/` automatically; `.gitignore` added for `__pycache__`
+- **2026-08-02:** `DeepSeekPanelist` added (`panelist.py`) — OpenAI-compatible client
+  against DeepSeek's API; `SYSTEM_PROMPT_TEMPLATE` promoted from a `ClaudePanelist`
+  class attribute to a module-level constant shared by both provider panelists
+- **2026-08-02:** Panel preset system added — `panels/*.yaml`, `main.py`'s
+  `create_session_from_file()`/`build_panelist_from_preset()`/`prompt_panel_file_selection()`
+- **2026-08-02:** `/help` and `/?` commands added (`HelpAction` in `models.py`,
+  handled in `session.py`); `main.py` and `session.run()`'s own separate partial
+  command-list banners trimmed to point at `/help` instead of maintaining duplicates
+- **2026-08-02:** Fixed a crash printing "Matsuo Bashō" on a default Windows console
+  (cp1252 can't encode the macron) — `sys.stdout.reconfigure(encoding="utf-8")` added
+  near the top of `main.py`
+- **2026-08-02:** Fixed a stale doc claim — `/all [prompt] Name` (broadcast + immediate
+  call) was documented here but never actually implemented in `moderator.py`; doc
+  corrected to match the code rather than the other way around
 
 ---
 
@@ -345,6 +398,18 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
   address separately
 - `prompt.directed_at` renders as Python object repr in API messages when it is a
   list — functionally harmless but untidy; a named target or "all" string would be cleaner
+- `summarize_history()` is Anthropic-specific; `DeepSeekPanelist` skips it and falls
+  back to plain truncation beyond the window — fine short-term, needs a
+  provider-agnostic rewrite before long DeepSeek sessions
+- No web search tool wired up for `DeepSeekPanelist` yet — Claude panelists can search,
+  DeepSeek panelists currently can't
+- Minor: `/add_guest`/`/allow`/unknown-command usage messages in `moderator.py` return
+  an empty-content `Prompt(directed_at=current_target)` to keep the input loop going —
+  if `current_target` is a single directed panelist (not `"all"`) rather than a broadcast,
+  this actually fires a live API call with blank content. Pre-existing, low-impact
+  (only triggers on a malformed command while mid-conversation with one panelist),
+  noticed 2026-08-02 while adding `/help` — `/help` itself deliberately avoids this
+  by using a dedicated `HelpAction` instead of the same empty-Prompt pattern.
 
 ---
 
@@ -356,9 +421,14 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
 3. **HumanPanelist directive power** — human panelist can direct other panelists from
    within their turn (`Name, prompt` syntax); moderator override hook before queuing
 4. **Gemini panelist** — `GeminiPanelist(Panelist)` subclass; own `format_history()`;
-   own API key handling
-5. **Persistence** — save/load conversations to SQLite, resume later
-6. **Persona authoring guide** — how to write a structured YAML role from scratch
+   own API key handling. `DeepSeekPanelist` shipped first (2026-08-02, cheaper to run
+   and OpenAI-SDK-compatible) — Gemini would need its own client library
+   (`google-generativeai` or successor), not a shared implementation with the
+   OpenAI-compatible pair.
+5. **Provider-agnostic `summarize_history()`** — currently Anthropic-only; blocks long
+   (>30 turn) DeepSeek sessions from summarizing instead of truncating
+6. **Persistence** — save/load conversations to SQLite, resume later
+7. **Persona authoring guide** — how to write a structured YAML role from scratch
    for any domain (historical figures, fictional characters, domain experts);
    covers schema fields, trigger_keywords calibration, cross-panel fault-line
    design, and worked examples beyond the philosophy-of-mind panel.
@@ -367,23 +437,40 @@ requires `.` to send, enabling safe paste of multi-paragraph content.
    Friction emerges from worldview collision, not from scripted opposition.
    A role that names its opponents is brittle and domain-specific; a role that
    expresses its own fault lines is composable across any panel.
-7. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond
+8. **Slack integration** — `slack_session.py`; open floor model; AI panelists respond
    to @mentions; human panelists are registered Slack users
-8. **Web UI** — Flask frontend, user login, conversation history browser
-9. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists
-   (Whisper/Deepgram)
+9. **Web UI** — Flask frontend, user login, conversation history browser
+10. **Speech layer** — TTS for AI voices (ElevenLabs), STT for human panelists
+    (Whisper/Deepgram)
+
+### Cross-model experiment (essay-project Roadmap #9 — see `documentation/Future Essays - Roadmap.md`)
+
+Engineering side of a question the essay project is tracking: does panel "richness"
+come from persona configuration, or from having genuinely different models in the
+room? `DeepSeekPanelist` + `panels/*.yaml` presets are the infrastructure for this.
+First factory-settings data point (2026-08-02, `role: Default` on both sides, no
+persona): real content-level cross-pollination between Claude and DeepSeek, but in a
+smooth/concessive register — not the sharp friction the persona-configured six-Claude
+panel produces. Tentative read: friction is coming from `friction_directives`
+configuration, not model diversity alone. Full writeup and both transcripts referenced
+in the essay roadmap entry; next step there is the same persona on both models to
+isolate the variable further.
 
 ---
 
 ## Dependencies
 
 ```bash
-pip install anthropic pyyaml
+pip install anthropic openai pyyaml
 ```
 
-Environment variable required:
+`openai` is only needed for `DeepSeekPanelist` (DeepSeek's API is OpenAI-SDK-compatible)
+— not required if you're only running Claude/Human panelists.
+
+Environment variables:
 ```
-ANTHROPIC_API_KEY=your_key_here
+ANTHROPIC_API_KEY=your_key_here      # required
+DEEPSEEK_API_KEY=your_key_here       # required only if using DeepSeekPanelist
 ```
 
 ---

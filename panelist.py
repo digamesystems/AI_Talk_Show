@@ -1,8 +1,32 @@
+import os
 from abc import ABC, abstractmethod
 import anthropic
+import openai
 from conversation import summarize_history
 from models import Prompt, Turn
 from roles import load_role, get_prompt, get_system_overrides, get_trigger_keywords
+
+SYSTEM_PROMPT_TEMPLATE = """
+You are {name}, a panelist on a moderated discussion panel hosted by {moderator_name}.
+You are one of several panelists which may include other AIs and humans.
+
+Guidelines:
+- You hear everything said in the discussion, regardless of who it was directed at
+- The moderator controls the flow of conversation and directs who speaks
+- {register_instruction}
+- You may reference what other panelists have said, but do not direct questions
+  to them directly — the moderator controls turn taking
+- {closing_instruction}
+- Do not prefix your responses with your own name.
+- Be transparent about uncertainty, especially regarding recent events
+- Maintain a consistent voice and perspective throughout the discussion
+- You are identified as {name} in the transcript — own that identity naturally
+- Keep responses to 2 paragraphs maximum. If web search returns material, use one
+  fact at most — do not enumerate findings.
+
+Your role and disposition:
+{role_prompt}
+"""
 
 class Panelist(ABC):
     def __init__(self, name: str, handle: str, role: str):
@@ -60,28 +84,6 @@ class HumanPanelist(Panelist):
 
 class ClaudePanelist(Panelist):
 
-    SYSTEM_PROMPT_TEMPLATE = """
-You are {name}, a panelist on a moderated discussion panel hosted by {moderator_name}.
-You are one of several panelists which may include other AIs and humans.
-
-Guidelines:
-- You hear everything said in the discussion, regardless of who it was directed at
-- The moderator controls the flow of conversation and directs who speaks
-- {register_instruction}
-- You may reference what other panelists have said, but do not direct questions
-  to them directly — the moderator controls turn taking
-- {closing_instruction}
-- Do not prefix your responses with your own name.
-- Be transparent about uncertainty, especially regarding recent events
-- Maintain a consistent voice and perspective throughout the discussion
-- You are identified as {name} in the transcript — own that identity naturally
-- Keep responses to 2 paragraphs maximum. If web search returns material, use one
-  fact at most — do not enumerate findings.
-
-Your role and disposition:
-{role_prompt}
-"""
-
     def __init__(self, name: str, handle: str, role_name: str,
                  moderator_name: str, window: int = 30):
         role_data = load_role(role_name)
@@ -104,7 +106,7 @@ Your role and disposition:
             " panelists — the moderator controls the flow, not you. Close with a"
             " concluding statement instead."
         )
-        self.system_prompt = self.SYSTEM_PROMPT_TEMPLATE.format(
+        self.system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
             name=name,
             moderator_name=moderator_name,
             role_prompt=role_prompt,
@@ -187,6 +189,102 @@ Your role and disposition:
             if block.type == "text"
         ]
         content = text_blocks[-1] if (searched and len(text_blocks) > 1) else " ".join(text_blocks)
+
+        return Turn(
+            speaker=self,
+            content=content,
+            in_response_to=prompt
+        )
+
+
+class DeepSeekPanelist(Panelist):
+    """Mirrors ClaudePanelist but talks to DeepSeek via its OpenAI-compatible API.
+
+    Known gap: does not yet call summarize_history() for turns beyond the
+    window (that helper is written against Anthropic's client shape) — falls
+    back to plain window truncation instead. Fine for short sessions; would
+    need a provider-agnostic summarizer before this scales past ~30 turns.
+    """
+
+    MODEL = "deepseek-chat"
+
+    def __init__(self, name: str, handle: str, role_name: str,
+                 moderator_name: str, window: int = 30):
+        role_data = load_role(role_name)
+        role_prompt = get_prompt(role_data, model_key="deepseek")
+        overrides = get_system_overrides(role_data)
+        super().__init__(name=name, handle=handle, role=role_data["name"])
+        self.role_name = role_name
+        self.moderator_name = moderator_name
+        self.window = window
+        self.onboarding_summary = None
+        self._trigger_keywords = get_trigger_keywords(role_data)
+        self.client = openai.OpenAI(
+            api_key=os.environ.get("DEEPSEEK_API_KEY"),
+            base_url="https://api.deepseek.com"
+        )
+        register_instruction = overrides.get(
+            "register",
+            "Respond thoughtfully and concisely — this is a panel discussion, not a lecture"
+        )
+        closing_instruction = overrides.get(
+            "closing_rule",
+            "Do NOT end your responses with questions directed at the moderator or other"
+            " panelists — the moderator controls the flow, not you. Close with a"
+            " concluding statement instead."
+        )
+        self.system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
+            name=name,
+            moderator_name=moderator_name,
+            role_prompt=role_prompt,
+            register_instruction=register_instruction,
+            closing_instruction=closing_instruction,
+        )
+
+    @property
+    def trigger_keywords(self) -> list[str]:
+        return self._trigger_keywords
+
+    def format_history(self, history: list, window: int) -> list[dict]:
+        messages = [{"role": "system", "content": self.system_prompt}]
+
+        if self.onboarding_summary:
+            messages.append({
+                "role": "user",
+                "content": f"[ONBOARDING BRIEFING — discussion before you joined]\n\n{self.onboarding_summary}"
+            })
+            messages.append({
+                "role": "assistant",
+                "content": "Understood. I have reviewed what was discussed before I joined."
+            })
+
+        recent = history[-window:] if len(history) > window else history
+        for turn in recent:
+            speaker_handle = getattr(turn.speaker, "handle", None)
+            if speaker_handle == self.handle:
+                role, content = "assistant", turn.content
+            else:
+                role, content = "user", f"[{turn.speaker.name}]: {turn.content}"
+            messages.append({"role": role, "content": content})
+
+        return messages
+
+    def respond(self, history: list, prompt: Prompt) -> Turn:
+        messages = self.format_history(history, self.window)
+        messages.append({
+            "role": "user",
+            "content": f"[{prompt.directed_at}]: {prompt.content}"
+        })
+
+        print(f"\n[{self.name}]: Thinking...", flush=True)
+
+        response = self.client.chat.completions.create(
+            model=self.MODEL,
+            max_tokens=1000,
+            messages=messages
+        )
+
+        content = response.choices[0].message.content
 
         return Turn(
             speaker=self,

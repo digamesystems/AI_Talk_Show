@@ -1,0 +1,10 @@
+# Pilot for Roadmap #9, "The Cross-Model Experiment."
+# Factory-settings condition: no persona configuration on either panelist
+# (role: Default has an empty prompt) - just two different model families
+# given the same material, to see whether any friction shows up from model
+# diversity alone, before any persona engineering enters the picture.
+moderator_name: "John"
+topic: "Cross-model pilot: factory settings, Claude vs. DeepSeek, no persona"
+panelists:
+  - {type: claude,    name: "Claude",    role: "Default"}
+  - {type: deepseek,  name: "DeepSeek",  role: "Default"}
