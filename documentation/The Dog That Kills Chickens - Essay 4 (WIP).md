@@ -92,7 +92,7 @@ It's tempting to think data-center opposition is the safer, more forgivable kind
 
 Every farmer knows the difference between a dog that chases squirrels and one that kills chickens. For the farmer, the line is clear. For institutions, this essay has shown, it almost never is.
 
-Three Mile Island and Fukushima weren't graded on how many people they hurt. Each was graded on whether the people running it were still believed. Germany never even needed an incident of its own; it needed a coalition, decades in the making, willing to stop believing together.
+Three Mile Island and Fukushima weren't graded on how many people they hurt. Each was graded on whether the people running it had earned another chance. Germany never even needed an incident of its own; it needed a coalition, decades in the making, that just stopped believing.
 
 Maybe the question isn't how dangerous a technology is. Maybe it's whether people believe the institutions surrounding it deserve another chance.
 
@@ -129,6 +129,8 @@ But the farmer doesn't like the way the dog is looking at his chickens.
 ---
 
 ## Revision log (not part of the essay itself)
+
+**2026-08-02, TMI/Fukushima/Germany recap sentence tightened (John's hand edit, also made outside a logged session — found the same way as the closing-line change above, on direct file comparison after John flagged a discrepancy):** "Each was graded on whether the people running it were still believed" became "...had earned another chance"; "it needed a coalition, decades in the making, willing to stop believing together" became "...that just stopped believing." John's reasoning: the original phrasing was too soft and read as academic, and didn't ground itself firmly enough under the essay's own "legitimacy" master frame. "Had earned another chance" also now echoes the closing paragraph's "deserve another chance" two sentences later — a callback the prior wording didn't create. Word count: 2,178 per `tic_scanner.py`, unchanged (a near-even swap).
 
 **2026-08-02, closing line changed again (John's hand edit, made outside a logged session — found out of sync with this log during a status check):** The line recorded in the entry below as the closing ("The farmer isn't waiting for the next chicken to decide what kind of dog he owns") was replaced with: "But the farmer doesn't like the way the dog is looking at his chickens." John's reasoning: the "waiting for the next chicken" version implied a chicken-level event had already happened, which contradicts the essay's own preceding line ("AI hasn't been put down. Not yet.") — the essay's actual claim is that the verdict is still pending, not already reached. The new line is judged more memorable for being a bit ominous, and keeps the essay honestly in "jury's still out" territory rather than implying society is already mid-verdict. Word count: 2,178 per `tic_scanner.py`.
 
