@@ -244,6 +244,27 @@ Key design decisions:
   for a specific panelist) at the moderator prompt — registers in `leash_pulls`,
   same `/allow` flow applies
 
+**Understood tradeoff: keyword matching is precision, not recall (2026-08-02)**
+`sniff()` catches only phrasings someone anticipated when writing `trigger_keywords` —
+it will never false-positive on unrelated text, but it will also never catch a fresh
+paraphrase of a character's own fault line. Observed directly during the `//`-statement
+leash-pull testing: "free will is an illusion," "we don't have free will anyway," and a
+line invoking "the Other" (Sartre's own term, from *Being and Nothingness*) all failed
+to trigger Sartre, despite determinism/freedom being his entire philosophical territory
+— none of the three literally contained any of his configured substrings. Adding more
+keywords is a treadmill, not a fix; the underlying limitation doesn't go away, it just
+moves to the next unanticipated phrasing. This is accepted as a known limitation of the
+current design, not a bug to patch keyword-by-keyword. The reason the mechanism is
+substring-based at all is cost: zero-token detection lets every idle panelist watch
+every turn with no API call. Two escalation tiers exist if better recall is ever wanted:
+(1) local embedding similarity against each panelist's fault-line concepts instead of
+literal substrings — catches paraphrase, still no per-turn API cost, but a real
+dependency and design change; (2) an LLM call asking "would this character react to
+this turn" — catches almost everything, but reintroduces the exact per-turn,
+per-panelist API cost this mechanism exists to avoid, and scales badly with panel size.
+Neither has been started; this is logged as context for whoever picks it up next, not
+as a queued task.
+
 **System prompt ownership**
 `SYSTEM_PROMPT_TEMPLATE` lives at module level in `panelist.py`, shared by
 `ClaudePanelist` and `DeepSeekPanelist` (promoted out of `ClaudePanelist` when
