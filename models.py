@@ -39,3 +39,7 @@ class AllowAction:
 @dataclass
 class InterjectionRequest:
     handle: str | None = None  # None = first human panelist found
+
+@dataclass
+class HelpAction:
+    pass

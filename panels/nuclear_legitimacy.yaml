@@ -1,0 +1,11 @@
+# Panel preset for discussing Essay 4, "The Dog That Kills Chickens"
+# (legitimacy / permission-to-operate as the real variable in institutional trust)
+moderator_name: "John"
+topic: "Essay 4: The Dog That Kills Chickens"
+panelists:
+  - {type: claude, name: "Sartre",       role: "Sartre"}
+  - {type: claude, name: "Watts",        role: "Watts"}
+  - {type: claude, name: "Searle",       role: "Searle"}
+  - {type: claude, name: "Wittgenstein", role: "Wittgenstein"}
+  - {type: claude, name: "Turing",       role: "Turing"}
+  - {type: claude, name: "Basho",        role: "Basho"}

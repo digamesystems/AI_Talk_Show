@@ -1,8 +1,18 @@
+import sys
+import yaml
+from pathlib import Path
+
 from conversation import Conversation
 from moderator import Moderator
 from panelist import ClaudePanelist, HumanPanelist
 from roles import list_roles, load_role
 from session import Session
+
+# Windows consoles default to cp1252, which can't print names like "Bashō" —
+# force UTF-8 so role names with non-ASCII characters don't crash the session.
+sys.stdout.reconfigure(encoding="utf-8")
+
+PANELS_DIR = Path(__file__).parent / "panels"
 
 
 def prompt_role_selection() -> str:
@@ -46,9 +56,98 @@ def add_human_panelist() -> HumanPanelist:
     return HumanPanelist(name=name, role=role)
 
 
+def list_panel_files() -> list[str]:
+    if not PANELS_DIR.exists():
+        return []
+    return sorted(p.stem for p in PANELS_DIR.glob("*.yaml"))
+
+
+def load_panel_file(name: str) -> dict:
+    path = PANELS_DIR / f"{name}.yaml"
+    if not path.exists():
+        raise FileNotFoundError(f"Panel preset '{name}' not found in {PANELS_DIR}")
+    with open(path, encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def prompt_panel_file_selection() -> str | None:
+    files = list_panel_files()
+    if not files:
+        print("  No panel presets found in panels/.")
+        return None
+    print("\nAvailable panel presets:")
+    for i, name in enumerate(files, 1):
+        print(f"  {i}. {name}")
+    print()
+    while True:
+        choice = input("  Select preset (name or number): ").strip().lower()
+        if choice.isdigit():
+            idx = int(choice) - 1
+            if 0 <= idx < len(files):
+                return files[idx]
+        else:
+            match = next((f for f in files if f.lower() == choice), None)
+            if match:
+                return match
+        print("  Invalid selection. Try again.")
+
+
+def build_panelist_from_preset(entry: dict, moderator_name: str):
+    kind = entry.get("type", "claude").lower()
+    name = entry["name"]
+    if kind == "human":
+        role = entry.get("role_description", "Guest Panelist")
+        return HumanPanelist(name=name, role=role)
+    role_name = entry.get("role", "Default")
+    return ClaudePanelist(
+        name=name,
+        handle=name.lower().replace(" ", "_"),
+        role_name=role_name,
+        moderator_name=moderator_name
+    )
+
+
+def create_session_from_file() -> Session:
+    preset_name = prompt_panel_file_selection()
+    if preset_name is None:
+        print("  Falling back to manual setup.")
+        return create_session_by_hand()
+    preset = load_panel_file(preset_name)
+
+    moderator_name = preset.get("moderator_name") \
+        or input("Moderator name: ").strip() or "Host"
+    moderator = Moderator(name=moderator_name)
+
+    topic = preset.get("topic") or (input("Opening topic (optional): ").strip() or None)
+    conversation = Conversation(topic=topic, active_window=30)
+
+    for entry in preset.get("panelists", []):
+        panelist = build_panelist_from_preset(entry, moderator_name)
+        handle = panelist.name.lower().replace(" ", "_")
+        if any(p.handle == handle for p in conversation.panelists):
+            print(f"  Skipping duplicate panelist name '{panelist.name}'.")
+            continue
+        conversation.add_panelist(panelist)
+        print(f"  Added {panelist.name} ({panelist.role})")
+
+    if not conversation.panelists:
+        print("  No panelists loaded from preset — falling back to manual setup.")
+        return create_session_by_hand()
+
+    return Session(conversation=conversation, moderator=moderator)
+
+
 def create_session() -> Session:
     print("\n=== Panel Discussion Setup ===\n")
 
+    mode = input("Build panel by hand or load from file? (hand/file) [hand]: "
+                ).strip().lower()
+    if mode.startswith("f"):
+        return create_session_from_file()
+    return create_session_by_hand()
+
+
+def create_session_by_hand() -> Session:
     moderator_name = input("Moderator name: ").strip() or "Host"
     moderator = Moderator(name=moderator_name)
 
@@ -85,12 +184,7 @@ def create_session() -> Session:
 
 def main():
     print("=== Panel Discussion Console ===")
-    print("Commands:")
-    print("  //...        Statement (no response expected)")
-    print("  /all ...     Broadcast to all panelists")
-    print("  Name, ...    Direct to named panelist")
-    print("  /quit        End session")
-    print("  .            Send (terminate multi-line input)\n")
+    print("Type /help once the session starts to see the full command list.\n")
 
     session = create_session()
     session.run()

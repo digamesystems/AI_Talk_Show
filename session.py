@@ -1,4 +1,22 @@
-from models import Prompt, Statement, Turn, AddGuestAction, AllowAction, DropGuestAction, InterjectionRequest
+from models import Prompt, Statement, Turn, AddGuestAction, AllowAction, DropGuestAction, InterjectionRequest, HelpAction
+
+HELP_TEXT = """\
+[System]: Available commands
+  //text                 Statement — recorded, no response expected
+  /all [prompt]          Broadcast to all panelists (they respond only when
+                          called on by name afterward)
+  Name, prompt           Direct a prompt to a panelist, updates sticky target
+  Name prompt            Same as above (comma optional)
+  [prompt]               Directed at the current sticky target
+  /allow <handle>        Let a leash-pulling panelist speak
+  !                      Request a human panelist interjection (first found)
+  !handle                Request interjection for a specific human panelist
+  /add_guest Name role   Add a panelist mid-session (role or 'human')
+  /drop_guest Name       Remove a panelist from the session
+  /help or /?            Show this list
+  /quit or /exit         End session
+  .                      Send (terminates multi-line/pasted input)
+"""
 from conversation import Conversation, summarize_history
 from moderator import Moderator
 from panelist import ClaudePanelist, HumanPanelist
@@ -196,6 +214,9 @@ class Session:
         print(f"\n[{panelist.name}]: {turn.content}\n")
         self._add_turn(turn)
 
+    def handle_help(self, action: HelpAction):
+        print(f"\n{HELP_TEXT}")
+
     def handle_drop_guest(self, action: DropGuestAction):
         name = action.name
         panelist = next(
@@ -227,8 +248,7 @@ class Session:
         print(f"\n[System]: Session started. "
               f"Panelists: "
               f"{', '.join(p.name for p in self.conversation.panelists)}\n"
-              f"Commands: // statement, /all everyone, "
-              f"/allow handle, /add_guest Name role, /drop_guest Name, /quit\n")
+              f"Type /help for the full command list.\n")
 
         while True:
             try:
@@ -249,6 +269,8 @@ class Session:
             if action is None:
                 print("\n[System]: Session ended.")
                 break
+            elif isinstance(action, HelpAction):
+                self.handle_help(action)
             elif isinstance(action, AddGuestAction):
                 self.handle_add_guest(action)
             elif isinstance(action, DropGuestAction):

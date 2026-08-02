@@ -1,4 +1,4 @@
-from models import Prompt, Statement, AddGuestAction, AllowAction, DropGuestAction, InterjectionRequest
+from models import Prompt, Statement, AddGuestAction, AllowAction, DropGuestAction, InterjectionRequest, HelpAction
 
 STATEMENT_PREFIX = "//"
 
@@ -13,6 +13,9 @@ class Moderator:
 
         if raw.lower() in ("/quit", "/exit"):
             return None
+
+        if raw.lower() in ("/help", "/?"):
+            return HelpAction()
 
         if raw.lower().startswith("/add_guest") or raw.lower().startswith("/add_panelist"):
             parts = raw.split(maxsplit=2)
@@ -61,7 +64,7 @@ class Moderator:
 
         if raw.startswith("/"):
             print(f"[System]: Unknown command '{raw.split()[0]}'. "
-                  f"Commands: /add_guest, /drop_guest, /all, //, /quit")
+                  f"Type /help for the full command list.")
             return Prompt(content="", directed_at=current_target)
 
         return Prompt(
