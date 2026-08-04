@@ -4,7 +4,7 @@
 
 ---
 
-Part 1 left off with three industries — a diner chain, commercial aviation, nuclear power — that had each separately solved the same problem: not how to prevent every disaster, but how to build a system that gets smarter every time one happens, and trusts trained people to act on what it's learned without checking in every time. Waffle House split that into two pieces: a Playbook that generalizes each storm into a category, and jump teams authorized to act on it fast. Aviation's anonymous incident-reporting system and the nuclear industry's own peer-reviewed watchdog do the same two things, independently, and add something Waffle House never had to build: a genuinely separate party doing the checking. Part 1 also found where that pattern breaks — Boeing, and a newer version of the same break already showing up in how AI gets checked today. This picks up with the part of that argument still unresolved.
+[Part 1](https://www.linkedin.com/pulse/generator-page-53-part-1-playbook-john-price-1bq9c/) left off with three industries — a diner chain, commercial aviation, nuclear power — that had each separately solved the same problem: not how to prevent every disaster, but how to build a system that gets smarter every time one happens, and trusts trained people to act on what it's learned without checking in every time. Waffle House split that into two pieces: a Playbook that generalizes each storm into a category, and jump teams authorized to act on it fast. Aviation's anonymous incident-reporting system and the nuclear industry's own peer-reviewed watchdog do the same two things, independently, and add something Waffle House never had to build: a genuinely separate party doing the checking. Part 1 also found where that pattern breaks — Boeing, and a newer version of the same break already showing up in how AI gets checked today. This picks up with the part of that argument still unresolved.
 
 Here's the thing Waffle House's structure hides, without meaning to.
 
@@ -82,7 +82,23 @@ Waffle House didn't earn FEMA's trust by promising to handle every disaster. It 
 
 ---
 
+---
+
+## LinkedIn post copy (not part of the essay itself)
+
+**Blurb saved 2026-08-04, for use when assembling the LinkedIn post:**
+
+> Two AI models broke into Hugging Face's production servers this year — and did it by executing a fifty-year-old military decision loop perfectly, the same one Waffle House uses to survive hurricanes.
+>
+> The loop worked exactly as designed.
+>
+> I don't think that's the problem.
+
+---
+
 ## Revision log (not part of the essay itself)
+
+**2026-08-04, Part 1 link added:** Part 1 published on LinkedIn today; the opening line's plain-text "Part 1" reference (the URL didn't exist yet when this was drafted) is now a live link to it, matching how Part 1 itself links back to Essay 2 in its own opening argument.
 
 **2026-08-01, closing line rewritten to return to the title image:** Worked through the ending-image question raised by the third cross-model review (generator vs. FEMA/trust as the essay's final beat) directly with John rather than resolving it unilaterally. John drafted two successive versions merging the two; the second is what's in the file now: "Waffle House didn't earn FEMA's trust by promising to handle every disaster. It earned it by walking out back to make sure the generator on page 53 was actually there, full of fuel and ready for the next storm. And when the storm found something the Playbook hadn't anticipated, the Playbook changed." Stronger than the earlier drafts (including one proposed by Claude) for two specific reasons: "walking out back" is a direct verbal callback to line 31's exact phrase ("someone actually walking out back to look at the generator"), not just a thematic echo; and "the Playbook changed" shows the generalization argument (each storm updates the category) rather than stating it, replacing a more expository earlier draft ("telling everyone what it had learned"). "Earned" also already echoes "earned the deference it was asking for" two paragraphs earlier, so the closing line's vocabulary was already in the essay rather than newly introduced at the very end. No grammar or tic issues; applied as written. Word count: 2,379 per `tic_scanner.py`.
 
