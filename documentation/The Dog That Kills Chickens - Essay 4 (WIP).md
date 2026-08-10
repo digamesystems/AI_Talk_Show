@@ -128,6 +128,20 @@ But the farmer doesn't like the way the dog is looking at his chickens.
 
 ---
 
+## LinkedIn post copy (not part of the essay itself)
+
+**Blurb saved 2026-08-09, for use when publishing tomorrow morning — leans on the Brockovich coalition's speed and the closing farmer line, supersedes the earlier 2026-08-01 nuclear-focused draft saved in `Essay 4 Outline - Chasing Chickens (WIP).md`:**
+
+> Erin Brockovich just built a 500-organization coalition against AI data centers in about a year.
+>
+> Germany's anti-nuclear movement took three decades to get that kind of power.
+>
+> AI hasn't been put down. Not yet.
+>
+> But the farmer doesn't like the way the dog is looking at his chickens.
+
+---
+
 ## Revision log (not part of the essay itself)
 
 **2026-08-02, TMI/Fukushima/Germany recap sentence tightened (John's hand edit, also made outside a logged session — found the same way as the closing-line change above, on direct file comparison after John flagged a discrepancy):** "Each was graded on whether the people running it were still believed" became "...had earned another chance"; "it needed a coalition, decades in the making, willing to stop believing together" became "...that just stopped believing." John's reasoning: the original phrasing was too soft and read as academic, and didn't ground itself firmly enough under the essay's own "legitimacy" master frame. "Had earned another chance" also now echoes the closing paragraph's "deserve another chance" two sentences later — a callback the prior wording didn't create. Word count: 2,178 per `tic_scanner.py`, unchanged (a near-even swap).
