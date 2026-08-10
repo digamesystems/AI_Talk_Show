@@ -208,7 +208,7 @@ Sound familiar?
 
 ---
 
-# PART 2 — DRAFT
+# Cursive in a Charter School, Part 2: The Margins — DRAFT
 
 *Status: first full draft, unpolished. Written 2026-08-09, same session as Part 2's outline
 negotiation (see decisions above — no authorization-throughline language, ending lands on the
@@ -292,7 +292,7 @@ compressed layers underneath. Proposing and committing are two different acts, d
 not because the AI can't be trusted with ideas, but because the record of *why* the system looks
 the way it does isn't allowed to change until someone actually decides it should.
 
-That record turns out to matter in a way Steve didn't fully anticipate when he built it. "The fact
+That record turns out to matter in a way Steve might not have fully anticipated when he built it. "The fact
 that it can see the design evolution in the L4 docs has helped in a lot of cases," he said,
 "especially on bugs, when I can see why system X has a bug now based on system Y changing a month
 ago and we missed one interaction point when changing that." Not just a description of what the
@@ -309,8 +309,9 @@ existed. Lose the people who held it: they leave, memory fades, six months pass.
 get worse. It just becomes much harder to change correctly, because the reasoning that made it
 safe to change is gone, even though every line still compiles.
 
-Naur was writing about human turnover. He had no reason to imagine a collaborator that shows up
-with zero theory of the system by default, every single session, unless someone hands it one. But
+Naur was writing about human turnover — the people who built the system, leaving and taking their
+knowledge with them. He had no reason to imagine a collaborator that shows up with zero theory of
+the system by default, every single session, unless someone hands it one. But
 that's exactly the gap Steve's L4 is built to close. Not documentation in the old sense, a
 description of what exists, but an externalized version of the thing Naur said actually mattered:
 the theory, kept in a form durable enough to survive whoever, or whatever, is asking about it next.
@@ -341,7 +342,8 @@ But the machine reading the equivalent document today doesn't need handwriting i
 needs context: the part of the system that was never going to fit in the code, no matter how
 carefully anyone wrote it.
 
-We don't need the 500-page specification back. We need to stop throwing away the margins.
+We don't need the 500-page specification back. We need to stop throwing away the notes in the
+margins.
 
 ## Footnotes — Part 2 (draft, needs verification pass)
 
