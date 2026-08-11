@@ -90,15 +90,15 @@ It didn't last.
 
 ---
 
-By the time I started writing code, in the early 1980s, that same upfront-everything model —
-months of design before a line of code got written, failure discovered only at the end, when it
-was most expensive to fix² — was already collapsing under its own weight. The industry couldn't
+By the time I started writing code, in the early 1980s, that same upfront-everything model was
+already collapsing under its own weight. Months of design before a line of code got written.
+Failure discovered only at the end, when it was most expensive to fix.² The industry couldn't
 respond to change fast enough, and Agile replaced it. I watched it work, then watched it calcify:
 scrum masters, certifications, ceremony piling onto something that started as a rejection of
 exactly that kind of overhead.³ Somewhere in that transition, the big upfront spec disappeared
 almost entirely. Teams learned to surf the change instead of planning around it.
 
-Now, working with LLMs, I'm watching something that looks a lot like the spec come back. These fast, strange collaborators need
+Now, working with LLMs, I'm watching something that looks a lot like a spec "comeback." These fast, strange collaborators need
 an upfront structure to keep from wandering into the weeds, and a skill the ancients had is
 getting reborn, like cursive in a charter school.
 
@@ -116,13 +116,14 @@ That reframes the whole thing. This isn't spec discipline returning because AI i
 untrustworthy. It's the same adjustment the field has made every time an abstraction layer
 admitted people — or now, systems — that don't share the tacit knowledge of the layer below. Robert
 "Uncle Bob" Martin, who's been writing software since before most of the abstractions in this
-essay existed, lists the actual sequence in his own recent history of the field: FORTRAN and
-COBOL in the late '50s, ALGOL and SIMULA 67 driving the level up again in the early-to-mid '60s,
-structured and object-oriented programming emerging from those, BASIC putting programming in
-reach of "almost anyone" by 1964, C and Unix in the late '60s and early '70s. Then, in his own
-words, "we were off to the races": mainframe, minicomputer, microcomputer, PC, object-oriented,
-internet, Agile, Ruby/Rails, mobile, and now — his own word for it — AI, which "reared up to
-threaten everything."⁴
+essay existed, lists the actual sequence in his own recent history of the field. FORTRAN and
+COBOL, in the late '50s. ALGOL and SIMULA 67, driving the level up again in the early-to-mid '60s.
+Structured and object-oriented programming, emerging from those. BASIC, putting programming in
+reach of "almost anyone" by 1964. C and Unix, in the late '60s and early '70s.
+
+Then, in his own words, "we were off to the races": mainframe, minicomputer, microcomputer, PC,
+object-oriented, internet, Agile, Ruby/Rails, mobile, and now — his own word for it — AI, which
+"reared up to threaten everything."⁴
 
 Each of those was a real disruption, not a metaphorical one, and one of them produced a reaction
 that looks a lot like the one happening right now.
@@ -256,7 +257,8 @@ quietly violates something nobody remembered to explain. Working from the codeba
 agent got 100% of the decisions that were visible in the code itself. On the decisions that
 weren't — the ones living in a product doc, a design conversation, someone's memory of why a thing
 was built that way — it got between zero and 33%. Give the same agent access to that missing
-context, and overall compliance jumped from 46% to 95%.
+context through Brief, a tool built by the same company whose researchers ran the study, and
+overall compliance jumped from 46% to 95%.
 
 The code was never the problem. The code was fine. What the agent couldn't do was see the parts of
 the system that had never been code in the first place.
@@ -356,9 +358,11 @@ with no history of its own the thing Gates already had: the margins.
    this session.** 8 tasks, 41 weighted decision points; baseline (codebase access only) 46%
    compliance, 100% on code-visible decisions, 0–33% on decisions requiring context outside the
    codebase; augmented condition (adding product-context retrieval via a commercial tool, "Brief")
-   reached 95%. Note: the augmented condition uses a specific commercial product — worth disclosing
-   as a vendor interest in the essay itself, even though the methodology (predefined decision
-   points, clean baseline split) looks rigorous on its own terms.
+   reached 95%. **Verified 2026-08-11:** the paper's authors, Drew Dillon and Kasyap Varanasi, work
+   at Brief — this is the vendor's own team publishing a study that validates their own product,
+   not independent researchers testing a third-party tool. Now disclosed directly in the essay's
+   prose, not just here, given how direct the conflict turns out to be. The methodology (predefined
+   decision points, clean baseline split) still looks rigorous on its own terms.
 3. Peter Naur, "Programming as Theory Building," *Microprocessing and Microprogramming*, May 1985
    (DOI: 10.1016/0165-6074(85)90032-8). **Checked 2026-08-09, corroborated but not directly
    read** — publication details confirmed, and the argument (code is a residue of a team's shared
