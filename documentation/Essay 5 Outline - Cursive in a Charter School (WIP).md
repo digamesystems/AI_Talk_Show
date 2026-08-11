@@ -86,7 +86,7 @@ scrum masters, certifications, ceremony piling onto something that started as a 
 exactly that kind of overhead.³ Somewhere in that transition, the big upfront spec disappeared
 almost entirely. Teams learned to surf the change instead of planning around it.
 
-Now, working with LLMs, I’m watching something that looks a lot, at first glance, like a spec-writing “renaissance”. My initial reaction was that our fast, strange new collaborators simply need an upfront structure to keep them from “wandering off into the weeds”, and a skill from ancient times is being reborn — like cursive being taught in a charter school.  
+Now, working with LLMs, I’m watching something that looks a lot, at first glance, like a spec-writing “renaissance”. My initial reaction was that our fast, strange new collaborators simply need an upfront structure to keep them from “wandering off into the weeds”, and a skill from ancient times is being reborn — like cursive being taught again in a charter school.  
 
 I put that observation to a couple of colleagues. One answer reframed the whole question.
 
