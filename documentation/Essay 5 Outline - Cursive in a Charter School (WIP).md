@@ -64,8 +64,6 @@ Don't treat either attribution as locked until they've responded to the draft it
 
 ## DRAFT TEXT
 
-Candidate revision to opening: 
-
 In 1992, Joel Spolsky was a program manager on Microsoft's Excel team, finishing the most detailed document he'd ever written: a specification for a new Basic-based programming language for Excel that would eventually become Visual Basic for Applications. It had grown to roughly 500 pages — about a ream of laser-printed paper — headed for something Microsoft called a BillG review, where major features were reviewed by Bill Gates.¹
 
 Spolsky sent the spec to Gates's office less than 24 hours before the meeting. He assumed nobody could read the whole thing that fast, let alone think carefully about it. Then Gates walked into the room with the spec already in his hand.
@@ -75,32 +73,6 @@ He'd read every page. There were notes in the margin of the first page. Then the
 A real compatibility landmine, buried in a five-hundred-page specification, had become the subject of the hardest question Gates could think to ask — and Spolsky had an answer because he'd already worked through it himself the day before.
 
 That's what a specification could do, in the right hands, before computer time got cheap enough that mistakes were survivable: not paperwork nobody read, but a document detailed enough that reading it carefully was itself a form of engineering.
-
-It didn't last.
-
-Original:
-
-
-In 1992, Joel Spolsky was a product manager at Microsoft, finishing the most detailed document
-he'd ever written: a specification for a new scripting language inside Excel that would
-eventually become Visual Basic for Applications. It ran to roughly 500 pages — about a ream of
-laser-printed paper — headed for something Microsoft called a BillG review, where a major feature
-got read and personally interrogated by Bill Gates.¹
-
-Spolsky sent the spec to Gates's office less than 24 hours before the meeting. He assumed nobody
-could read the whole thing that fast, let alone think carefully about it. Then Gates walked into
-the room with the spec already in his hand.
-
-He'd read every page. There were notes in the margin of the first page. Then the second. Then,
-Spolsky realized, every single page in the stack: five hundred pages of handwritten annotation,
-produced overnight. And Gates didn't open with something vague. He went straight to a specific
-technical objection: how Excel's date system would handle the year 1900, and whether it would
-stay compatible with Lotus 1-2-3. A real bug, buried deep in a five-hundred-page document, found
-by someone who had actually read the thing, cover to cover, the night before.
-
-That's what a specification could do, in the right hands, before computer time got cheap enough
-that mistakes were survivable: not paperwork nobody read, but a document detailed enough that
-reading it carefully was itself a form of engineering.
 
 It didn't last.
 
@@ -114,51 +86,17 @@ scrum masters, certifications, ceremony piling onto something that started as a 
 exactly that kind of overhead.³ Somewhere in that transition, the big upfront spec disappeared
 almost entirely. Teams learned to surf the change instead of planning around it.
 
-Now, working with LLMs, I'm watching something that looks a lot like a spec "comeback." These fast, strange collaborators need
-an upfront structure to keep from wandering into the weeds, and a skill the ancients had is
-getting reborn, like cursive in a charter school.
-
-Revision of the paragraph above: 
-
 Now, working with LLMs, I’m watching something that looks a lot, at first glance, like a spec-writing “renaissance”. My initial reaction was that our fast, strange new collaborators simply need an upfront structure to keep them from “wandering off into the weeds”, and a skill from ancient times is being reborn — like cursive being taught in a charter school.  
 
 I put that observation to a couple of colleagues. One answer reframed the whole question.
 
 ---
 
-Brian's reply: every one of those transitions also brought more people into coding, and to
-whoever was fluent in the layer below, the new arrivals looked exactly like what I'd just called
-the LLMs: capable, fast, and missing something real. To someone writing assembly, the
-Python-only coder is the idiot savant who barely understands the machine underneath their own
-code.
-
-Revision of the paragraph above: 
-
 Brian's reply was essentially: every one of those transitions also brought more people into coding, and to whoever was fluent in the layer below, the new arrivals looked exactly like what I'd just called the LLMs — capable, fast, and missing something real. To someone writing assembly, the Python-only coder is the idiot savant who barely understands the machine underneath their own code.
-
-New: 
 
 That reframes the whole thing. This isn't spec discipline returning because AI is uniquely untrustworthy. It's the same adjustment the field has made every time an abstraction layer admitted people — or now, systems — that don't share the tacit knowledge of the layer below. Robert "Uncle Bob" Martin, in his recent history of the field, traces that progression from FORTRAN and COBOL through ALGOL, BASIC, C, Unix, object-oriented programming, the internet, Agile, mobile, and finally AI. As he puts it, "we were off to the races."⁴
 
 Each of those was a real disruption, not a metaphorical one. And one of them produced a reaction that looks a lot like the one happening right now.
-
-Original: 
-
-That reframes the whole thing. This isn't spec discipline returning because AI is uniquely
-untrustworthy. It's the same adjustment the field has made every time an abstraction layer
-admitted people — or now, systems — that don't share the tacit knowledge of the layer below. Robert
-"Uncle Bob" Martin, who's been writing software since before most of the abstractions in this
-essay existed, lists the actual sequence in his own recent history of the field. FORTRAN and
-COBOL, in the late '50s. ALGOL and SIMULA 67, driving the level up again in the early-to-mid '60s.
-Structured and object-oriented programming, emerging from those. BASIC, putting programming in
-reach of "almost anyone" by 1964. C and Unix, in the late '60s and early '70s.
-
-Then, in his own words, "we were off to the races": mainframe, minicomputer, microcomputer, PC,
-object-oriented, internet, Agile, Ruby/Rails, mobile, and now — his own word for it — AI, which
-"reared up to threaten everything."⁴
-
-Each of those was a real disruption, not a metaphorical one, and one of them produced a reaction
-that looks a lot like the one happening right now.
 
 ---
 
