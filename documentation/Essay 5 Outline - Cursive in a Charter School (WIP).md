@@ -323,30 +323,25 @@ tried to know everything before a line of code got written, and the industry bro
 to keep that pretense alive. Agile's answer was honest: nobody can actually know everything in
 advance, so stop pretending, and build a process that survives being wrong. What Steve's system
 does is neither. It doesn't freeze the design, and it doesn't let the reasoning disappear when the
-design changes. It lets the
-implementation move as fast as Agile ever wanted, while keeping the one thing the big upfront spec
+design changes. It lets the implementation move as fast as Agile ever wanted, while keeping the one thing the big upfront spec
 used to protect, and Agile never meant to throw away along with it: a place where the reasoning
 survives the people who had it in their heads.
-
-We're not going back to the 500-page specification. We're recovering what it was actually for,
-without giving up anything Agile taught us about how fast the world moves underneath it.
 
 ---
 
 Gates filled the margins of Spolsky's specification with everything he knew that the document
-itself couldn't say: a decade of industry knowledge, brought to bear on someone else's writing, in
+itself couldn't say: decades of industry knowledge, brought to bear on someone else's writing, in
 his own hand. It's tempting to read that as the high-water mark of a discipline we've since lost
 — five hundred pages, annotated overnight, by someone who understood what he was reading closely
 enough to catch a bug no one else had found.
 
-But the discipline isn't lost. It's being redirected — toward a different kind of reader, for the
-same reason it always existed.
+But the discipline isn't lost. It's being redirected toward a different kind of reader: one with
+no institutional context of its own — capable and fast on everything visible in the code, and
+exactly as unreliable as the study above on everything that wasn't.
 
-The machine reading the equivalent document today doesn't need the handwriting. It needs what the
-handwriting carried: the part of the system that was never going to fit in the code, no matter how
-carefully anyone wrote it.
+We're not going back to Spolsky's 500-page specification. We're figuring out how to hand a reader
+with no history of its own the thing Gates already had: the margins.
 
-We don't need the 500-page specification back. We need to stop losing what the margins were for.
 
 ## Footnotes — Part 2 (draft, needs verification pass)
 
