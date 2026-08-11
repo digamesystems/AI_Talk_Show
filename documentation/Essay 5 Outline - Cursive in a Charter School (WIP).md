@@ -78,15 +78,9 @@ It didn't last.
 
 ---
 
-By the time I started writing code, in the early 1980s, that same upfront-everything model was
-already collapsing under its own weight. Months of design before a line of code got written.
-Failure discovered only at the end, when it was most expensive to fix.² The industry couldn't
-respond to change fast enough, and Agile replaced it. I watched it work, then watched it calcify:
-scrum masters, certifications, ceremony piling onto something that started as a rejection of
-exactly that kind of overhead.³ Somewhere in that transition, the big upfront spec disappeared
-almost entirely. Teams learned to surf the change instead of planning around it.
+By the time I started writing code, in the early 1980s, that same upfront-everything model was already collapsing under its own weight. Months of design before a line of code got written. Failure discovered only at the end, when it was most expensive to fix.² The industry couldn't respond to change fast enough, and Agile was the answer: stop pretending we could know everything in advance, build something, learn from it, change it. I watched it work, then watched it calcify — scrum masters, certifications, ceremony piling onto something that had started as a rejection of exactly that kind of overhead.³ Somewhere along the way, the big upfront specification disappeared almost entirely. We learned to surf the change instead of planning around it.
 
-Now, working with LLMs, I’m watching something that looks a lot, at first glance, like a spec-writing “renaissance”. My initial reaction was that our fast, strange new collaborators simply need an upfront structure to keep them from “wandering off into the weeds”, and a skill from ancient times is being reborn — like cursive being taught in a charter school.  
+Now, working with LLMs, I'm watching something that looks, at first glance, like a spec-writing "renaissance." My first reaction was that our fast, strange new collaborators simply needed more structure up front to keep them from "wandering off into the weeds." A skill from an ancient era was being reborn — like cursive being taught again in a charter school.
 
 I put that observation to a couple of colleagues. One answer reframed the whole question.
 
