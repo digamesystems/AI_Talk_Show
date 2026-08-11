@@ -64,6 +64,22 @@ Don't treat either attribution as locked until they've responded to the draft it
 
 ## DRAFT TEXT
 
+Candidate revision to opening: 
+In 1992, Joel Spolsky was a program manager on Microsoft's Excel team, finishing the most detailed document he'd ever written: a specification for a new Basic-based programming language for Excel that would eventually become Visual Basic for Applications. It had grown to roughly 500 pages — about a ream of laser-printed paper — headed for something Microsoft called a BillG review, where major features were reviewed by Bill Gates.¹
+
+Spolsky sent the spec to Gates's office less than 24 hours before the meeting. He assumed nobody could read the whole thing that fast, let alone think carefully about it. Then Gates walked into the room with the spec already in his hand.
+
+He'd read every page. There were notes in the margin of the first page. Then the second. Then, Spolsky realized, every single page in the stack: five hundred pages of handwritten annotation, produced overnight. And as the questions got harder, Gates eventually zeroed in on a specific technical detail: whether Excel's many date and time functions would behave the same way in Basic. Spolsky already knew the answer. There was an exception for January and February 1900 — the legacy behavior Excel had to preserve for compatibility with Lotus 1-2-3.
+
+A real compatibility landmine, buried in a five-hundred-page specification, had become the subject of the hardest question Gates could think to ask — and Spolsky had an answer because he'd already worked through it himself the day before.
+
+That's what a specification could do, in the right hands, before computer time got cheap enough that mistakes were survivable: not paperwork nobody read, but a document detailed enough that reading it carefully was itself a form of engineering.
+
+It didn't last.
+
+Original:
+
+
 In 1992, Joel Spolsky was a product manager at Microsoft, finishing the most detailed document
 he'd ever written: a specification for a new scripting language inside Excel that would
 eventually become Visual Basic for Applications. It ran to roughly 500 pages — about a ream of
