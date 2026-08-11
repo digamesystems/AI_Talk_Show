@@ -100,46 +100,22 @@ Each of those was a real disruption, not a metaphorical one. And one of them pro
 
 ---
 
-In the early 1950s, Grace Hopper built the first compiler, a program called A-0, that translated
-a kind of pseudocode into the raw numeric instructions a UNIVAC I could actually run. To prove it
-worked, she ran a timing comparison: one programmer using A-0 against a team of experienced
-programmers writing the raw machine code — called C-10 — by hand, on the same problem. The
-hand-coded team took three programmers a little over 14.5 hours, roughly 44 man-hours combined.
-The A-0 programmer finished in 48.5 minutes. A factor of over 50.⁵
+In the early 1950s, Grace Hopper built the first compiler, a program called A-0, that translated a kind of pseudocode into the raw numeric instructions a UNIVAC I could actually run. To prove it worked, she ran a timing comparison: one programmer using A-0 against a team of experienced programmers writing the raw machine code — called C-10 — by hand, on the same problem. The hand-coded team took three programmers a little over 14.5 hours, roughly 44 man-hours combined. The A-0 programmer finished in 48.5 minutes. A factor of over 50.⁵
 
-You'd expect that comparison to end the argument. It didn't, for two reasons that both still
-sound familiar. First, an honest technical one: A-0's compiled programs ran about 30% slower than
-hand-written C-10, and computer time back then cost roughly ten times what a programmer's time
-cost, so raw speed wasn't a minor concern. It was the whole economic picture, and for years
-afterward "the advantage was still to the raw machine language programmers."⁶ Second, a fear with
-nothing technical about it at all: programmers were afraid a working compiler would put them out
-of work. If one person with A-0 could do what fifty people used to do by hand, Martin's account
-puts the worry plainly: there were going to be "a lot of hungry programmers out on the
-streets."⁷
+You'd expect that comparison to end the argument. It didn't, for two reasons that both still sound familiar. First, an honest technical one: A-0's compiled programs ran about 30% slower than hand-written C-10, and computer time back then cost roughly ten times what a programmer's time cost. Raw speed wasn't a minor concern. It was the whole economic picture, and for years afterward, "the advantage was still to the raw machine language programmers."⁶ Second, a fear with nothing technical about it at all: programmers were afraid a working compiler would put them out of work. If one person with A-0 could do what fifty people used to do by hand, Martin's account puts the worry plainly: there were going to be "a lot of hungry programmers out on the streets."⁷
 
-The clearest resistance, though, didn't come from the programmers worried about their jobs. It
-came from a peer. When Hopper's team demonstrated an early algebraic compiler — a program that
-translated ordinary mathematical formulas directly into executable code — John Backus was in the
-room. Backus is the person who created FORTRAN; he was not a bystander skeptical of things he
-didn't understand. He watched the demonstration and, in Martin's account, "equat[ed] the work
-with insanity."⁸
+The clearest resistance, though, didn't come from the programmers worried about their jobs. It came from a peer. When Hopper's team demonstrated an early algebraic compiler — a program that translated ordinary mathematical formulas directly into executable code — John Backus was in the room. Backus is the person who created FORTRAN; he was not a bystander skeptical of things he didn't understand. He watched the demonstration and, in Martin's account, "equat[ed] the work with insanity."⁸
 
-That's the friction this essay is actually about. Not ignorance meeting insight. One person who'd
-already pushed the field forward, looking at someone else's version of the same kind of leap, and
-calling it crazy.
+That's the friction this essay is actually about. Not ignorance meeting insight. One person who'd already pushed the field forward, looking at someone else's version of the same kind of leap, and calling it crazy.
 
-None of that resistance was fully wrong, either. The 30% performance penalty was real. The
-job-loss fear wasn't paranoia: compilers genuinely did collapse the number of people needed to
-produce the same output, the same way every abstraction since has.
-What actually resolved the standoff wasn't someone winning an argument. It was infrastructure
-catching up: the Navy's work on core memory, adopted rapidly once it became public, made computers
-roughly a hundred times more capable and finally made the compiler's convenience worth its cost.⁹
-The tradeoff was real on both sides. It just took the ground shifting underneath it before one
-side's argument stopped being the stronger one.
+None of that resistance was fully wrong, either. The 30% performance penalty was real. The job-loss fear wasn't paranoia: compilers genuinely reduced the number of people needed to produce the same output. What eventually resolved the standoff wasn't someone winning an argument. It was infrastructure catching up: the Navy's work on core memory, adopted rapidly once it became public, made computers roughly a hundred times more capable and finally made the compiler's convenience worth its cost.⁹
+
+The tradeoff was real on both sides. It just took the ground shifting underneath it before one side's argument stopped being the stronger one.
 
 There were going to be "a lot of hungry programmers out on the streets."⁷
 
 Sound familiar?
+
 
 ---
 
