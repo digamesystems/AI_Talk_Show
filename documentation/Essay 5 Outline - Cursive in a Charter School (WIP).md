@@ -333,17 +333,20 @@ without giving up anything Agile taught us about how fast the world moves undern
 
 ---
 
-Gates filled the margins of Spolsky's specification with everything he'd learned in years of
-building software, and it's tempting to read that as the high-water mark of a discipline we've
-since lost: five hundred pages, annotated by hand, overnight, by someone who understood what he
-was reading closely enough to catch a bug no one else had found.
+Gates filled the margins of Spolsky's specification with everything he knew that the document
+itself couldn't say: a decade of industry knowledge, brought to bear on someone else's writing, in
+his own hand. It's tempting to read that as the high-water mark of a discipline we've since lost
+— five hundred pages, annotated overnight, by someone who understood what he was reading closely
+enough to catch a bug no one else had found.
 
-But the machine reading the equivalent document today doesn't need handwriting in the margins. It
-needs context: the part of the system that was never going to fit in the code, no matter how
+But the discipline isn't lost. It's being redirected — toward a different kind of reader, for the
+same reason it always existed.
+
+The machine reading the equivalent document today doesn't need the handwriting. It needs what the
+handwriting carried: the part of the system that was never going to fit in the code, no matter how
 carefully anyone wrote it.
 
-We don't need the 500-page specification back. We need to stop throwing away the notes in the
-margins.
+We don't need the 500-page specification back. We need to stop losing what the margins were for.
 
 ## Footnotes — Part 2 (draft, needs verification pass)
 
