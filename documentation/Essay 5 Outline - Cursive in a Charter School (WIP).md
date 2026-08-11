@@ -92,7 +92,7 @@ I put that observation to a couple of colleagues. One answer reframed the whole 
 
 ---
 
-Brian's reply was essentially: every one of those transitions also brought more people into coding, and to whoever was fluent in the layer below, the new arrivals looked exactly like what I'd just called the LLMs — capable, fast, and missing something real. To someone writing assembly, the Python-only coder is the idiot savant who barely understands the machine underneath their own code.
+Brian's reply was essentially this: every one of those transitions also brought more people into coding, and to whoever was fluent in the layer below, the new arrivals looked exactly like what I'd just called the LLMs — capable, fast, and missing something real. To someone writing assembly, the Python-only coder is the idiot savant who barely understands the machine underneath their own code.
 
 That reframes the whole thing. This isn't spec discipline returning because AI is uniquely untrustworthy. It's the same adjustment the field has made every time an abstraction layer admitted people — or now, systems — that don't share the tacit knowledge of the layer below. Robert "Uncle Bob" Martin, in his recent history of the field, traces that progression from FORTRAN and COBOL through ALGOL, BASIC, C, Unix, object-oriented programming, the internet, Agile, mobile, and finally AI. As he puts it, "we were off to the races."⁴
 
