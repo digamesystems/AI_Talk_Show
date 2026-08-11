@@ -53,13 +53,12 @@ The Slack thread this essay opens on is real, and two of the three participants 
 comfortable being quoted directly before this locks for publication. Until confirmed, treat any
 draft language attributed to them as provisional.
 
-**Status as of 2026-08-09:** John sent both a request in the original Slack thread, framed around
-what each contributed (Brian's abstraction/participants point; Steve's L1–L4 distinction between
-human-tuned and AI-tuned spec content), with an explicit offer to send a draft before anything
-goes out. Steve responded with a thumbs-up. Brian hasn't responded yet. Note the thumbs-up is
-agreement to being asked, not sign-off on actual draft language — the real checkpoint is still
-ahead, once John sends the draft as promised. Don't treat Steve's attribution as fully locked
-until that second step happens.
+**Status as of 2026-08-11:** John sent both a request in the original Slack thread (2026-08-09),
+framed around what each contributed, with an explicit offer to send a draft before anything goes
+out. Steve responded with a thumbs-up. John has since sent both Brian and Steve an earlier draft
+of the essay and is waiting on their comments. Note this is still short of final sign-off — an
+earlier draft was sent, not the current text, and neither has confirmed the actual language yet.
+Don't treat either attribution as locked until they've responded to the draft itself.
 
 ---
 
