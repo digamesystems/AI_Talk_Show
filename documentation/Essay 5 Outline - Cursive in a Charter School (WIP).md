@@ -65,6 +65,7 @@ Don't treat either attribution as locked until they've responded to the draft it
 ## DRAFT TEXT
 
 Candidate revision to opening: 
+
 In 1992, Joel Spolsky was a program manager on Microsoft's Excel team, finishing the most detailed document he'd ever written: a specification for a new Basic-based programming language for Excel that would eventually become Visual Basic for Applications. It had grown to roughly 500 pages — about a ream of laser-printed paper — headed for something Microsoft called a BillG review, where major features were reviewed by Bill Gates.¹
 
 Spolsky sent the spec to Gates's office less than 24 hours before the meeting. He assumed nobody could read the whole thing that fast, let alone think carefully about it. Then Gates walked into the room with the spec already in his hand.
@@ -116,6 +117,10 @@ almost entirely. Teams learned to surf the change instead of planning around it.
 Now, working with LLMs, I'm watching something that looks a lot like a spec "comeback." These fast, strange collaborators need
 an upfront structure to keep from wandering into the weeds, and a skill the ancients had is
 getting reborn, like cursive in a charter school.
+
+Revision of the paragraph above: 
+
+Now, working with LLMs, I’m watching something that looks a lot, at first glance, like a spec-writing “renaissance”. My initial reaction was that our fast, strange new collaborators simply need an upfront structure to keep them from “wandering off into the weeds”, and a skill from ancient times is being reborn — like cursive being taught in a charter school.  
 
 I put that observation to a couple of colleagues. One answer reframed the whole question.
 
