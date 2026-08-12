@@ -105,7 +105,12 @@ It didn't last.
 
 By the time I started writing code, in the early 1980s, that same upfront-everything model was already collapsing under its own weight. Months of design before a line of code got written. Failure discovered only at the end, when it was most expensive to fix.² The industry couldn't respond to change fast enough, and Agile was the answer: stop pretending we could know everything in advance, build something, learn from it, change it. I watched it work, then watched it calcify — scrum masters, certifications, ceremony piling onto something that had started as a rejection of exactly that kind of overhead. Somewhere along the way, the big upfront specification disappeared almost entirely. We learned to surf the change instead of planning around it.
 
-Now, working with LLMs, I'm watching something that looks, at first glance, like a spec-writing "renaissance." My first reaction was that our fast, strange new collaborators simply needed more structure up front to keep them from "wandering off into the weeds." A skill from an ancient era was being reborn — like cursive being taught again in a charter school.
+Now, working with LLMs, I'm watching something that looks, at first glance, like a spec-writing
+"renaissance." Prompt engineering was becoming a sequence of mini-specs — one for every task,
+rewritten until the model got it right. My first reaction was that our fast, strange new
+collaborators simply needed more structure up front to keep them from "wandering off into the
+weeds." A skill from an ancient era was being reborn — like cursive being taught again, to a new
+generation, in a charter school.
 
 I put that observation to a couple of colleagues. One answer reframed the whole question.
 
