@@ -67,3 +67,17 @@ Sound familiar?
    "Type A Compilers" section, pp. 103–105.
 7–8. [↩ Backus](#cite7) [↩ core memory](#cite8) Martin, *We, Programmers*, "Languages: 1953–1956" section,
    pp. 105–107.
+
+---
+
+## LinkedIn post copy (not part of the essay itself)
+
+**Blurb saved 2026-08-13, for use when publishing:**
+
+> In 1992, Bill Gates read all 500 pages of a software spec overnight, then asked the one question that mattered most.
+>
+> Joel Spolsky already had the answer. He'd found it himself, working through the spec.
+>
+> That kind of document nearly disappeared for thirty years. Writing prompts for AI, I watched it come back.
+>
+> A colleague told me why that's not the story I thought it was.
