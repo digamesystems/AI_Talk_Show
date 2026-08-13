@@ -1,9 +1,5 @@
 # Cursive in a Charter School, Part 1: A Lot of Hungry Programmers
 
-*(First of a two-part essay. Part 2, "The Margins," continues directly from this one — see
-"Cursive in a Charter School - Essay 5, Part 2 (WIP).md". Working notes, decisions, and source
-verification for both parts live in "Essay 5 Outline - Cursive in a Charter School (WIP).md".)*
-
 ---
 
 In 1992, Joel Spolsky was a program manager on Microsoft's Excel team, finishing the most detailed document he'd ever written: a specification for a new Basic-based programming language for Excel that would eventually become Visual Basic for Applications. It had grown to roughly 500 pages — about a ream of laser-printed paper — headed for something Microsoft called a BillG review, where major features were personally reviewed by Bill Gates.<a id="cite1"></a>[¹](https://www.joelonsoftware.com/2006/06/16/my-first-billg-review/)
@@ -29,11 +25,11 @@ collaborators simply needed more structure up front to keep them from "wandering
 weeds." A skill from an ancient era was being reborn — like cursive being taught again, to a new
 generation, in a charter school.
 
-I put that observation to a couple of colleagues. One answer reframed the whole question.
+I put that observation to a couple of colleagues; Brian Deters and Steve Reed. (Thanks to them for allowing me to credit their observations.) Both of their answers refined my thinking.
 
 ---
 
-Brian's reply was essentially this: every one of those transitions also brought more people into coding, and to whoever was fluent in the layer below, the new arrivals looked exactly like what I'd just called the LLMs — capable, fast, and missing something real. To someone writing assembly, the Python-only coder is the idiot savant who barely understands the machine underneath their own code.
+Brian's reply was essentially this: every technology / language advancement in our field also brought more people into coding, and to whoever was fluent in the layer below, the new arrivals looked exactly like what I'd just called the LLMs — capable, fast, and missing something real. To someone writing assembly, the Python-only coder is the idiot savant who barely understands the machine underneath their own code.
 
 That reframes the whole thing. This isn't spec discipline returning because AI is uniquely untrustworthy. It's the same adjustment the field has made every time an abstraction layer admitted people — or now, systems — that don't share the tacit knowledge of the layer below. Robert "Uncle Bob" Martin, in his recent history of the field, traces that progression from FORTRAN and COBOL through ALGOL, BASIC, C, Unix, object-oriented programming, the internet, Agile, mobile, and finally AI. As he puts it, "we were off to the races."<a id="cite3"></a>³
 

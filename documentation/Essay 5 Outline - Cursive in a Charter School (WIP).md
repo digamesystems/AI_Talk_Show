@@ -56,17 +56,18 @@ essay itself.
 
 ## Attribution note (not part of the essay)
 
-The Slack thread this essay opens on is real, and two of the three participants (Brian Deters,
-"Steve") are named colleagues, not public figures. John is reaching out to confirm they're
-comfortable being quoted directly before this locks for publication. Until confirmed, treat any
-draft language attributed to them as provisional.
+The Slack thread this essay opens on is real, and two of the three participants are named
+colleagues, not public figures: Brian Deters and Steve Reed.
 
 **Status as of 2026-08-11:** John sent both a request in the original Slack thread (2026-08-09),
 framed around what each contributed, with an explicit offer to send a draft before anything goes
 out. Steve responded with a thumbs-up. John has since sent both Brian and Steve an earlier draft
-of the essay and is waiting on their comments. Note this is still short of final sign-off — an
-earlier draft was sent, not the current text, and neither has confirmed the actual language yet.
-Don't treat either attribution as locked until they've responded to the draft itself.
+of the essay and was waiting on their comments.
+
+**Status as of 2026-08-13, confirmed:** Both named by full name in Part 1's transition paragraph
+("Brian Deters and Steve Reed"), with an explicit thanks for permission to credit their
+observations, applied directly in the LinkedIn editor. Attribution is locked — no longer
+provisional.
 
 ---
 
