@@ -122,8 +122,8 @@ survives the people who had it in their heads.
 Gates filled the margins of Spolsky's specification with everything he knew that the document
 itself couldn't say: decades of industry knowledge, brought to bear on someone else's writing, in
 his own hand. It's tempting to read that as the high-water mark of a discipline we've since lost
-— five hundred pages, annotated overnight, by someone who understood what he was reading closely
-enough to catch a bug no one else had found.
+— five hundred pages, annotated overnight, by someone who'd read closely enough to ask the one
+question that actually mattered.
 
 But the discipline isn't lost. It's being redirected toward a different kind of reader: one with
 no institutional context of its own — capable and fast on everything visible in the code, and
