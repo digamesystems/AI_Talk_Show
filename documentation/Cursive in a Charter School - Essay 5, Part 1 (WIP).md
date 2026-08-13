@@ -59,7 +59,8 @@ Sound familiar?
 
 1. [↩](#cite1) Joel Spolsky, "My First BillG Review," *Joel on Software*, June 16, 2006.
    [joelonsoftware.com/2006/06/16/my-first-billg-review](https://www.joelonsoftware.com/2006/06/16/my-first-billg-review/)
-2. [↩](#cite2) Barry Boehm, *Software Engineering Economics* (1981).
+2. [↩](#cite2) Barry Boehm, *Software Engineering Economics*, 1st ed. (Prentice Hall, January 1,
+   1981), ISBN 978-0138221225.
 3. [↩](#cite3) Robert C. Martin, *We, Programmers: A Chronicle of Coders from Ada to AI*, 1st ed. (Boston:
    Addison-Wesley Professional, November 30, 2024), ISBN 978-0135344262, Preface, p. xxii.
 4–6. [↩ timing](#cite4) [↩ economics](#cite5) [↩ streets](#cite6a) [↩ echo](#cite6b) Martin, *We, Programmers*,
