@@ -144,3 +144,17 @@ with no history of its own the thing Gates already had: the margins.
    [arxiv.org/pdf/2605.08112](https://arxiv.org/pdf/2605.08112)
 3. [↩](#cite3) Peter Naur, "Programming as Theory Building," *Microprocessing and Microprogramming*, May 1985
    (DOI: 10.1016/0165-6074(85)90032-8).
+
+---
+
+## LinkedIn post copy (not part of the essay itself)
+
+**Blurb saved 2026-08-13, for use when publishing:**
+
+> An AI coding agent got 100% of the decisions right when the answer was visible in the code.
+>
+> On the decisions that weren't written down anywhere — the ones that lived in a Slack thread, a meeting, someone's memory — it got as low as zero.
+>
+> A colleague of mine had already solved this problem, without calling it AI safety, or context engineering, or anything else with a name.
+>
+> He just wrote down the part that used to live only in people's heads.
