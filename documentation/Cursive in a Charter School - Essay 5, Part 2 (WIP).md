@@ -1,7 +1,8 @@
 # Cursive in a Charter School, Part 2: The Margins
 
-*(Second of a two-part essay. Continues directly from "Cursive in a Charter School - Essay 5,
-Part 1 (WIP).md". Working notes, decisions, and source verification for both parts live in
+*(Second of a two-part essay. Continues directly from
+[Part 1, "A Lot of Hungry Programmers"](https://www.linkedin.com/feed/update/urn:li:ugcPost:7493709876209057792/).
+Working notes, decisions, and source verification for both parts live in
 "Essay 5 Outline - Cursive in a Charter School (WIP).md". Footnote numbering restarts at 1,
 matching Essay 3's convention of independent numbering per part.)*
 
