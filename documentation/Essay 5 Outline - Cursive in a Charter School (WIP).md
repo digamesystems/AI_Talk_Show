@@ -1,6 +1,7 @@
-# Cursive in a Charter School (working title) — Essay 5, Part 1 — DRAFT
+# Cursive in a Charter School, Part 1: A Lot of Hungry Programmers — DRAFT
 
-*Status: second draft pass, unpolished. Title not locked. Written 2026-08-09 from a real Slack
+*Status: second draft pass, unpolished. Title locked 2026-08-12: "Cursive in a Charter School,
+Part 1: A Lot of Hungry Programmers." Written 2026-08-09 from a real Slack
 thread (John, Brian Deters, Steve — see note on attribution below), excerpts from Robert C.
 Martin's "We, Programmers" photographed directly from John's purchased Kindle copy, and Joel
 Spolsky's "My First BillG Review" (verified directly via WebFetch). Opening reworked to lead with
