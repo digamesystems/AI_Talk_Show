@@ -49,10 +49,14 @@ sections as final until that happens.
 ## Section-by-section plan
 
 **1. Opening scene — the dictaphone.** Concrete, no explanation yet, matching this series' house
-convention. Father, asked on the spot for a West Point recommendation for Craig. Dictaphone, one
-uninterrupted pass, no draft, strong closing included. "There! How about I take you to lunch. My
-secretary will have it typed up by the time we get back." John and Craig's shared reaction: "How
-did he do that?" Let the mystery sit unexplained through this section.
+convention. Father, asked on the spot for a West Point recommendation for Craig, addressed
+directly to Senator Barry Goldwater's office — John's recollection, not yet cross-checked with
+Craig. Timeline checks out independently: Goldwater was a sitting Arizona senator from 1969 to
+1987 (his second stint, after 1953–1965 and the 1964 presidential run), so a letter to his office
+around John's 1982 graduation is fully plausible, not just a detail to take on faith. Dictaphone,
+one uninterrupted pass, no draft, strong closing included. "There! How about I take you to lunch.
+My secretary will have it typed up by the time we get back." John and Craig's shared reaction:
+"How did he do that?" Let the mystery sit unexplained through this section.
 
 **2. Naming what was witnessed — Dreyfus.** The five stages, correctly named (Novice, Competence,
 Proficiency, Expertise, Mastery). The Table 1 detail that does the real work: Awareness across the
