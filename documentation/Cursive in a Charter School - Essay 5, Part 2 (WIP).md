@@ -156,6 +156,6 @@ with no history of its own the thing Gates already had: the margins.
 >
 > On the decisions that weren't written down anywhere — the ones that lived in a Slack thread, a meeting, someone's memory — it got as low as zero.
 >
-> A colleague of mine had already solved this problem, without calling it AI safety, or context engineering, or anything else with a name.
+> A colleague of mine had already built an answer to it, without calling it AI safety, or context engineering, or anything else with a name.
 >
 > He just wrote down the part that used to live only in people's heads.
