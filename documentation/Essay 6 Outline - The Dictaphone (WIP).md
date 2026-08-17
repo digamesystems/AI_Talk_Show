@@ -1,21 +1,23 @@
-# Essay 6 Outline — The Dictaphone (working title)
+# Essay 6 Outline — "The Dictaphone: a Case Study in Mastery"
 
-*Status: not drafted. This outline consolidates everything developed in `Future Essays - Roadmap.md`,
-entry 19, across the 2026-08-09 through 2026-08-15 sessions. Full detail, sourcing, and the
-back-and-forth that produced each decision below lives there — this file is the structural plan
-for actually writing the piece, not a replacement for that record.*
+*Status: not drafted. Title locked 2026-08-17. Target length up to ~2,500 words before a two-part
+split gets seriously considered (revised up from an assumed ~2,000-word ceiling — this essay is
+carrying comparable density to Essay 5, which needed two parts at a similar load). This outline
+consolidates everything developed in `Future Essays - Roadmap.md`, entry 19, across the
+2026-08-09 through 2026-08-17 sessions. Full detail, sourcing, and the back-and-forth that
+produced each decision below lives there — this file is the structural plan for actually writing
+the piece, not a replacement for that record.*
 
 ---
 
 ## Attribution note (not part of the essay)
 
-Craig is a named, real, non-public person. He confirmed the core fact (he asked John's father for
-the recommendation) but his own memory of the details has faded — his words, "I am starting to
-lose some of my memory over the last couple years." No objection raised to being named or to the
-story being told; the exchange was warm, and an in-person meeting is being set up. Still needed
-before this locks: an explicit go-ahead for using his name and the specific story, worth asking
-directly when they meet rather than inferring it from a friendly reply. Don't draft the Craig
-sections as final until that happens.
+Craig is a named, real, non-public person. **Resolved 2026-08-17: John has Craig's explicit
+permission to use his name within John's own recollections.** Craig's faded memory of the
+details ("I am starting to lose some of my memory over the last couple years") will not be
+referenced anywhere in the essay — a deliberate decision, not an omission. The story is told as
+John's own witness throughout, consistent with this project's standing rule that personal
+testimony doesn't require external corroboration.
 
 ---
 
@@ -95,23 +97,23 @@ form of the thesis, worth protecting as the essay's actual engine: the frighteni
 isn't that the machine produces expert-level work. It's that we stop producing experts who can
 recognize what expert-level work looks like.
 
-**6. Closing — not yet drafted.** Candidate material, not yet decided whether either belongs
-verbatim: John's own line from this session's conversation, unscripted and more direct than
-anything else gathered so far — "I'm a 62 year old, Berkeley Ph.D. I worry about the young
-students who don't have the framework established yet, interacting blindly with you and your
-cousins." Also worth having in view, not forced: reaching out to Craig, the one other witness of
-this scene, and finding his memory of the details has faded — a real, unplanned echo of the
-essay's own subject. Whatever the actual closing line turns out to be, it should land as a
+**6. Closing — not yet drafted.** Craig's faded memory is explicitly out (see Attribution note) —
+not a candidate for the closing or anywhere else in the essay. Still open: whether John's own line
+from this session's conversation, unscripted and more direct than anything else gathered so far —
+"I'm a 62 year old, Berkeley Ph.D. I worry about the young students who don't have the framework
+established yet, interacting blindly with you and your cousins" — belongs verbatim, in some
+adapted form, or not at all. Whatever the actual closing line turns out to be, it should land as a
 complete, declarative sentence, not a trail-off, matching this series' convention.
 
 ---
 
 ## Open items before drafting starts
 
-1. Craig's explicit go-ahead to use his name and story — pending their in-person meeting.
+1. ~~Craig's explicit go-ahead~~ — resolved 2026-08-17.
 2. Whether the Essay 1 bookend is a two-point structure or the first sign of a recurring rhythm
    the series returns to — not decided, and doesn't need to be before drafting; it only affects how
    this essay would be described in hindsight, not how it gets written.
-3. The actual closing — the two candidate pieces above (John's direct statement, Craig's faded
-   memory) need a real decision about whether either belongs in the essay itself.
-4. Title — "The Dictaphone" is a working title only, not locked.
+3. The actual closing — whether John's own direct statement belongs, in what form, or not at all.
+4. ~~Title~~ — locked 2026-08-17: "The Dictaphone: a Case Study in Mastery."
+5. Whether this stays one essay at ~2,500 words or becomes a two-part piece — not yet decided;
+   revisit once a full draft shows actual length.
