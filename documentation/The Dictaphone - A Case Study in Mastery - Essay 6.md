@@ -37,7 +37,7 @@ The distinction is simple: does the tool do the thinking for you, or does it mak
 A young person, who can send their boss a presentation or essay that looks like an expert made it without being an expert themselves, does not represent advancement. It's a loss. The young person has been cheated out of the growth they deserved.
 
 ---
-Craig went on to get into West Point and had a decades-long career in the military.  I went on to become a scientist and eventually an engineer thinking about problems around AI. David Krakauer postulated a distinction between "Competitive" and "Complementary" artifacts<a id="cite2"></a>[²](http://nautil.us/blog/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature) — things that make us smarter when we use them, and those that don't contribute to our development. 
+Craig went on to get into West Point and had a decades-long career in the military.  I went on to become a scientist and eventually an engineer thinking about problems around AI. David Krakauer postulated a distinction between "Competitive" and "Complementary" artifacts<a id="cite2"></a>[²](https://nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098) — things that make us smarter when we use them, and those that don't contribute to our development. 
 
 His classic example is: a GPS vs. a Map. A map gives you the shape of the city. The GPS gives you step-by-step instructions. In one case, after using the tool, you are smarter — you know the city better. In the other, you are basically no better off, even if you got to where you wanted to go.
 
@@ -54,6 +54,6 @@ This distinction is important.
    URL didn't resolve.
    [web.archive.org/web/20100516071752/dtic.mil/.../ADA084551](https://web.archive.org/web/20100516071752/http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA084551&Location=U2&doc=GetTRDoc.pdf)
 2. [↩](#cite2) Krakauer, D. "Will AI Harm Us? Better to Ask How We'll Reckon With Our Hybrid
-   Nature." *Nautilus*, 2016.
-   [nautil.us/blog/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature](http://nautil.us/blog/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature)
-   (if dead, try the Wayback Machine) — same citation used in Essay 1.
+   Nature." *Nautilus*, September 5, 2016. Link verified directly 2026-08-18; the URL used in
+   Essay 1 has since gone dead — this is a live replacement, same article, same citation.
+   [nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098](https://nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098)
