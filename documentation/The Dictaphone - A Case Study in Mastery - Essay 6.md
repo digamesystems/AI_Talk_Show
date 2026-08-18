@@ -1,3 +1,5 @@
+# The Dictaphone - A case study in Mastery
+
 In 1981, I was a senior in high school when my good friend Craig decided he was going to try to get into West Point. He was smart, athletic and of excellent character. The thing was, he needed a letter of recommendation. 
 
 We went to see my father. Dad was an attorney and knew pretty much everyone in Tucson and across the state. "A letter of recommendation? Of course, Craig! I'd be happy to!" Dad knew Craig well and this by itself was really no surprise. His remarkable skill was what left us stunned.  
