@@ -20,7 +20,7 @@ By the time he dictated that letter, my Dad had been practicing law for more tha
 
 In 1980, Stuart and Hubert Dreyfus published a short report for the Air Force Office of Scientific Research. They were interested in how people acquire expertise in complex skills. Their answer was a five-stage progression: Novice, Competence, Proficiency, Expertise, and Mastery.
 
-Their paper: "A Five-Stage Model of the Mental Activities Involved in Directed Skill Acquisition" is one of those lovely, short primary sources that graduate theses are built upon. 
+Their paper: "A Five-Stage Model of the Mental Activities Involved in Directed Skill Acquisition"<a id="cite1"></a>[¹](https://apps.dtic.mil/sti/tr/pdf/ADA084551.pdf) is one of those lovely, short primary sources that graduate theses are built upon. 
 
 The underlying idea is rather intuitive, but grounded in actual data from the field. A Novice needs rules, checklists and a playbook to follow. Someone who is Proficient understands the task, perhaps has their own internal framework for evaluating what they are doing. The Master, however, is no longer thinking about the mechanics. They are simply in the moment, not even thinking about what they are doing.
 
@@ -37,8 +37,22 @@ The distinction is simple: does the tool do the thinking for you, or does it mak
 A young person, who can send their boss a presentation or essay that looks like an expert made it without being an expert themselves, does not represent advancement. It's a loss. The young person has been cheated out of the growth they deserved.
 
 ---
-Craig went on to get into West Point and had a decades-long career in the military.  I went on to become a scientist and eventually an engineer thinking about problems around AI. David Krakauer postulated a distinction between "Competitive" and "Complementary" artifacts — things that make us smarter when we use them, and those that don't contribute to our development. 
+Craig went on to get into West Point and had a decades-long career in the military.  I went on to become a scientist and eventually an engineer thinking about problems around AI. David Krakauer postulated a distinction between "Competitive" and "Complementary" artifacts<a id="cite2"></a>[²](http://nautil.us/blog/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature) — things that make us smarter when we use them, and those that don't contribute to our development. 
 
 His classic example is: a GPS vs. a Map. A map gives you the shape of the city. The GPS gives you step-by-step instructions. In one case, after using the tool, you are smarter — you know the city better. In the other, you are basically no better off, even if you got to where you wanted to go.
 
 This distinction is important. 
+
+---
+
+## Footnotes
+
+1. [↩](#cite1) Stuart E. Dreyfus and Hubert L. Dreyfus, "A Five-Stage Model of the Mental Activities
+   Involved in Directed Skill Acquisition," ORC 80-2, Operations Research Center, University of
+   California, Berkeley, February 1980, sponsored by the Air Force Office of Scientific Research
+   (AFSC), USAF, under Contract F49620-79-C-0063.
+   [apps.dtic.mil/sti/tr/pdf/ADA084551.pdf](https://apps.dtic.mil/sti/tr/pdf/ADA084551.pdf)
+2. [↩](#cite2) Krakauer, D. "Will AI Harm Us? Better to Ask How We'll Reckon With Our Hybrid
+   Nature." *Nautilus*, 2016.
+   [nautil.us/blog/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature](http://nautil.us/blog/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature)
+   (if dead, try the Wayback Machine) — same citation used in Essay 1.
