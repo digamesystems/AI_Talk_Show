@@ -49,11 +49,8 @@ This distinction is important.
 
 1. [↩](#cite1) Stuart E. Dreyfus and Hubert L. Dreyfus, "A Five-Stage Model of the Mental Activities
    Involved in Directed Skill Acquisition," ORC 80-2, Operations Research Center, University of
-   California, Berkeley, February 1980, sponsored by the Air Force Office of Scientific Research
-   (AFSC), USAF, under Contract F49620-79-C-0063. Link via the Wayback Machine — the live DTIC
-   URL didn't resolve.
+   California, Berkeley, February 1980.
    [web.archive.org/web/20100516071752/dtic.mil/.../ADA084551](https://web.archive.org/web/20100516071752/http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA084551&Location=U2&doc=GetTRDoc.pdf)
 2. [↩](#cite2) Krakauer, D. "Will AI Harm Us? Better to Ask How We'll Reckon With Our Hybrid
-   Nature." *Nautilus*, September 5, 2016. Link verified directly 2026-08-18; the URL used in
-   Essay 1 has since gone dead — this is a live replacement, same article, same citation.
+   Nature." *Nautilus*, September 5, 2016.
    [nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098](https://nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098)
