@@ -20,7 +20,7 @@ By the time he dictated that letter, my Dad had been practicing law for more tha
 
 In 1980, Stuart and Hubert Dreyfus published a short report for the Air Force Office of Scientific Research. They were interested in how people acquire expertise in complex skills. Their answer was a five-stage progression: Novice, Competence, Proficiency, Expertise, and Mastery.
 
-Their paper: "A Five-Stage Model of the Mental Activities Involved in Directed Skill Acquisition"<a id="cite1"></a>[¹](https://apps.dtic.mil/sti/tr/pdf/ADA084551.pdf) is one of those lovely, short primary sources that graduate theses are built upon. 
+Their paper: "A Five-Stage Model of the Mental Activities Involved in Directed Skill Acquisition"<a id="cite1"></a>[¹](https://web.archive.org/web/20100516071752/http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA084551&Location=U2&doc=GetTRDoc.pdf) is one of those lovely, short primary sources that graduate theses are built upon. 
 
 The underlying idea is rather intuitive, but grounded in actual data from the field. A Novice needs rules, checklists and a playbook to follow. Someone who is Proficient understands the task, perhaps has their own internal framework for evaluating what they are doing. The Master, however, is no longer thinking about the mechanics. They are simply in the moment, not even thinking about what they are doing.
 
@@ -50,8 +50,9 @@ This distinction is important.
 1. [↩](#cite1) Stuart E. Dreyfus and Hubert L. Dreyfus, "A Five-Stage Model of the Mental Activities
    Involved in Directed Skill Acquisition," ORC 80-2, Operations Research Center, University of
    California, Berkeley, February 1980, sponsored by the Air Force Office of Scientific Research
-   (AFSC), USAF, under Contract F49620-79-C-0063.
-   [apps.dtic.mil/sti/tr/pdf/ADA084551.pdf](https://apps.dtic.mil/sti/tr/pdf/ADA084551.pdf)
+   (AFSC), USAF, under Contract F49620-79-C-0063. Link via the Wayback Machine — the live DTIC
+   URL didn't resolve.
+   [web.archive.org/web/20100516071752/dtic.mil/.../ADA084551](https://web.archive.org/web/20100516071752/http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA084551&Location=U2&doc=GetTRDoc.pdf)
 2. [↩](#cite2) Krakauer, D. "Will AI Harm Us? Better to Ask How We'll Reckon With Our Hybrid
    Nature." *Nautilus*, 2016.
    [nautil.us/blog/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature](http://nautil.us/blog/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature)
