@@ -26,7 +26,9 @@ Their paper: "A Five-Stage Model of the Mental Activities Involved in Directed S
 
 The underlying idea is rather intuitive, but grounded in actual data from the field. A Novice needs rules, checklists and a playbook to follow. Someone who is Proficient understands the task, perhaps has their own internal framework for evaluating what they are doing. The Master, however, is no longer thinking about the mechanics. They are simply in the moment, not even thinking about what they are doing.
 
-An interesting discovery in the Dreyfus report is that the performance of "master-level" pilots actually got worse when they were asked, mid-task, to explain their decision-making methodology. Thinking about what they were doing made them worse pilots. The very act of making their accumulated, tacit knowledge explicit interfered with the performance that knowledge had produced.
+The Dreyfus report describes expert-level pilots whose performance actually got worse the moment they became aware of what they were doing, mid-flight. Suddenly reflecting on the act of flying — rather than simply flying — degraded their performance. The very act of noticing their own tacit knowledge interfered with the performance that knowledge had produced.
+
+Tellingly, the report never gives an equivalent anecdote for Mastery itself — as if that stage, by its own definition, sits too far past anything that can be put into words.
 
 Like interrupting jazz. 
 
