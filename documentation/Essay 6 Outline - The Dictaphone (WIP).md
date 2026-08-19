@@ -105,6 +105,28 @@ established yet, interacting blindly with you and your cousins" — belongs verb
 adapted form, or not at all. Whatever the actual closing line turns out to be, it should land as a
 complete, declarative sentence, not a trail-off, matching this series' convention.
 
+Candidate material for the closing, from a 2026-08-18 cross-model review, logged for later
+consideration rather than drafted in yet:
+
+- *Usable on its own terms:* a litmus-test framing — "After using this tool, am I more capable
+  than before, or merely more productive?" — clean, quotable, doesn't depend on any metaphor this
+  essay has already retracted. Also: "We don't need to fear AI. We need to fear confusing a fluent
+  output for a fluent mind."
+- *Safe structural direction:* keeping the closing anchored in Dad's actual role — mentorship,
+  presenting a worthy challenge — rather than reaching for the Dictaphone itself as a symbol for a
+  category of tool.
+- **Flagged and rejected, don't reintroduce:** the same review's two more fully-drafted options
+  both used "the Dictaphone" itself as an example of a complementary tool ("AI can be a Dictaphone
+  for our nascent ideas, or it can be a GPS for tasks we never learn to navigate ourselves") — this
+  is exactly the misreading three separate AI reviewers made independently earlier this week and
+  that got explicitly corrected ("Pointing at the moon. He stares at the finger.") — the
+  Dictaphone's only job in this essay is to put mastery in front of the reader before Dreyfus is
+  named, not to carry a claim about tool categories. Also flagged: the same review recommended
+  opening the conclusion with "the Craig/Dad callback" — but that callback ("The letter worked.
+  Craig went on to get into West Point...") was deliberately moved earlier in the 2026-08-18
+  session specifically to close out the first movement of the essay, not saved for the ending; the
+  review appears to have been working from an earlier draft state, not the current one.
+
 ---
 
 ## Open items before drafting starts
