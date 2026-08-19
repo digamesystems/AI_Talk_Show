@@ -30,18 +30,27 @@ The Dreyfus report describes expert-level pilots whose performance actually got 
 
 Tellingly, the report never gives an equivalent anecdote for Mastery itself — as if that stage, by its own definition, sits too far past anything that can be put into words.
 
-Like interrupting jazz. 
+Like jazz. 
+
+The letter worked. Craig went on to get into West Point and had a decades-long career in the military.
 
 ---
  
-The thing about the Dreyfus study is that the path to mastery involves a lot of effort. Repeated failures, corrections, and having your work (flying skill in this instance) evaluated by superiors who would guide your development. At risk of sounding like what I am, a 60+ something, over-educated STEM type, I worry that recent advances in AI might short-circuit that progression for younger people entering the work force. There are enough articles out there about how "AI is making us dumb." I don't want this post to fall into that category. In my opinion, this is a question about how a tool is used, not if the tool itself is a problem. 
+The thing about the Dreyfus study is that the path to mastery involves a lot of effort. Repeated failures, corrections, and having your work (flying skill in this instance) evaluated by superiors who would guide your development. 
+
+There's a name for the process that path actually runs on: flow. Psychologist Mihaly Csikszentmihalyi described it four years before the Dreyfus report<a id="cite3"></a>[³](https://www.wiley.com/en-us/Beyond+Boredom+and+Anxiety:+Experiencing+Flow+in+Work+and+Play,+25th+Anniversary+Edition-p-9780787951405) — starting from interviews with rock climbers and artists, not pilots or philosophers. Flow shows up when a challenge is matched almost exactly to your current skill: hard enough to demand everything you've got, not so hard it turns into anxiety. As your skill grows, the challenge has to grow with it, or flow disappears into boredom. That's the actual mechanism underneath that drives the path through Dreyfus's five stages — each rung gets built by that same cycle, over and over: a problem just past what you can already do, solved, then the next one.
+
+At risk of sounding like what I am, a 60+ something, over-educated STEM type, I worry that recent advances in AI might short-circuit that progression for younger people entering the work force. Hand someone the answer before they've earned it and there's no challenge left to match. No flow. No rung climbed. No joy in either. 
+
+There are enough articles out there about how "AI is making us dumb." I don't want this post to fall into that category. In my opinion, this is a question about how a tool is used, not if the tool itself is a problem. 
 
 The distinction is simple: does the tool do the thinking for you, or does it make your thinking better?
 
-A young person, who can send their boss a presentation or essay that looks like an expert made it without being an expert themselves, does not represent advancement. It's a loss. The young person has been cheated out of the growth they deserved.
+A young person, who can send their boss a presentation or essay that looks like an expert made it without being an expert themselves, does not represent advancement. It's a loss. They've been cheated out of growth they deserved and we've been cheated out of a person advancing to the next level.
 
 ---
-Craig went on to get into West Point and had a decades-long career in the military.  I went on to become a scientist and eventually an engineer thinking about problems around AI. David Krakauer postulated a distinction between "Competitive" and "Complementary" artifacts<a id="cite2"></a>[²](https://nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098) — things that make us smarter when we use them, and those that don't contribute to our development. 
+
+David Krakauer postulated a distinction between "Competitive" and "Complementary" artifacts<a id="cite2"></a>[²](https://nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098) — things that make us smarter when we use them, and those that don't contribute to our development. 
 
 His classic example is: a GPS vs. a Map. A map gives you the shape of the city. The GPS gives you step-by-step instructions. In one case, after using the tool, you are smarter — you know the city better. In the other, you are basically no better off, even if you got to where you wanted to go.
 
@@ -58,3 +67,6 @@ This distinction is important.
 2. [↩](#cite2) Krakauer, D. "Will AI Harm Us? Better to Ask How We'll Reckon With Our Hybrid
    Nature." *Nautilus*, September 5, 2016.
    [nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098](https://nautil.us/will-ai-harm-us-better-to-ask-how-well-reckon-with-our-hybrid-nature-236098)
+3. [↩](#cite3) Mihaly Csikszentmihalyi, *Beyond Boredom and Anxiety: Experiencing Flow in Work and
+   Play* (San Francisco: Jossey-Bass, 1975).
+   [wiley.com/en-us/Beyond+Boredom+and+Anxiety](https://www.wiley.com/en-us/Beyond+Boredom+and+Anxiety:+Experiencing+Flow+in+Work+and+Play,+25th+Anniversary+Edition-p-9780787951405)
