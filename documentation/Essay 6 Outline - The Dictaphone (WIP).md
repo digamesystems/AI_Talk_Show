@@ -4,9 +4,47 @@
 split gets seriously considered (revised up from an assumed ~2,000-word ceiling — this essay is
 carrying comparable density to Essay 5, which needed two parts at a similar load). This outline
 consolidates everything developed in `Future Essays - Roadmap.md`, entry 19, across the
-2026-08-09 through 2026-08-17 sessions. Full detail, sourcing, and the back-and-forth that
+2026-08-09 through 2026-08-18 sessions. Full detail, sourcing, and the back-and-forth that
 produced each decision below lives there — this file is the structural plan for actually writing
 the piece, not a replacement for that record.*
+
+---
+
+## Ideas to consider, not yet incorporated (not part of the essay)
+
+**Auftragstaktik / commander's intent (Moltke the Elder), surfaced 2026-08-18.** John brought in
+pasted material on Prussian mission-command doctrine as a possible frame for the essay. One claim
+in the source material was wrong and worth flagging if this gets used: the "four types of
+officers" value matrix (clever/lazy, clever/diligent, stupid/lazy, stupid/industrious) is not
+Moltke's — it's General Kurt von Hammerstein-Equord, 1933, writing the German army manual
+*Truppenführung*. Quote Investigator traces the drift: misattributed to Manstein by 2004, then to
+Moltke by 2005, decades after Moltke's 1891 death. Don't use the Moltke attribution if this thread
+gets developed.
+
+The rest is solid, verified history: Moltke's 1869 *Instructions for Large Unit Commanders*
+codified early mission-command principles, and the U.S. Army's 1986 adoption of mission orders
+traces to this Prussian influence (though "Auftragstaktik" and "mission command" are related, not
+identical terms — current scholarship treats them as distinct).
+
+The actual bearing on this essay: Auftragstaktik doesn't work on novices. The whole doctrine
+depends on giving *intent* rather than detailed orders and trusting the subordinate to fill in
+the specifics — which only works because that subordinate has already built the internalized
+judgment Dreyfus's model describes. A Novice needs rules and checklists, the opposite of what
+mission command gives anyone; the doctrine presupposes officers who've already climbed most of
+Dreyfus's staircase. That's a real, institutionally-proven parallel to the essay's actual worry:
+the "give broad intent, trust good judgment" mode can't be shortcut to — it has to be earned
+first. Sharpens the AI question in the essay's own vocabulary: is a given AI interaction
+structured like Auftragstaktik (intent given, real judgment still required and trusted), or like
+the rigid, detailed-orders model mission command replaced, where judgment never has to develop
+because every step is already specified? Same Krakauer distinction, different historical frame.
+
+Not yet decided whether this belongs in the essay itself (Section 4 or 5 are the natural homes) or
+stays as background. Further reading identified 2026-08-18, not yet reviewed: Major Michael J.
+Gunther, *Auftragstaktik: The Basis for Modern Military Command?* (U.S. Army Command and General
+Staff College monograph, publicly available via DTIC) — a serious, on-topic secondary source
+worth an actual read before citing anything from this thread. Also worth knowing: this project's
+own Essay 3 already cites a related military decision framework (Boyd's OODA loop, via Craig
+Fugate/Waffle House) — a possible, not-yet-explored internal echo if this thread develops further.
 
 ---
 
